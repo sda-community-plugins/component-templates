@@ -1,0 +1,1194 @@
+{
+    "entityType": "ComponentTemplate",
+    "name": "dotnet-iis",
+    "description": "Microsoft.NET Web App Deployment to IIS Template",
+    "active": true,
+    "envPropDefs": [
+        {
+            "name": "appPool.name",
+            "label": "AppPool",
+            "extendedLabel": "AppPool",
+            "type": "TEXT",
+            "value": "AppPool",
+            "required": false,
+            "description": "Application Pool name",
+            "hidden": false
+        },
+        {
+            "name": "appPool.fwk",
+            "label": "AppPool Fwk",
+            "extendedLabel": "AppPool Fwk",
+            "type": "TEXT",
+            "value": "v4.0",
+            "required": false,
+            "description": "AppPool .NET Framework",
+            "hidden": false
+        },
+        {
+            "name": "site.name",
+            "label": "Site Name",
+            "extendedLabel": "Site Name",
+            "type": "TEXT",
+            "value": "SiteName",
+            "required": false,
+            "description": "Site Name",
+            "hidden": false
+        },
+        {
+            "name": "virtualPath.name",
+            "label": "Virtual Path",
+            "extendedLabel": "Virtual Path",
+            "type": "TEXT",
+            "value": "sitename",
+            "required": false,
+            "description": "Virtual Path",
+            "hidden": false
+        },
+        {
+            "name": "physicalPath.dir",
+            "label": "Physical Path",
+            "extendedLabel": "Physical Path",
+            "type": "TEXT",
+            "value": "C:\\inetpub\\website-root",
+            "required": false,
+            "description": "Physical Path directory",
+            "hidden": false
+        },
+        {
+            "name": "parent.name",
+            "label": "Parent Website",
+            "extendedLabel": "Parent Website",
+            "type": "TEXT",
+            "value": "DefaultWebSite",
+            "required": false,
+            "description": "Parent Website name",
+            "hidden": false
+        },
+        {
+            "name": "site.bindings",
+            "label": "Bindings",
+            "extendedLabel": "Bindings",
+            "type": "TEXT",
+            "value": "http:\/*:81:",
+            "required": false,
+            "description": "Site Bindings",
+            "hidden": false
+        },
+        {
+            "name": "database.name",
+            "label": "Database Name",
+            "extendedLabel": "Database Name",
+            "type": "TEXT",
+            "value": "dbname",
+            "required": false,
+            "description": "Database Name",
+            "hidden": false
+        },
+        {
+            "name": "database.username",
+            "label": "Database Username",
+            "extendedLabel": "Database Username",
+            "type": "TEXT",
+            "value": "sa",
+            "required": false,
+            "description": "Database Username",
+            "hidden": false
+        },
+        {
+            "name": "database.password",
+            "label": "Database Password",
+            "extendedLabel": "Database Password",
+            "type": "SECURE",
+            "required": false,
+            "description": "Database Password",
+            "hidden": false
+        },
+        {
+            "name": "database.server",
+            "label": "Database Server",
+            "extendedLabel": "Database Server",
+            "type": "TEXT",
+            "value": "localhost",
+            "required": false,
+            "description": "Database Server Name",
+            "hidden": false
+        }
+    ],
+    "versionPropDefs": [],
+    "propDefs": [],
+    "properties": [],
+    "processes": [
+        {
+            "name": "deploy-to-iis",
+            "description": "Deploy Website to IIS",
+            "defaultWorkingDir": "${p:resource\/work.dir}\/${p:component.name}",
+            "takesVersion": true,
+            "inventoryActionType": "ADD",
+            "status": "Active",
+            "configActionType": "ADD",
+            "active": true,
+            "deleted": false,
+            "executionTimeout": 0,
+            "propDefs": [{
+                "name": "baseDir",
+                "label": "Base Directory",
+                "extendedLabel": "Base Directory",
+                "type": "TEXT",
+                "value": ".",
+                "required": false,
+                "description": "The base directory to start copying files from to IIS",
+                "hidden": false
+            }],
+            "rootActivity": {
+                "edges": [
+                    {
+                        "to": "Create Site",
+                        "from": "Delete Site",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Synchronize Artifacts to Website root",
+                        "from": "Update Connection Settings",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Stop Application Pool",
+                        "from": "Delete Files and Directories",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Synchronize Artifacts to Website root",
+                        "from": "Create Website root",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Modify File Permissions",
+                        "from": "Start Application Pool",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Set Application Pool and Bindings",
+                        "from": "Create Application",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Start Application Pool",
+                        "from": "Synchronize Artifacts to Website root",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Download Artifacts",
+                        "from": "Create Application Pool",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Update Connection Settings",
+                        "from": "Create Application Pool",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Create Website root",
+                        "from": "Check if Website root exists",
+                        "type": "FAILURE",
+                        "value": ""
+                    },
+                    {
+                        "to": "Delete Files and Directories",
+                        "type": "ALWAYS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Delete Application",
+                        "from": "Create Site",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Check if Website root exists",
+                        "from": "Download Artifacts",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Create Application",
+                        "from": "Delete Application",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Create Application Pool",
+                        "from": "Delete Application Pool",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Synchronize Artifacts to Website root",
+                        "from": "Check if Website root exists",
+                        "type": "ALWAYS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Delete Application Pool",
+                        "from": "Stop Application Pool",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Synchronize Artifacts to Website root",
+                        "from": "Set Application Pool and Bindings",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "6ee3d56e0cbca3f22e781d1f4eb13d",
+                        "from": "Modify File Permissions",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Delete Site",
+                        "from": "Create Application Pool",
+                        "type": "SUCCESS",
+                        "value": ""
+                    }
+                ],
+                "offsets": [
+                    {
+                        "name": "Start Application Pool",
+                        "x": -80,
+                        "y": 820
+                    },
+                    {
+                        "name": "Update Connection Settings",
+                        "x": -85,
+                        "y": 575
+                    },
+                    {
+                        "name": "Stop Application Pool",
+                        "x": -80,
+                        "y": 180
+                    },
+                    {
+                        "name": "Delete Application",
+                        "x": 190,
+                        "y": 550
+                    },
+                    {
+                        "name": "Create Website root",
+                        "x": -499,
+                        "y": 690
+                    },
+                    {
+                        "name": "Delete Files and Directories",
+                        "x": -90,
+                        "y": 80
+                    },
+                    {
+                        "name": "Synchronize Artifacts to Website root",
+                        "x": -100,
+                        "y": 710
+                    },
+                    {
+                        "name": "Check if Website root exists",
+                        "x": -514,
+                        "y": 580
+                    },
+                    {
+                        "name": "Download Artifacts",
+                        "x": -334,
+                        "y": 490
+                    },
+                    {
+                        "name": "Delete Application Pool",
+                        "x": -90,
+                        "y": 280
+                    },
+                    {
+                        "name": "Create Site",
+                        "x": 426,
+                        "y": 480
+                    },
+                    {
+                        "name": "Modify File Permissions",
+                        "x": -65,
+                        "y": 920
+                    },
+                    {
+                        "name": "6ee3d56e0cbca3f22e781d1f4eb13d",
+                        "x": -5,
+                        "y": 1090
+                    },
+                    {
+                        "name": "Create Application",
+                        "x": 440,
+                        "y": 590
+                    },
+                    {
+                        "name": "Set Application Pool and Bindings",
+                        "x": 251,
+                        "y": 690
+                    },
+                    {
+                        "name": "Create Application Pool",
+                        "x": -80,
+                        "y": 390
+                    },
+                    {
+                        "name": "Delete Site",
+                        "x": 190,
+                        "y": 455
+                    }
+                ],
+                "sizes": [
+                    {
+                        "name": "Delete Site",
+                        "width": 180,
+                        "height": 70
+                    },
+                    {
+                        "name": "Stop Application Pool",
+                        "width": 230,
+                        "height": 60
+                    },
+                    {
+                        "name": "Set Application Pool and Bindings",
+                        "width": 280,
+                        "height": 70
+                    },
+                    {
+                        "name": "Delete Files and Directories",
+                        "width": 260,
+                        "height": 60
+                    },
+                    {
+                        "name": "Synchronize Artifacts to Website root",
+                        "width": 270,
+                        "height": 60
+                    },
+                    {
+                        "name": "Modify File Permissions",
+                        "width": 200,
+                        "height": 60
+                    },
+                    {
+                        "name": "Check if Website root exists",
+                        "width": 240,
+                        "height": 60
+                    },
+                    {
+                        "name": "Create Application Pool",
+                        "width": 230,
+                        "height": 60
+                    },
+                    {
+                        "name": "Create Application",
+                        "width": 210,
+                        "height": 60
+                    },
+                    {
+                        "name": "Update Connection Settings",
+                        "width": 240,
+                        "height": 70
+                    },
+                    {
+                        "name": "Delete Application Pool",
+                        "width": 250,
+                        "height": 70
+                    },
+                    {
+                        "name": "Create Site",
+                        "width": 170,
+                        "height": 60
+                    },
+                    {
+                        "name": "Delete Application",
+                        "width": 220,
+                        "height": 70
+                    },
+                    {
+                        "name": "Start Application Pool",
+                        "width": 230,
+                        "height": 60
+                    },
+                    {
+                        "name": "Download Artifacts",
+                        "width": 220,
+                        "height": 60
+                    },
+                    {
+                        "name": "Create Website root",
+                        "width": 210,
+                        "height": 60
+                    },
+                    {
+                        "name": "6ee3d56e0cbca3f22e781d1f4eb13d",
+                        "width": 80,
+                        "height": 50
+                    }
+                ],
+                "type": "graph",
+                "name": "401ee895-862c-4a25-8f9d-f3948c007b2b",
+                "children": [
+                    {
+                        "type": "finish",
+                        "name": "6ee3d56e0cbca3f22e781d1f4eb13d",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "commandName": "Delete Files and Directories",
+                        "pluginName": "File Utils",
+                        "pluginVersion": 33,
+                        "properties": {
+                            "baseDir": ".",
+                            "includes": "**\/*",
+                            "excludes": "",
+                            "followSymlinks": "false",
+                            "caseSensitive": "true"
+                        },
+                        "type": "plugin",
+                        "name": "Delete Files and Directories",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": true,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "commandName": "Stop Application Pool",
+                        "pluginName": "IIS AppCmd",
+                        "pluginVersion": 2,
+                        "properties": {
+                            "poolName": "${p:environment\/appPool.name}",
+                            "argString": "",
+                            "commandPath": "${p:system\/appcmd.commandPath}"
+                        },
+                        "type": "plugin",
+                        "name": "Stop Application Pool",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "commandName": "Create Application Pool",
+                        "pluginName": "IIS AppCmd",
+                        "pluginVersion": 2,
+                        "properties": {
+                            "poolName": "${p:environment\/appPool.name}",
+                            "argString": "\/managedRuntimeVersion:${p:environment\/appPool.fwk}",
+                            "commandPath": "${p:system\/appcmd.commandPath}"
+                        },
+                        "type": "plugin",
+                        "name": "Create Application Pool",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "commandName": "Download Artifacts",
+                        "pluginName": "DA Versioned File Storage",
+                        "pluginVersion": 23,
+                        "properties": {
+                            "directoryOffset": ".",
+                            "fileIncludePatterns": "**\/*",
+                            "fileExcludePatterns": "",
+                            "syncMode": "true",
+                            "fullVerification": "true",
+                            "setFileExecuteBits": "false",
+                            "verifyFileIntegrity": "false",
+                            "repositoryUrl": "${p:server.url}\/vfs",
+                            "repositoryId": "${p:component\/code_station\/repository}",
+                            "label": "${p:version.name}",
+                            "serverUrl": "${p:server.url}",
+                            "compId": "${p:component.id}",
+                            "resId": "${p:resource.id}"
+                        },
+                        "type": "plugin",
+                        "name": "Download Artifacts",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": true,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "commandName": "Check Directories Exist",
+                        "pluginName": "File Utils",
+                        "pluginVersion": 33,
+                        "properties": {"dir": "${p:environment\/physicalPath.dir}\\${p:environment\/virtualPath.name}"},
+                        "type": "plugin",
+                        "name": "Check if Website root exists",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "commandName": "Create Directories",
+                        "pluginName": "File Utils",
+                        "pluginVersion": 33,
+                        "properties": {"dir": "${p:environment\/physicalPath.dir}\\${p:environment\/virtualPath.name}"},
+                        "type": "plugin",
+                        "name": "Create Website root",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "commandName": "Synchronize Directories",
+                        "pluginName": "File Utils",
+                        "pluginVersion": 33,
+                        "properties": {
+                            "sourceDir": "${p:baseDir}",
+                            "destDirList": "${p:environment\/physicalPath.dir}\\${p:environment\/virtualPath.name}",
+                            "overwrite": "true",
+                            "includes": "**\/*",
+                            "excludes": "",
+                            "preserveInTargetIncludes": "",
+                            "preserveInTargetExcludes": ""
+                        },
+                        "type": "plugin",
+                        "name": "Synchronize Artifacts to Website root",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "commandName": "Create Site",
+                        "pluginName": "IIS AppCmd",
+                        "pluginVersion": 2,
+                        "properties": {
+                            "siteName": "${p:environment\/parent.name}",
+                            "argString": "\"\/bindings${p:environment\/site.bindings}\" \"\/physicalPath:${p:environment\/physicalPath.dir}\"",
+                            "commandPath": "${p:system\/appcmd.commandPath}"
+                        },
+                        "type": "plugin",
+                        "name": "Create Site",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "commandName": "Create Application",
+                        "pluginName": "IIS AppCmd",
+                        "pluginVersion": 2,
+                        "properties": {
+                            "site": "${p:environment\/parent.name}",
+                            "vpath": "\/${p:environment\/virtualPath.name}",
+                            "argString": "\"\/physicalPath:${p:environment\/physicalPath.dir}\\${p:environment\/virtualPath.name}\"",
+                            "commandPath": "${p:system\/appcmd.commandPath}"
+                        },
+                        "type": "plugin",
+                        "name": "Create Application",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": true,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "commandName": "Shell",
+                        "pluginName": "Shell",
+                        "pluginVersion": 4,
+                        "properties": {
+                            "directoryOffset": ".",
+                            "shellInterpreter": "",
+                            "scriptBody": "${p:system\/appcmd.commandPath}\\appcmd.exe set app \/app.name:\"${p:environment\/parent.name}\/${p:environment\/virtualPath.name}\" \/applicationPool:${p:environment\/appPool.name}\n${p:system\/appcmd.commandPath}\\appcmd.exe set site \/site.name:\"${p:environment\/parent.name}\/${p:environment\/site.name}\" \/+bindings.[protocol='net.tcp',bindingInformation='82:*']\n${p:system\/appcmd.commandPath}\\appcmd.exe set site \/site.name:\"${p:environment\/parent.name}\/${p:environment\/site.name}\" \/+bindings.[protocol='net.pipe',bindingInformation='*']",
+                            "runAsDaemon": "false",
+                            "outputFile": ""
+                        },
+                        "type": "plugin",
+                        "name": "Set Application Pool and Bindings",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "commandName": "Start Application Pool",
+                        "pluginName": "IIS AppCmd",
+                        "pluginVersion": 2,
+                        "properties": {
+                            "poolName": "${p:environment\/appPool.name}",
+                            "argString": "",
+                            "commandPath": "${p:system\/appcmd.commandPath}"
+                        },
+                        "type": "plugin",
+                        "name": "Start Application Pool",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "commandName": "Modify ACLs",
+                        "pluginName": "Windows System Tools",
+                        "pluginVersion": 14,
+                        "properties": {
+                            "directoryOffset": ".",
+                            "caclsPath": "",
+                            "caclsType": "cacls",
+                            "includeSubfolders": "true",
+                            "editInstead": "true",
+                            "ignoreAccessDenied": "false",
+                            "grantRights": "IUSR:R",
+                            "revokeUser": "",
+                            "replaceUserRights": "",
+                            "denyUser": "",
+                            "noVerify": "false",
+                            "files": "${p:environment\/physicalPath.dir}\\${p:environment\/virtualPath.name}"
+                        },
+                        "type": "plugin",
+                        "name": "Modify File Permissions",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": true,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "commandName": "Delete Application Pool",
+                        "pluginName": "IIS AppCmd",
+                        "pluginVersion": 2,
+                        "properties": {
+                            "poolName": "${p:environment\/appPool.name}",
+                            "argString": "",
+                            "commandPath": "${p:system\/appcmd.commandPath}"
+                        },
+                        "type": "plugin",
+                        "name": "Delete Application Pool",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": true,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "commandName": "Delete Site",
+                        "pluginName": "IIS AppCmd",
+                        "pluginVersion": 2,
+                        "properties": {
+                            "siteName": "${p:environment\/parent.name}",
+                            "argString": "",
+                            "commandPath": "${p:system\/appcmd.commandPath}"
+                        },
+                        "type": "plugin",
+                        "name": "Delete Site",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": true,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "commandName": "Delete Application",
+                        "pluginName": "IIS AppCmd",
+                        "pluginVersion": 2,
+                        "properties": {
+                            "id": "${p:environment\/parent.name}\/${p:environment\/virtualPath.name}",
+                            "argString": "",
+                            "commandPath": "${p:system\/appcmd.commandPath}"
+                        },
+                        "type": "plugin",
+                        "name": "Delete Application",
+                        "children": []
+                    },
+                    {
+                        "componentTemplateName": "dotnet-app",
+                        "componentProcessName": "update-connection-settings",
+                        "allowFailure": false,
+                        "properties": {},
+                        "type": "componentProcess",
+                        "name": "Update Connection Settings",
+                        "children": []
+                    }
+                ]
+            }
+        },
+        {
+            "name": "recycle-app-pool",
+            "description": "Recycle Application Pool",
+            "defaultWorkingDir": "${p:resource\/work.dir}\/${p:component.name}",
+            "takesVersion": false,
+            "status": "",
+            "active": true,
+            "deleted": false,
+            "executionTimeout": 0,
+            "propDefs": [],
+            "rootActivity": {
+                "edges": [
+                    {
+                        "to": "6ee3d56e0cbca3f22e781d1f4eb13d",
+                        "from": "Recycle Application Pool",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Recycle Application Pool",
+                        "type": "ALWAYS",
+                        "value": ""
+                    }
+                ],
+                "offsets": [
+                    {
+                        "name": "Recycle Application Pool",
+                        "x": -80,
+                        "y": 130
+                    },
+                    {
+                        "name": "6ee3d56e0cbca3f22e781d1f4eb13d",
+                        "x": 0,
+                        "y": 290
+                    }
+                ],
+                "sizes": [
+                    {
+                        "name": "Recycle Application Pool",
+                        "width": 240,
+                        "height": 60
+                    },
+                    {
+                        "name": "6ee3d56e0cbca3f22e781d1f4eb13d",
+                        "width": 80,
+                        "height": 50
+                    }
+                ],
+                "type": "graph",
+                "name": "c5b6421d-693d-4e50-aeef-7bf39c8533e8",
+                "children": [
+                    {
+                        "type": "finish",
+                        "name": "6ee3d56e0cbca3f22e781d1f4eb13d",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "commandName": "Recycle Application Pool",
+                        "pluginName": "IIS AppCmd",
+                        "pluginVersion": 2,
+                        "properties": {
+                            "poolName": "${p:environment\/appPool.name}",
+                            "argString": "",
+                            "commandPath": "${p:resource\/appcmd.commandPath}"
+                        },
+                        "type": "plugin",
+                        "name": "Recycle Application Pool",
+                        "children": []
+                    }
+                ]
+            }
+        },
+        {
+            "name": "remove-from-iis",
+            "description": "Remove Website from IIS",
+            "defaultWorkingDir": "${p:resource\/work.dir}\/${p:component.name}",
+            "takesVersion": true,
+            "inventoryActionType": "REMOVE",
+            "status": "Active",
+            "active": true,
+            "deleted": false,
+            "executionTimeout": 0,
+            "propDefs": [],
+            "rootActivity": {
+                "edges": [
+                    {
+                        "to": "Stop Site",
+                        "from": "Stop Application Pool",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Delete Application Pool",
+                        "from": "Delete Virtual Directory",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Stop Application Pool",
+                        "type": "ALWAYS",
+                        "value": ""
+                    },
+                    {
+                        "to": "6ee3d56e0cbca3f22e781d1f4eb13d",
+                        "from": "Delete Website root",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Delete Website root",
+                        "from": "Delete Application Pool",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Delete Application",
+                        "from": "Stop Site",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Delete Site",
+                        "from": "Delete Application",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Delete Virtual Directory",
+                        "from": "Delete Site",
+                        "type": "SUCCESS",
+                        "value": ""
+                    }
+                ],
+                "offsets": [
+                    {
+                        "name": "6ee3d56e0cbca3f22e781d1f4eb13d",
+                        "x": 0,
+                        "y": 910
+                    },
+                    {
+                        "name": "Delete Site",
+                        "x": -44.5,
+                        "y": 440
+                    },
+                    {
+                        "name": "Delete Application Pool",
+                        "x": -75,
+                        "y": 660
+                    },
+                    {
+                        "name": "Delete Virtual Directory",
+                        "x": -75,
+                        "y": 550
+                    },
+                    {
+                        "name": "Delete Website root",
+                        "x": -89.5,
+                        "y": 770
+                    },
+                    {
+                        "name": "Stop Site",
+                        "x": -40,
+                        "y": 220
+                    },
+                    {
+                        "name": "Delete Application",
+                        "x": -64.5,
+                        "y": 330
+                    },
+                    {
+                        "name": "Stop Application Pool",
+                        "x": -75,
+                        "y": 110
+                    }
+                ],
+                "sizes": [
+                    {
+                        "name": "Delete Application",
+                        "width": 210,
+                        "height": 60
+                    },
+                    {
+                        "name": "6ee3d56e0cbca3f22e781d1f4eb13d",
+                        "width": 80,
+                        "height": 50
+                    },
+                    {
+                        "name": "Delete Website root",
+                        "width": 260,
+                        "height": 60
+                    },
+                    {
+                        "name": "Delete Site",
+                        "width": 170,
+                        "height": 60
+                    },
+                    {
+                        "name": "Stop Application Pool",
+                        "width": 230,
+                        "height": 60
+                    },
+                    {
+                        "name": "Stop Site",
+                        "width": 160,
+                        "height": 60
+                    },
+                    {
+                        "name": "Delete Virtual Directory",
+                        "width": 230,
+                        "height": 60
+                    },
+                    {
+                        "name": "Delete Application Pool",
+                        "width": 230,
+                        "height": 60
+                    }
+                ],
+                "type": "graph",
+                "name": "c29fa3ae-b046-4370-a51a-00becf5205d5",
+                "children": [
+                    {
+                        "type": "finish",
+                        "name": "6ee3d56e0cbca3f22e781d1f4eb13d",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": true,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "commandName": "Stop Application Pool",
+                        "pluginName": "IIS AppCmd",
+                        "pluginVersion": 2,
+                        "properties": {
+                            "poolName": "${p:environment\/appPool.name}",
+                            "argString": "",
+                            "commandPath": "${p:resource\/appcmd.commandPath}"
+                        },
+                        "type": "plugin",
+                        "name": "Stop Application Pool",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "commandName": "Delete Site",
+                        "pluginName": "IIS AppCmd",
+                        "pluginVersion": 2,
+                        "properties": {
+                            "siteName": "${p:environment\/parent.name}",
+                            "argString": "",
+                            "commandPath": "${p:resource\/appcmd.commandPath}"
+                        },
+                        "type": "plugin",
+                        "name": "Delete Site",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "commandName": "Delete Virtual Directory",
+                        "pluginName": "IIS AppCmd",
+                        "pluginVersion": 2,
+                        "properties": {
+                            "vpath": "${p:environment\/parent.name}\/${p:environment\/virtualPath.name}",
+                            "argString": "",
+                            "commandPath": "${p:resource\/appcmd.commandPath}"
+                        },
+                        "type": "plugin",
+                        "name": "Delete Virtual Directory",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "commandName": "Delete Application Pool",
+                        "pluginName": "IIS AppCmd",
+                        "pluginVersion": 2,
+                        "properties": {
+                            "poolName": "${p:environment\/appPool.name}",
+                            "argString": "",
+                            "commandPath": "${p:resource\/appcmd.commandPath}"
+                        },
+                        "type": "plugin",
+                        "name": "Delete Application Pool",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": true,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "commandName": "Stop Site",
+                        "pluginName": "IIS AppCmd",
+                        "pluginVersion": 2,
+                        "properties": {
+                            "siteName": "${p:environment\/parent.name}",
+                            "argString": "",
+                            "commandPath": "${p:resource\/appcmd.commandPath}"
+                        },
+                        "type": "plugin",
+                        "name": "Stop Site",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "commandName": "Delete Application",
+                        "pluginName": "IIS AppCmd",
+                        "pluginVersion": 2,
+                        "properties": {
+                            "id": "${p:environment\/parent.name}\/${p:environment\/virtualPath.name}",
+                            "argString": "",
+                            "commandPath": "${p:resource\/appcmd.commandPath}"
+                        },
+                        "type": "plugin",
+                        "name": "Delete Application",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "commandName": "Delete Files and Directories",
+                        "pluginName": "File Utils",
+                        "pluginVersion": 33,
+                        "properties": {
+                            "baseDir": "${p:environment\/physicalPath.dir}\\${p:environment\/virtualPath.name}",
+                            "includes": "**\/*",
+                            "excludes": "",
+                            "followSymlinks": "false",
+                            "caseSensitive": "true"
+                        },
+                        "type": "plugin",
+                        "name": "Delete Website root",
+                        "children": []
+                    }
+                ]
+            }
+        },
+        {
+            "name": "update-connection-settings",
+            "description": "Update Connection Settings",
+            "defaultWorkingDir": "${p:resource\/work.dir}\/${p:component.name}",
+            "takesVersion": false,
+            "status": "",
+            "active": true,
+            "deleted": false,
+            "executionTimeout": 0,
+            "propDefs": [],
+            "rootActivity": {
+                "edges": [
+                    {
+                        "to": "Update Connection Settings",
+                        "type": "ALWAYS",
+                        "value": ""
+                    },
+                    {
+                        "to": "6ee3d56e0cbca3f22e781d1f4eb13d",
+                        "from": "Update Connection Settings",
+                        "type": "SUCCESS",
+                        "value": ""
+                    }
+                ],
+                "offsets": [
+                    {
+                        "name": "6ee3d56e0cbca3f22e781d1f4eb13d",
+                        "x": 0,
+                        "y": 240
+                    },
+                    {
+                        "name": "Update Connection Settings",
+                        "x": -90,
+                        "y": 110
+                    }
+                ],
+                "sizes": [
+                    {
+                        "name": "6ee3d56e0cbca3f22e781d1f4eb13d",
+                        "width": 80,
+                        "height": 50
+                    },
+                    {
+                        "name": "Update Connection Settings",
+                        "width": 260,
+                        "height": 60
+                    }
+                ],
+                "type": "graph",
+                "name": "25a95770-774e-4064-8710-69babfcf8173",
+                "children": [
+                    {
+                        "type": "finish",
+                        "name": "6ee3d56e0cbca3f22e781d1f4eb13d",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "workingDir": "${p:environment\/physicalPath.dir}\\${p:environment\/virtualPath.name}",
+                        "commandName": "Update XML File with XPath",
+                        "pluginName": "File Utils",
+                        "pluginVersion": 33,
+                        "properties": {
+                            "dirOffset": "",
+                            "includes": "ConnectionStrings.config",
+                            "excludes": "",
+                            "replaceText": "connectionStrings\/add\/@connectionString->Data Source=${p:environment\/database.server};Initial Catalog=${p:environment\/database.name};Persist Security Info=True;User ID=${p:environment\/database.username};Password=${p:environment\/database.password}",
+                            "remove": "",
+                            "insert": "",
+                            "setAttr": "",
+                            "failWithoutMatch": "false"
+                        },
+                        "type": "plugin",
+                        "name": "Update Connection Settings",
+                        "children": []
+                    }
+                ]
+            }
+        },
+    ],
+    "taskDefs": []
+}
