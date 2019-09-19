@@ -6,7 +6,7 @@ that you might want to deploy
 
 The following templates are available:
 
- - [dotnet-iis](dotnet-iis\README.md)  
+ - [dotnet-iis](dotnet-iis/README.md)  
    An example of how to deploy a Microsoft .NET Web Application to Microsoft IIS and update
    database connection settings
    
