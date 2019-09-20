@@ -1,0 +1,2517 @@
+{
+    "entityType": "Component",
+    "name": "java-web-app",
+    "description": "An example component using Java\/Tomcat template",
+    "created": 1568979813973,
+    "importAutomatically": false,
+    "useVfs": true,
+    "active": true,
+    "deleted": false,
+    "defaultVersionType": "FULL",
+    "cleanupDaysToKeep": 0,
+    "cleanupCountToKeep": 0,
+    "componentTemplate": {
+        "entityType": "ComponentTemplate",
+        "name": "java-tomcat",
+        "description": "Java Web Application Deployment to Apache Tomcat",
+        "active": true,
+        "envPropDefs": [
+            {
+                "name": "tomcat.manager.url",
+                "label": "Tomcat Manager URL",
+                "extendedLabel": "Tomcat Manager URL",
+                "type": "TEXT",
+                "value": "http:\/\/${p:environment\/tomcat.host}:${p:environment\/tomcat.port}\/manager\/text",
+                "required": true,
+                "description": "Tomcat Manager URL",
+                "hidden": false
+            },
+            {
+                "name": "tomcat.manager.login",
+                "label": "Tomcat Manager Login",
+                "extendedLabel": "Tomcat Manager Login",
+                "type": "TEXT",
+                "value": "tomcat",
+                "required": true,
+                "description": "Tomcat Manager Login",
+                "hidden": false
+            },
+            {
+                "name": "tomcat.manager.password",
+                "label": "Tomcat Manager Password",
+                "extendedLabel": "Tomcat Manager Password",
+                "type": "SECURE",
+                "value": "pbe{h1LnUvFk1G3ydS13Am+KYYWsTEbv0UIrbbzJadKadg6aHg2dCyYrPMfcsQ8f2ZP6tvr92Frb8mE=}",
+                "required": true,
+                "description": "Tomcat Manager Password",
+                "hidden": false
+            },
+            {
+                "name": "example.db.username",
+                "label": "Database Username",
+                "extendedLabel": "Database Username",
+                "type": "TEXT",
+                "value": "dbuser",
+                "required": false,
+                "description": "An example Database Username",
+                "hidden": false
+            },
+            {
+                "name": "example.db.password",
+                "label": "Database Password",
+                "extendedLabel": "Database Password",
+                "type": "SECURE",
+                "value": "pbe{7FLkUGVgFU+WUeJswVB5dESSEwyehTJ\/EoPIozA0puY=}",
+                "required": false,
+                "description": "An example Database Password",
+                "hidden": false
+            },
+            {
+                "name": "example.db.name",
+                "label": "Database Name",
+                "extendedLabel": "Database Name",
+                "type": "TEXT",
+                "value": "mydb",
+                "required": false,
+                "description": "An example Database Name",
+                "hidden": false
+            },
+            {
+                "name": "example.db.host",
+                "label": "Database Hostname",
+                "extendedLabel": "Database Hostname",
+                "type": "TEXT",
+                "value": "localhost",
+                "required": false,
+                "description": "An example Database Hostname",
+                "hidden": false
+            },
+            {
+                "name": "example.db.port",
+                "label": "Database Port",
+                "extendedLabel": "Database Port",
+                "type": "TEXT",
+                "value": "5432",
+                "required": false,
+                "description": "An example Database Port",
+                "hidden": false
+            },
+            {
+                "name": "tomcat.base.dir",
+                "label": "Tomcat Base Directory",
+                "extendedLabel": "Tomcat Base Directory",
+                "type": "TEXT",
+                "value": "C:\\Tools\\Apache Tomcat\\Tomcat9_INT",
+                "required": true,
+                "description": "Tomcat Base Directory",
+                "hidden": false
+            },
+            {
+                "name": "tomcat.service.name",
+                "label": "Tomcat Service Name",
+                "extendedLabel": "Tomcat Service Name",
+                "type": "TEXT",
+                "value": "Tomcat9_INT",
+                "required": true,
+                "description": "Tomcat Service Name (Windows)",
+                "hidden": false
+            },
+            {
+                "name": "tomcat.port",
+                "label": "Tomcat Port",
+                "extendedLabel": "Tomcat Port",
+                "type": "TEXT",
+                "value": "8081",
+                "required": true,
+                "description": "Tomcat Server Port",
+                "hidden": false
+            },
+            {
+                "name": "tomcat.host",
+                "label": "Tomcat Hostname",
+                "extendedLabel": "Tomcat Hostname",
+                "type": "TEXT",
+                "value": "localhost",
+                "required": true,
+                "description": "Tomcat Server Hostname of IP Address",
+                "hidden": false
+            },
+            {
+                "name": "tomcat.launcher.options",
+                "label": "Tomcat Launcher Options",
+                "extendedLabel": "Tomcat Launcher Options",
+                "type": "TEXTAREA",
+                "required": false,
+                "description": "New line separated list of options to pass to the Tomcat Launcher",
+                "hidden": false
+            },
+            {
+                "name": "tomcat.webapps.dir",
+                "label": "Tomcat \"webapps\" Directory",
+                "extendedLabel": "Tomcat \"webapps\" Directory",
+                "type": "TEXT",
+                "value": "${p:environment\/tomcat.base.dir}\/webapps",
+                "required": true,
+                "description": "The pull path to the Tomcat Webapps directory",
+                "hidden": false
+            },
+            {
+                "name": "tomcat.logs.dir",
+                "label": "Tomcat \"logs\" directory",
+                "extendedLabel": "Tomcat \"logs\" directory",
+                "type": "TEXT",
+                "value": "${p:environment\/tomcat.base.dir}\/logs",
+                "required": true,
+                "description": "The full path to the Tomcat logs directory",
+                "hidden": false
+            },
+            {
+                "name": "tomcat.launcher.start",
+                "label": "Tomcat Launcher Start",
+                "extendedLabel": "Tomcat Launcher Start",
+                "type": "TEXT",
+                "value": "\/opt\/tomcat\/bin\/startup.sh",
+                "required": false,
+                "description": "The full path to the executable that starts Tomcat",
+                "hidden": false
+            },
+            {
+                "name": "tomcat.launcher.stop",
+                "label": "Tomcat Launcher Stop",
+                "extendedLabel": "Tomcat Launcher Stop",
+                "type": "TEXT",
+                "value": "\/opt\/tomcat\/bin\/shutdown.sh",
+                "required": false,
+                "description": "The full path to the executable that stops Tomcat",
+                "hidden": false
+            },
+            {
+                "name": "tomcat.launcher.start.options",
+                "label": "Tomcat Launcher Start Options",
+                "extendedLabel": "Tomcat Launcher Start Options",
+                "type": "TEXTAREA",
+                "required": false,
+                "description": "New line separated list of options to pass to the Tomcat Launcher Start",
+                "hidden": false
+            },
+            {
+                "name": "tomcat.launcher.stop.options",
+                "label": "Tomcat Launcher Stop Options",
+                "extendedLabel": "Tomcat Launcher Stop Options",
+                "type": "TEXTAREA",
+                "required": false,
+                "description": "New line separated list of options to pass to the Tomcat Launcher Stop",
+                "hidden": false
+            },
+            {
+                "name": "tomcat.timeout",
+                "label": "Tomcat Timeout",
+                "extendedLabel": "Tomcat Timeout",
+                "type": "TEXT",
+                "value": "60",
+                "required": false,
+                "description": "Timeout in seconds for checking various Tomcat operations, e.g. started, stopped, is running etc.",
+                "hidden": false
+            }
+        ],
+        "versionPropDefs": [],
+        "propDefs": [],
+        "properties": [],
+        "processes": [
+            {
+                "name": "jetty-clean",
+                "description": "Clean Jetty Webapps and Logs",
+                "defaultWorkingDir": "${p:resource\/work.dir}\/${p:component.name}",
+                "takesVersion": false,
+                "status": "",
+                "active": true,
+                "deleted": true,
+                "executionTimeout": 0,
+                "propDefs": [],
+                "rootActivity": {
+                    "edges": [
+                        {
+                            "to": "Delete Files and Directories",
+                            "from": "Stop Service",
+                            "type": "SUCCESS",
+                            "value": ""
+                        },
+                        {
+                            "to": "Stop Service",
+                            "type": "ALWAYS",
+                            "value": ""
+                        },
+                        {
+                            "to": "b58c-bb96-d6e8-8076",
+                            "from": "Delete Files and Directories",
+                            "type": "SUCCESS",
+                            "value": ""
+                        }
+                    ],
+                    "offsets": [
+                        {
+                            "name": "Delete Files and Directories",
+                            "x": -100,
+                            "y": 260
+                        },
+                        {
+                            "name": "Stop Service",
+                            "x": -85,
+                            "y": 143
+                        },
+                        {
+                            "name": "b58c-bb96-d6e8-8076",
+                            "x": 0,
+                            "y": 484
+                        }
+                    ],
+                    "sizes": [
+                        {
+                            "name": "Delete Files and Directories",
+                            "width": 240,
+                            "height": 50
+                        },
+                        {
+                            "name": "Stop Service",
+                            "width": 210,
+                            "height": 50
+                        },
+                        {
+                            "name": "b58c-bb96-d6e8-8076",
+                            "width": 50,
+                            "height": 50
+                        }
+                    ],
+                    "type": "graph",
+                    "name": "e5488bfe-3dc2-4f2c-9a33-cb608414c278",
+                    "children": [
+                        {
+                            "type": "finish",
+                            "name": "b58c-bb96-d6e8-8076",
+                            "children": []
+                        },
+                        {
+                            "allowFailure": true,
+                            "useImpersonation": false,
+                            "showHidden": false,
+                            "impersonationUseSudo": false,
+                            "impersonationUseSsh": false,
+                            "commandName": "Stop Service",
+                            "pluginName": "Service Control Manager",
+                            "pluginVersion": 5,
+                            "properties": {
+                                "Service": "${p:environment\/jettyServiceName}",
+                                "argString": "",
+                                "waitFor": "true"
+                            },
+                            "type": "plugin",
+                            "name": "Stop Service",
+                            "children": []
+                        },
+                        {
+                            "allowFailure": true,
+                            "useImpersonation": false,
+                            "showHidden": false,
+                            "impersonationUseSudo": false,
+                            "impersonationUseSsh": false,
+                            "commandName": "Delete Files and Directories",
+                            "pluginName": "File Utils",
+                            "pluginVersion": 33,
+                            "properties": {
+                                "baseDir": "${p:environment\/jettyBaseDir}\/..",
+                                "includes": "webapps\\**\nlogs\\*\ntemp\\**\\*",
+                                "excludes": "",
+                                "followSymlinks": "",
+                                "caseSensitive": "true"
+                            },
+                            "type": "plugin",
+                            "name": "Delete Files and Directories",
+                            "children": []
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "jetty-copy",
+                "description": "Quick process to download artifacts only",
+                "defaultWorkingDir": "${p:resource\/work.dir}\/${p:component.name}",
+                "takesVersion": true,
+                "inventoryActionType": "ADD",
+                "status": "Active",
+                "configActionType": "ADD",
+                "active": true,
+                "deleted": true,
+                "executionTimeout": 0,
+                "propDefs": [],
+                "rootActivity": {
+                    "edges": [
+                        {
+                            "to": "2d37c0c4e9992175d991c7eb2a1900",
+                            "from": "Download Artifacts",
+                            "type": "SUCCESS",
+                            "value": ""
+                        },
+                        {
+                            "to": "Download Artifacts",
+                            "type": "ALWAYS",
+                            "value": ""
+                        }
+                    ],
+                    "offsets": [
+                        {
+                            "name": "Download Artifacts",
+                            "x": -80,
+                            "y": 212
+                        },
+                        {
+                            "name": "2d37c0c4e9992175d991c7eb2a1900",
+                            "x": 0,
+                            "y": 702
+                        }
+                    ],
+                    "sizes": [
+                        {
+                            "name": "2d37c0c4e9992175d991c7eb2a1900",
+                            "width": 80,
+                            "height": 50
+                        },
+                        {
+                            "name": "Download Artifacts",
+                            "width": 230,
+                            "height": 70
+                        }
+                    ],
+                    "type": "graph",
+                    "name": "ca0e8849-9043-49fc-879f-7e3c3621c451",
+                    "children": [
+                        {
+                            "type": "finish",
+                            "name": "2d37c0c4e9992175d991c7eb2a1900",
+                            "children": []
+                        },
+                        {
+                            "allowFailure": false,
+                            "useImpersonation": false,
+                            "showHidden": false,
+                            "impersonationUseSudo": false,
+                            "impersonationUseSsh": false,
+                            "commandName": "Download Artifacts",
+                            "pluginName": "DA Versioned File Storage",
+                            "pluginVersion": 23,
+                            "properties": {
+                                "directoryOffset": ".",
+                                "fileIncludePatterns": "**\/*",
+                                "fileExcludePatterns": "",
+                                "syncMode": "true",
+                                "fullVerification": "true",
+                                "setFileExecuteBits": "false",
+                                "verifyFileIntegrity": "false",
+                                "repositoryUrl": "${p:server.url}\/vfs",
+                                "repositoryId": "${p:component\/code_station\/repository}",
+                                "label": "${p:version.name}",
+                                "serverUrl": "${p:server.url}",
+                                "compId": "${p:component.id}",
+                                "resId": "${p:resource.id}"
+                            },
+                            "type": "plugin",
+                            "name": "Download Artifacts",
+                            "children": []
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "jetty-deploy",
+                "description": "Deploy the web application (war) into Jetty directory",
+                "defaultWorkingDir": "${p:resource\/work.dir}\/${p:component.name}",
+                "takesVersion": true,
+                "inventoryActionType": "ADD",
+                "status": "Active",
+                "configActionType": "ADD",
+                "active": true,
+                "deleted": true,
+                "executionTimeout": 0,
+                "propDefs": [],
+                "rootActivity": {
+                    "edges": [
+                        {
+                            "to": "951e9473e1fa481faf8ddb750ce087",
+                            "from": "Octane Issue?",
+                            "type": "VALUE",
+                            "value": ""
+                        },
+                        {
+                            "to": "Create Service Metadata File",
+                            "from": "Clean Work Directory",
+                            "type": "SUCCESS",
+                            "value": ""
+                        },
+                        {
+                            "to": "Clean Work Directory",
+                            "type": "ALWAYS",
+                            "value": ""
+                        },
+                        {
+                            "to": "Update service.properties",
+                            "from": "Extract WAR",
+                            "type": "SUCCESS",
+                            "value": ""
+                        },
+                        {
+                            "to": "85d133f44ad92f17f0969d9583779f",
+                            "from": "951e9473e1fa481faf8ddb750ce087",
+                            "type": "SUCCESS",
+                            "value": ""
+                        },
+                        {
+                            "to": "Clean Jetty Directories",
+                            "from": "Stop Jetty Service",
+                            "type": "ALWAYS",
+                            "value": ""
+                        },
+                        {
+                            "to": "Start Service",
+                            "from": "Copy WAR to Jetty",
+                            "type": "SUCCESS",
+                            "value": ""
+                        },
+                        {
+                            "to": "Copy WAR to Jetty",
+                            "from": "Re-create WAR",
+                            "type": "SUCCESS",
+                            "value": ""
+                        },
+                        {
+                            "to": "951e9473e1fa481faf8ddb750ce087",
+                            "from": "Start Service",
+                            "type": "SUCCESS",
+                            "value": ""
+                        },
+                        {
+                            "to": "Stop Jetty Service",
+                            "from": "Download Artifacts",
+                            "type": "SUCCESS",
+                            "value": ""
+                        },
+                        {
+                            "to": "Octane Add Comments",
+                            "from": "Octane Issue?",
+                            "type": "VALUE",
+                            "value": "*#*"
+                        },
+                        {
+                            "to": "Re-create WAR",
+                            "from": "Update service.properties",
+                            "type": "SUCCESS",
+                            "value": ""
+                        },
+                        {
+                            "to": "Octane Issue?",
+                            "from": "Copy WAR to Jetty",
+                            "type": "SUCCESS",
+                            "value": ""
+                        },
+                        {
+                            "to": "Copy WAR to Jetty",
+                            "from": "Clean Jetty Directories",
+                            "type": "SUCCESS",
+                            "value": ""
+                        },
+                        {
+                            "to": "Extract WAR",
+                            "from": "Download Artifacts",
+                            "type": "SUCCESS",
+                            "value": ""
+                        },
+                        {
+                            "to": "Download Artifacts",
+                            "from": "Create Service Metadata File",
+                            "type": "SUCCESS",
+                            "value": ""
+                        }
+                    ],
+                    "offsets": [
+                        {
+                            "name": "85d133f44ad92f17f0969d9583779f",
+                            "x": 0,
+                            "y": 860
+                        },
+                        {
+                            "name": "Clean Work Directory",
+                            "x": -75,
+                            "y": 70
+                        },
+                        {
+                            "name": "Re-create WAR",
+                            "x": 195,
+                            "y": 470
+                        },
+                        {
+                            "name": "Download Artifacts",
+                            "x": -85,
+                            "y": 210
+                        },
+                        {
+                            "name": "951e9473e1fa481faf8ddb750ce087",
+                            "x": -50,
+                            "y": 775
+                        },
+                        {
+                            "name": "Stop Jetty Service",
+                            "x": -315,
+                            "y": 297
+                        },
+                        {
+                            "name": "Copy WAR to Jetty",
+                            "x": -68,
+                            "y": 560
+                        },
+                        {
+                            "name": "Octane Add Comments",
+                            "x": -543,
+                            "y": 800
+                        },
+                        {
+                            "name": "Start Service",
+                            "x": 147,
+                            "y": 650
+                        },
+                        {
+                            "name": "Octane Issue?",
+                            "x": -343,
+                            "y": 670
+                        },
+                        {
+                            "name": "Clean Jetty Directories",
+                            "x": -315,
+                            "y": 380
+                        },
+                        {
+                            "name": "Create Service Metadata File",
+                            "x": -98,
+                            "y": 140
+                        },
+                        {
+                            "name": "Update service.properties",
+                            "x": 160,
+                            "y": 380
+                        },
+                        {
+                            "name": "Extract WAR",
+                            "x": 205,
+                            "y": 290
+                        }
+                    ],
+                    "sizes": [
+                        {
+                            "name": "Copy WAR to Jetty",
+                            "width": 180,
+                            "height": 50
+                        },
+                        {
+                            "name": "Start Service",
+                            "width": 210,
+                            "height": 50
+                        },
+                        {
+                            "name": "Clean Jetty Directories",
+                            "width": 210,
+                            "height": 50
+                        },
+                        {
+                            "name": "Create Service Metadata File",
+                            "width": 240,
+                            "height": 50
+                        },
+                        {
+                            "name": "Clean Work Directory",
+                            "width": 200,
+                            "height": 50
+                        },
+                        {
+                            "name": "Re-create WAR",
+                            "width": 160,
+                            "height": 50
+                        },
+                        {
+                            "name": "Update service.properties",
+                            "width": 230,
+                            "height": 50
+                        },
+                        {
+                            "name": "85d133f44ad92f17f0969d9583779f",
+                            "width": 50,
+                            "height": 50
+                        },
+                        {
+                            "name": "Download Artifacts",
+                            "width": 220,
+                            "height": 50
+                        },
+                        {
+                            "name": "Extract WAR",
+                            "width": 140,
+                            "height": 50
+                        },
+                        {
+                            "name": "Stop Jetty Service",
+                            "width": 210,
+                            "height": 50
+                        },
+                        {
+                            "name": "Octane Add Comments",
+                            "width": 340,
+                            "height": 50
+                        },
+                        {
+                            "name": "Octane Issue?",
+                            "width": 210,
+                            "height": 60
+                        },
+                        {
+                            "name": "951e9473e1fa481faf8ddb750ce087",
+                            "width": 150,
+                            "height": 50
+                        }
+                    ],
+                    "type": "graph",
+                    "name": "b6647dd5-4e55-4af0-8a0e-c47e290343f8",
+                    "children": [
+                        {
+                            "type": "finish",
+                            "name": "85d133f44ad92f17f0969d9583779f",
+                            "children": []
+                        },
+                        {
+                            "allowFailure": false,
+                            "useImpersonation": false,
+                            "showHidden": false,
+                            "impersonationUseSudo": false,
+                            "impersonationUseSsh": false,
+                            "commandName": "Download Artifacts",
+                            "pluginName": "DA Versioned File Storage",
+                            "pluginVersion": 23,
+                            "properties": {
+                                "directoryOffset": ".",
+                                "fileIncludePatterns": "**\/*",
+                                "fileExcludePatterns": "",
+                                "syncMode": "true",
+                                "fullVerification": "true",
+                                "setFileExecuteBits": "false",
+                                "verifyFileIntegrity": "false",
+                                "repositoryUrl": "${p:server.url}\/vfs",
+                                "repositoryId": "${p:component\/code_station\/repository}",
+                                "label": "${p:version.name}",
+                                "serverUrl": "${p:server.url}",
+                                "compId": "${p:component.id}",
+                                "resId": "${p:resource.id}"
+                            },
+                            "type": "plugin",
+                            "name": "Download Artifacts",
+                            "children": []
+                        },
+                        {
+                            "allowFailure": true,
+                            "useImpersonation": false,
+                            "showHidden": false,
+                            "impersonationUseSudo": false,
+                            "impersonationUseSsh": false,
+                            "commandName": "Stop Service",
+                            "pluginName": "Service Control Manager",
+                            "pluginVersion": 5,
+                            "properties": {
+                                "Service": "${p:environment\/jettyServiceName}",
+                                "argString": "",
+                                "waitFor": "true"
+                            },
+                            "type": "plugin",
+                            "name": "Stop Jetty Service",
+                            "children": []
+                        },
+                        {
+                            "allowFailure": true,
+                            "useImpersonation": false,
+                            "showHidden": false,
+                            "impersonationUseSudo": false,
+                            "impersonationUseSsh": false,
+                            "commandName": "Delete Files and Directories",
+                            "pluginName": "File Utils",
+                            "pluginVersion": 33,
+                            "properties": {
+                                "baseDir": "${p:environment\/jettyBaseDir}\/..",
+                                "includes": "webapp\\${p:component\/service.url}.war\nlogs\\*\ntemp\\${p:component\/service.url}*\\*",
+                                "excludes": "",
+                                "followSymlinks": "",
+                                "caseSensitive": "true"
+                            },
+                            "type": "plugin",
+                            "name": "Clean Jetty Directories",
+                            "children": []
+                        },
+                        {
+                            "allowFailure": false,
+                            "useImpersonation": false,
+                            "showHidden": false,
+                            "impersonationUseSudo": false,
+                            "impersonationUseSsh": false,
+                            "commandName": "Copy Directory",
+                            "pluginName": "File Utils",
+                            "pluginVersion": 33,
+                            "properties": {
+                                "sourceDir": ".",
+                                "destDirList": "${p:environment\/jettyBaseDir}",
+                                "includes": "${p:component\/service.url}.war",
+                                "excludes": "",
+                                "mapperRules": "",
+                                "flatten": ""
+                            },
+                            "type": "plugin",
+                            "name": "Copy WAR to Jetty",
+                            "children": []
+                        },
+                        {
+                            "allowFailure": false,
+                            "useImpersonation": false,
+                            "showHidden": false,
+                            "impersonationUseSudo": false,
+                            "impersonationUseSsh": false,
+                            "commandName": "Start Service",
+                            "pluginName": "Service Control Manager",
+                            "pluginVersion": 5,
+                            "properties": {
+                                "Service": "${p:environment\/jettyServiceName}",
+                                "argString": "",
+                                "waitFor": "true"
+                            },
+                            "type": "plugin",
+                            "name": "Start Service",
+                            "children": []
+                        },
+                        {
+                            "sleepMode": "sleepSpecifiedTime",
+                            "sleepTime": "5",
+                            "type": "processSleep",
+                            "name": "951e9473e1fa481faf8ddb750ce087",
+                            "children": []
+                        },
+                        {
+                            "propertyName": "${p:version\/issueIds}",
+                            "type": "switch",
+                            "name": "Octane Issue?",
+                            "children": []
+                        },
+                        {
+                            "allowFailure": true,
+                            "useImpersonation": false,
+                            "showHidden": false,
+                            "impersonationUseSudo": false,
+                            "impersonationUseSsh": false,
+                            "commandName": "Create File",
+                            "pluginName": "File Utils",
+                            "pluginVersion": 33,
+                            "properties": {
+                                "file": "${p:component\/service.url}.props",
+                                "contents": "version=${p:version.name}",
+                                "overwrite": "true"
+                            },
+                            "type": "plugin",
+                            "name": "Create Service Metadata File",
+                            "children": []
+                        },
+                        {
+                            "allowFailure": false,
+                            "useImpersonation": false,
+                            "showHidden": false,
+                            "impersonationUseSudo": false,
+                            "impersonationUseSsh": false,
+                            "commandName": "Delete Files and Directories",
+                            "pluginName": "File Utils",
+                            "pluginVersion": 33,
+                            "properties": {
+                                "baseDir": ".",
+                                "includes": "**\/*",
+                                "excludes": "",
+                                "followSymlinks": "",
+                                "caseSensitive": "true"
+                            },
+                            "type": "plugin",
+                            "name": "Clean Work Directory",
+                            "children": []
+                        },
+                        {
+                            "allowFailure": false,
+                            "useImpersonation": false,
+                            "showHidden": false,
+                            "impersonationUseSudo": false,
+                            "impersonationUseSsh": false,
+                            "commandName": "Unzip",
+                            "pluginName": "File Utils",
+                            "pluginVersion": 33,
+                            "properties": {
+                                "dir": "",
+                                "zip": "${p:component\/service.url}.war",
+                                "overwrite": ""
+                            },
+                            "type": "plugin",
+                            "name": "Extract WAR",
+                            "children": []
+                        },
+                        {
+                            "allowFailure": false,
+                            "useImpersonation": false,
+                            "showHidden": false,
+                            "impersonationUseSudo": false,
+                            "impersonationUseSsh": false,
+                            "commandName": "Replace Tokens",
+                            "pluginName": "File Utils",
+                            "pluginVersion": 33,
+                            "properties": {
+                                "dir": "",
+                                "includes": "**\/services.properties **\/internal_config_for_env.properties",
+                                "excludes": "",
+                                "startDelimiter": "@",
+                                "endDelimiter": "@",
+                                "propertyPrefix": "",
+                                "propFile": "replace_tokens.properties",
+                                "envPropValues": "${p:environment\/allProperties}",
+                                "explicitTokens": ""
+                            },
+                            "type": "plugin",
+                            "name": "Update service.properties",
+                            "children": []
+                        },
+                        {
+                            "allowFailure": false,
+                            "useImpersonation": false,
+                            "showHidden": false,
+                            "impersonationUseSudo": false,
+                            "impersonationUseSsh": false,
+                            "commandName": "Create Zip Archive",
+                            "pluginName": "File Utils",
+                            "pluginVersion": 33,
+                            "properties": {
+                                "zipName": "${p:component\/service.url}.war",
+                                "baseDir": ".",
+                                "includes": "**\/*",
+                                "excludes": "**\/*.war",
+                                "update": "",
+                                "followSymlinks": "",
+                                "caseSensitive": "true",
+                                "noMatch": "skip"
+                            },
+                            "type": "plugin",
+                            "name": "Re-create WAR",
+                            "children": []
+                        },
+                        {
+                            "componentTemplateName": "dps-aos-web",
+                            "componentProcessName": "octane-add-comments",
+                            "allowFailure": false,
+                            "properties": {},
+                            "type": "componentProcess",
+                            "name": "Octane Add Comments",
+                            "children": []
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "jetty-restart-service",
+                "description": "Restart the Jetty Service for the current environment",
+                "defaultWorkingDir": "${p:resource\/work.dir}\/${p:component.name}",
+                "takesVersion": false,
+                "status": "",
+                "active": true,
+                "deleted": true,
+                "executionTimeout": 0,
+                "propDefs": [],
+                "rootActivity": {
+                    "edges": [],
+                    "offsets": [{
+                        "name": "272eb7dd5e26a51d492d8953bb889c",
+                        "x": 0,
+                        "y": 707
+                    }],
+                    "sizes": [{
+                        "name": "272eb7dd5e26a51d492d8953bb889c",
+                        "width": 80,
+                        "height": 50
+                    }],
+                    "type": "graph",
+                    "name": "9e30fe39-361d-4e97-ac5c-ee1fd4534747",
+                    "children": [{
+                        "type": "finish",
+                        "name": "272eb7dd5e26a51d492d8953bb889c",
+                        "children": []
+                    }]
+                }
+            },
+            {
+                "name": "jetty-uninstall",
+                "description": "Uninstall an application from Jetty",
+                "defaultWorkingDir": "${p:resource\/work.dir}\/${p:component.name}",
+                "takesVersion": true,
+                "inventoryActionType": "REMOVE",
+                "status": "Active",
+                "active": true,
+                "deleted": true,
+                "executionTimeout": 0,
+                "propDefs": [],
+                "rootActivity": {
+                    "edges": [],
+                    "offsets": [{
+                        "name": "63ce469f41d89af764e0bf0d67a275",
+                        "x": -5,
+                        "y": 340
+                    }],
+                    "sizes": [{
+                        "name": "63ce469f41d89af764e0bf0d67a275",
+                        "width": 80,
+                        "height": 50
+                    }],
+                    "type": "graph",
+                    "name": "244caecd-f7f4-48f3-a78c-dcc87b525232",
+                    "children": [{
+                        "type": "finish",
+                        "name": "63ce469f41d89af764e0bf0d67a275",
+                        "children": []
+                    }]
+                }
+            },
+            {
+                "name": "octane-add-comments",
+                "description": "Update Octane work items with comment on details of deployment",
+                "defaultWorkingDir": "${p:resource\/work.dir}\/${p:component.name}",
+                "takesVersion": true,
+                "status": "",
+                "active": true,
+                "deleted": true,
+                "executionTimeout": 0,
+                "propDefs": [],
+                "rootActivity": {
+                    "edges": [
+                        {
+                            "to": "d98a02c3b9a427e757f76ea50a8e7e",
+                            "from": "Add Comments to Octane Items",
+                            "type": "SUCCESS",
+                            "value": ""
+                        },
+                        {
+                            "to": "Add Comments to Octane Items",
+                            "type": "ALWAYS",
+                            "value": ""
+                        }
+                    ],
+                    "offsets": [
+                        {
+                            "name": "d98a02c3b9a427e757f76ea50a8e7e",
+                            "x": 0,
+                            "y": 538
+                        },
+                        {
+                            "name": "Add Comments to Octane Items",
+                            "x": -95,
+                            "y": 120
+                        }
+                    ],
+                    "sizes": [
+                        {
+                            "name": "d98a02c3b9a427e757f76ea50a8e7e",
+                            "width": 50,
+                            "height": 50
+                        },
+                        {
+                            "name": "Add Comments to Octane Items",
+                            "width": 260,
+                            "height": 50
+                        }
+                    ],
+                    "type": "graph",
+                    "name": "6b0ef655-b9fe-49ff-a74a-feae8119727f",
+                    "children": [
+                        {
+                            "type": "finish",
+                            "name": "d98a02c3b9a427e757f76ea50a8e7e",
+                            "children": []
+                        },
+                        {
+                            "allowFailure": true,
+                            "useImpersonation": false,
+                            "showHidden": true,
+                            "impersonationUseSudo": false,
+                            "impersonationUseSsh": false,
+                            "commandName": "Add Comments",
+                            "pluginName": "Octane",
+                            "pluginVersion": 5,
+                            "properties": {
+                                "wiIds": "${p:version\/issueIds}",
+                                "commentBody": "${p:request.user.displayName} successfully deployed component \"${p:component.name}\" version \"${p:version.name}\" to environment \"${p:environment.name}\". See request: ${p:server.url}\/#componentProcessRequest\/${p:request.id}",
+                                "commentAuthor": "",
+                                "failMode": "WARN_ONLY",
+                                "serverUrl": "${p:system\/octane.serverUrl}",
+                                "clientId": "${p:system\/octane.clientId}",
+                                "password": "pbe{dmRgYKdOXG4DUgd00m1MYogwQw+2ngXhP\/sdV7EhAnHmTW5AuSU6heQ0p1CzHh3a}",
+                                "sharedSpaceId": "${p:application\/octane.sharedSpaceId}",
+                                "workSpaceId": "${p:application\/octane.workSpaceId}"
+                            },
+                            "type": "plugin",
+                            "name": "Add Comments to Octane Items",
+                            "children": []
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "octane-create-defect",
+                "description": "Create a new defect in Octane",
+                "defaultWorkingDir": "${p:resource\/work.dir}\/${p:component.name}",
+                "takesVersion": false,
+                "status": "",
+                "active": true,
+                "deleted": true,
+                "executionTimeout": 0,
+                "propDefs": [
+                    {
+                        "name": "defectSummary",
+                        "label": "Summary",
+                        "extendedLabel": "Summary",
+                        "type": "TEXT",
+                        "required": false,
+                        "description": "Defect Summary",
+                        "hidden": false
+                    },
+                    {
+                        "name": "defectDescription",
+                        "label": "Description",
+                        "extendedLabel": "Description",
+                        "type": "TEXTAREA",
+                        "required": false,
+                        "description": "Defect Description",
+                        "hidden": false
+                    }
+                ],
+                "rootActivity": {
+                    "edges": [
+                        {
+                            "to": "0d7e4b7832f4ec870fceb050588c25",
+                            "from": "Create Defect",
+                            "type": "SUCCESS",
+                            "value": ""
+                        },
+                        {
+                            "to": "Create Defect",
+                            "type": "ALWAYS",
+                            "value": ""
+                        }
+                    ],
+                    "offsets": [
+                        {
+                            "name": "Create Defect",
+                            "x": -70,
+                            "y": 150
+                        },
+                        {
+                            "name": "0d7e4b7832f4ec870fceb050588c25",
+                            "x": 0,
+                            "y": 681
+                        }
+                    ],
+                    "sizes": [
+                        {
+                            "name": "Create Defect",
+                            "width": 150,
+                            "height": 50
+                        },
+                        {
+                            "name": "0d7e4b7832f4ec870fceb050588c25",
+                            "width": 50,
+                            "height": 50
+                        }
+                    ],
+                    "type": "graph",
+                    "name": "6c4fb47b-1b45-4ee8-ac92-96f5752bdc21",
+                    "children": [
+                        {
+                            "type": "finish",
+                            "name": "0d7e4b7832f4ec870fceb050588c25",
+                            "children": []
+                        },
+                        {
+                            "allowFailure": true,
+                            "useImpersonation": false,
+                            "showHidden": false,
+                            "impersonationUseSudo": false,
+                            "impersonationUseSsh": false,
+                            "commandName": "Create Work Item",
+                            "pluginName": "Octane",
+                            "pluginVersion": 5,
+                            "properties": {
+                                "type": "DEFECT",
+                                "name": "${p:defectSummary}",
+                                "description": "${p:defectDescription}",
+                                "parentType": "work_item_root",
+                                "parentId": "",
+                                "productAreas": "${p:component\/octane.productAreaId}",
+                                "releaseId": "${p:application\/octane.releaseId}",
+                                "severityId": "list_node.severity.high",
+                                "serverUrl": "${p:system\/octane.serverUrl}",
+                                "clientId": "${p:system\/octane.clientId}",
+                                "password": "pbe{JlGzXNVy9Gm5YFdLSV02TWWqViegKVmtj4rpvBfDei5fN3aa7\/RQOskuM0kOLni3}",
+                                "sharedSpaceId": "${p:application\/octane.sharedSpaceId}",
+                                "workSpaceId": "${p:application\/octane.workSpaceId}"
+                            },
+                            "type": "plugin",
+                            "name": "Create Defect",
+                            "children": []
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "tomcat-clean",
+                "description": "Stop Tomcat and remove logs, temporary files etc.",
+                "defaultWorkingDir": "${p:resource\/work.dir}\/${p:component.name}",
+                "takesVersion": false,
+                "status": "",
+                "active": true,
+                "deleted": false,
+                "executionTimeout": 0,
+                "propDefs": [],
+                "rootActivity": {
+                    "edges": [
+                        {
+                            "to": "Stop Tomcat",
+                            "type": "ALWAYS",
+                            "value": ""
+                        },
+                        {
+                            "to": "Delete Files and Directories",
+                            "from": "Stop Tomcat",
+                            "type": "SUCCESS",
+                            "value": ""
+                        },
+                        {
+                            "to": "07b6-821b-99b7-236d",
+                            "from": "Delete Files and Directories",
+                            "type": "SUCCESS",
+                            "value": ""
+                        }
+                    ],
+                    "offsets": [
+                        {
+                            "name": "Stop Tomcat",
+                            "x": -165,
+                            "y": 140
+                        },
+                        {
+                            "name": "07b6-821b-99b7-236d",
+                            "x": 0,
+                            "y": 444
+                        },
+                        {
+                            "name": "Delete Files and Directories",
+                            "x": -100,
+                            "y": 251
+                        }
+                    ],
+                    "sizes": [
+                        {
+                            "name": "Stop Tomcat",
+                            "width": 370,
+                            "height": 50
+                        },
+                        {
+                            "name": "07b6-821b-99b7-236d",
+                            "width": 50,
+                            "height": 50
+                        },
+                        {
+                            "name": "Delete Files and Directories",
+                            "width": 240,
+                            "height": 50
+                        }
+                    ],
+                    "type": "graph",
+                    "name": "a32f55fa-431d-4623-913a-cdc8f437444b",
+                    "children": [
+                        {
+                            "type": "finish",
+                            "name": "07b6-821b-99b7-236d",
+                            "children": []
+                        },
+                        {
+                            "allowFailure": true,
+                            "useImpersonation": false,
+                            "showHidden": false,
+                            "impersonationUseSudo": false,
+                            "impersonationUseSsh": false,
+                            "commandName": "Delete Files and Directories",
+                            "pluginName": "File Utils",
+                            "pluginVersion": 33,
+                            "properties": {
+                                "baseDir": "${environment\/tomcat.base.dir}",
+                                "includes": "logs\\*\ntemp\\*\nwork\\**\\*",
+                                "excludes": "",
+                                "followSymlinks": "",
+                                "caseSensitive": "true"
+                            },
+                            "type": "plugin",
+                            "name": "Delete Files and Directories",
+                            "children": []
+                        },
+                        {
+                            "componentTemplateName": "java-tomcat",
+                            "componentProcessName": "tomcat-stop",
+                            "allowFailure": false,
+                            "properties": {},
+                            "type": "componentProcess",
+                            "name": "Stop Tomcat",
+                            "children": []
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "tomcat-copy",
+                "description": "Downloads and copies files into the Tomcat \"webapps\" directory for \"hot-deployment\"",
+                "defaultWorkingDir": "${p:resource\/work.dir}\/${p:component.name}",
+                "takesVersion": true,
+                "inventoryActionType": "ADD",
+                "status": "Active",
+                "configActionType": "ADD",
+                "active": true,
+                "deleted": false,
+                "executionTimeout": 0,
+                "propDefs": [],
+                "rootActivity": {
+                    "edges": [
+                        {
+                            "to": "d83e812fedf6ea383228a5470807d3",
+                            "from": "Copy WAR to Tomcat",
+                            "type": "SUCCESS",
+                            "value": ""
+                        },
+                        {
+                            "to": "Copy WAR to Tomcat",
+                            "from": "Create Zip Archive",
+                            "type": "SUCCESS",
+                            "value": ""
+                        },
+                        {
+                            "to": "Clean Work Directory",
+                            "type": "ALWAYS",
+                            "value": ""
+                        },
+                        {
+                            "to": "Download Artifacts",
+                            "from": "Clean Work Directory",
+                            "type": "SUCCESS",
+                            "value": ""
+                        },
+                        {
+                            "to": "Extract War",
+                            "from": "Download Artifacts",
+                            "type": "SUCCESS",
+                            "value": ""
+                        },
+                        {
+                            "to": "Create application.yml from template",
+                            "from": "Extract War",
+                            "type": "SUCCESS",
+                            "value": ""
+                        },
+                        {
+                            "to": "Create Zip Archive",
+                            "from": "Create application.yml from template",
+                            "type": "SUCCESS",
+                            "value": ""
+                        }
+                    ],
+                    "offsets": [
+                        {
+                            "name": "Extract War",
+                            "x": -45,
+                            "y": 200
+                        },
+                        {
+                            "name": "Copy WAR to Tomcat",
+                            "x": -75,
+                            "y": 455
+                        },
+                        {
+                            "name": "d83e812fedf6ea383228a5470807d3",
+                            "x": 0,
+                            "y": 610
+                        },
+                        {
+                            "name": "Create application.yml from template",
+                            "x": -120,
+                            "y": 286
+                        },
+                        {
+                            "name": "Clean Work Directory",
+                            "x": -80,
+                            "y": 50
+                        },
+                        {
+                            "name": "Download Artifacts",
+                            "x": -85,
+                            "y": 120
+                        },
+                        {
+                            "name": "Create Zip Archive",
+                            "x": -65,
+                            "y": 360
+                        }
+                    ],
+                    "sizes": [
+                        {
+                            "name": "Create application.yml from template",
+                            "width": 290,
+                            "height": 50
+                        },
+                        {
+                            "name": "Download Artifacts",
+                            "width": 210,
+                            "height": 50
+                        },
+                        {
+                            "name": "Extract War",
+                            "width": 140,
+                            "height": 50
+                        },
+                        {
+                            "name": "Clean Work Directory",
+                            "width": 200,
+                            "height": 50
+                        },
+                        {
+                            "name": "Copy WAR to Tomcat",
+                            "width": 200,
+                            "height": 50
+                        },
+                        {
+                            "name": "Create Zip Archive",
+                            "width": 180,
+                            "height": 50
+                        },
+                        {
+                            "name": "d83e812fedf6ea383228a5470807d3",
+                            "width": 50,
+                            "height": 50
+                        }
+                    ],
+                    "type": "graph",
+                    "name": "ef519908-ef67-41c3-9029-9f1e0255fc79",
+                    "children": [
+                        {
+                            "type": "finish",
+                            "name": "d83e812fedf6ea383228a5470807d3",
+                            "children": []
+                        },
+                        {
+                            "allowFailure": false,
+                            "useImpersonation": false,
+                            "showHidden": false,
+                            "impersonationUseSudo": false,
+                            "impersonationUseSsh": false,
+                            "commandName": "Download Artifacts",
+                            "pluginName": "DA Versioned File Storage",
+                            "pluginVersion": 23,
+                            "properties": {
+                                "directoryOffset": ".",
+                                "fileIncludePatterns": "**\/*",
+                                "fileExcludePatterns": "",
+                                "syncMode": "true",
+                                "fullVerification": "true",
+                                "setFileExecuteBits": "false",
+                                "verifyFileIntegrity": "false",
+                                "repositoryUrl": "${p:server.url}\/vfs",
+                                "repositoryId": "${p:component\/code_station\/repository}",
+                                "label": "${p:version.name}",
+                                "serverUrl": "${p:server.url}",
+                                "compId": "${p:component.id}",
+                                "resId": "${p:resource.id}"
+                            },
+                            "type": "plugin",
+                            "name": "Download Artifacts",
+                            "children": []
+                        },
+                        {
+                            "allowFailure": false,
+                            "useImpersonation": false,
+                            "showHidden": false,
+                            "impersonationUseSudo": false,
+                            "impersonationUseSsh": false,
+                            "commandName": "Delete Files and Directories",
+                            "pluginName": "File Utils",
+                            "pluginVersion": 33,
+                            "properties": {
+                                "baseDir": ".",
+                                "includes": "**\/*",
+                                "excludes": "",
+                                "followSymlinks": "",
+                                "caseSensitive": "true"
+                            },
+                            "type": "plugin",
+                            "name": "Clean Work Directory",
+                            "children": []
+                        },
+                        {
+                            "allowFailure": false,
+                            "useImpersonation": false,
+                            "showHidden": false,
+                            "impersonationUseSudo": false,
+                            "impersonationUseSsh": false,
+                            "commandName": "Unzip",
+                            "pluginName": "File Utils",
+                            "pluginVersion": 33,
+                            "properties": {
+                                "dir": "",
+                                "zip": "${component.name}.war",
+                                "overwrite": "true"
+                            },
+                            "type": "plugin",
+                            "name": "Extract War",
+                            "children": []
+                        },
+                        {
+                            "allowFailure": false,
+                            "useImpersonation": false,
+                            "showHidden": false,
+                            "impersonationUseSudo": false,
+                            "impersonationUseSsh": false,
+                            "commandName": "Create Zip Archive",
+                            "pluginName": "File Utils",
+                            "pluginVersion": 33,
+                            "properties": {
+                                "zipName": "${p:component.name}.war",
+                                "baseDir": ".",
+                                "includes": "**\/*",
+                                "excludes": "**\/*.war",
+                                "update": "",
+                                "followSymlinks": "",
+                                "caseSensitive": "true",
+                                "noMatch": "skip"
+                            },
+                            "type": "plugin",
+                            "name": "Create Zip Archive",
+                            "children": []
+                        },
+                        {
+                            "allowFailure": false,
+                            "useImpersonation": false,
+                            "showHidden": false,
+                            "impersonationUseSudo": false,
+                            "impersonationUseSsh": false,
+                            "commandName": "Copy Directory",
+                            "pluginName": "File Utils",
+                            "pluginVersion": 33,
+                            "properties": {
+                                "sourceDir": ".",
+                                "destDirList": "${environment\/tomcat.webapps.dir}",
+                                "includes": "${p:component.name}.war",
+                                "excludes": "",
+                                "mapperRules": "",
+                                "flatten": ""
+                            },
+                            "type": "plugin",
+                            "name": "Copy WAR to Tomcat",
+                            "children": []
+                        },
+                        {
+                            "allowFailure": false,
+                            "useImpersonation": false,
+                            "showHidden": false,
+                            "impersonationUseSudo": false,
+                            "impersonationUseSsh": false,
+                            "workingDir": "${p:resource\/work.dir}\/${p:component.name}\/WEB-INF\/classes",
+                            "commandName": "Install Template",
+                            "pluginName": "DA Configuration Management",
+                            "pluginVersion": 6,
+                            "properties": {
+                                "serverUrl": "${p:server.url}\/",
+                                "requestId": "${p:request.id}",
+                                "name": "application.yml",
+                                "envPropValues": "${environment\/allProperties}"
+                            },
+                            "type": "plugin",
+                            "name": "Create application.yml from template",
+                            "children": []
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "tomcat-deploy",
+                "description": "Download files and deploys to Tomcat using the \"manager\" API.",
+                "defaultWorkingDir": "${p:resource\/work.dir}\/${p:component.name}",
+                "takesVersion": true,
+                "inventoryActionType": "ADD",
+                "status": "Active",
+                "configActionType": "ADD",
+                "active": true,
+                "deleted": false,
+                "executionTimeout": 0,
+                "propDefs": [],
+                "rootActivity": {
+                    "edges": [
+                        {
+                            "to": "Check Tomcat is Started",
+                            "from": "Which OS?",
+                            "type": "VALUE",
+                            "value": ""
+                        },
+                        {
+                            "to": "Create application.yml from template",
+                            "from": "Extract WAR",
+                            "type": "SUCCESS",
+                            "value": ""
+                        },
+                        {
+                            "to": "d83e812fedf6ea383228a5470807d3",
+                            "from": "Deploy Application",
+                            "type": "SUCCESS",
+                            "value": ""
+                        },
+                        {
+                            "to": "Delete Old WAR",
+                            "from": "Create application.yml from template",
+                            "type": "SUCCESS",
+                            "value": ""
+                        },
+                        {
+                            "to": "Restart Tomcat",
+                            "from": "Which OS?",
+                            "type": "VALUE",
+                            "value": "*Windows*\n*windows*"
+                        },
+                        {
+                            "to": "Re-create WAR",
+                            "from": "Delete Old WAR",
+                            "type": "SUCCESS",
+                            "value": ""
+                        },
+                        {
+                            "to": "Download Artifacts",
+                            "from": "Clean Work Directory",
+                            "type": "SUCCESS",
+                            "value": ""
+                        },
+                        {
+                            "to": "Extract WAR",
+                            "from": "Download Artifacts",
+                            "type": "SUCCESS",
+                            "value": ""
+                        },
+                        {
+                            "to": "Deploy Application",
+                            "from": "Undeploy Application",
+                            "type": "ALWAYS",
+                            "value": ""
+                        },
+                        {
+                            "to": "Undeploy Application",
+                            "from": "Restart Tomcat",
+                            "type": "SUCCESS",
+                            "value": ""
+                        },
+                        {
+                            "to": "Clean Work Directory",
+                            "type": "ALWAYS",
+                            "value": ""
+                        },
+                        {
+                            "to": "Undeploy Application",
+                            "from": "Check Tomcat is Started",
+                            "type": "SUCCESS",
+                            "value": ""
+                        },
+                        {
+                            "to": "Which OS?",
+                            "from": "Re-create WAR",
+                            "type": "SUCCESS",
+                            "value": ""
+                        }
+                    ],
+                    "offsets": [
+                        {
+                            "name": "Re-create WAR",
+                            "x": -60,
+                            "y": 460
+                        },
+                        {
+                            "name": "Clean Work Directory",
+                            "x": -75,
+                            "y": 35
+                        },
+                        {
+                            "name": "Download Artifacts",
+                            "x": -85,
+                            "y": 120
+                        },
+                        {
+                            "name": "d83e812fedf6ea383228a5470807d3",
+                            "x": -18,
+                            "y": 960
+                        },
+                        {
+                            "name": "Delete Old WAR",
+                            "x": -60,
+                            "y": 375
+                        },
+                        {
+                            "name": "Deploy Application",
+                            "x": -75,
+                            "y": 880
+                        },
+                        {
+                            "name": "Restart Tomcat",
+                            "x": -318,
+                            "y": 681
+                        },
+                        {
+                            "name": "Check Tomcat is Started",
+                            "x": 62,
+                            "y": 681
+                        },
+                        {
+                            "name": "Undeploy Application",
+                            "x": -93,
+                            "y": 770
+                        },
+                        {
+                            "name": "Extract WAR",
+                            "x": -50,
+                            "y": 210
+                        },
+                        {
+                            "name": "Create application.yml from template",
+                            "x": -130,
+                            "y": 300
+                        },
+                        {
+                            "name": "Which OS?",
+                            "x": -75,
+                            "y": 547
+                        }
+                    ],
+                    "sizes": [
+                        {
+                            "name": "Delete Old WAR",
+                            "width": 160,
+                            "height": 50
+                        },
+                        {
+                            "name": "Clean Work Directory",
+                            "width": 200,
+                            "height": 50
+                        },
+                        {
+                            "name": "Which OS?",
+                            "width": 190,
+                            "height": 60
+                        },
+                        {
+                            "name": "Re-create WAR",
+                            "width": 160,
+                            "height": 50
+                        },
+                        {
+                            "name": "Check Tomcat is Started",
+                            "width": 280,
+                            "height": 50
+                        },
+                        {
+                            "name": "Download Artifacts",
+                            "width": 210,
+                            "height": 50
+                        },
+                        {
+                            "name": "Extract WAR",
+                            "width": 140,
+                            "height": 50
+                        },
+                        {
+                            "name": "Deploy Application",
+                            "width": 180,
+                            "height": 50
+                        },
+                        {
+                            "name": "Create application.yml from template",
+                            "width": 290,
+                            "height": 50
+                        },
+                        {
+                            "name": "Undeploy Application",
+                            "width": 200,
+                            "height": 50
+                        },
+                        {
+                            "name": "d83e812fedf6ea383228a5470807d3",
+                            "width": 50,
+                            "height": 50
+                        },
+                        {
+                            "name": "Restart Tomcat",
+                            "width": 290,
+                            "height": 50
+                        }
+                    ],
+                    "type": "graph",
+                    "name": "bae4f660-7e65-4707-a1ae-e38a68688e89",
+                    "children": [
+                        {
+                            "type": "finish",
+                            "name": "d83e812fedf6ea383228a5470807d3",
+                            "children": []
+                        },
+                        {
+                            "allowFailure": false,
+                            "useImpersonation": false,
+                            "showHidden": false,
+                            "impersonationUseSudo": false,
+                            "impersonationUseSsh": false,
+                            "commandName": "Download Artifacts",
+                            "pluginName": "DA Versioned File Storage",
+                            "pluginVersion": 23,
+                            "properties": {
+                                "directoryOffset": ".",
+                                "fileIncludePatterns": "**\/*",
+                                "fileExcludePatterns": "",
+                                "syncMode": "true",
+                                "fullVerification": "true",
+                                "setFileExecuteBits": "false",
+                                "verifyFileIntegrity": "false",
+                                "repositoryUrl": "${p:server.url}\/vfs",
+                                "repositoryId": "${p:component\/code_station\/repository}",
+                                "label": "${p:version.name}",
+                                "serverUrl": "${p:server.url}",
+                                "compId": "${p:component.id}",
+                                "resId": "${p:resource.id}"
+                            },
+                            "type": "plugin",
+                            "name": "Download Artifacts",
+                            "children": []
+                        },
+                        {
+                            "allowFailure": false,
+                            "useImpersonation": false,
+                            "showHidden": false,
+                            "impersonationUseSudo": false,
+                            "impersonationUseSsh": false,
+                            "commandName": "Delete Files and Directories",
+                            "pluginName": "File Utils",
+                            "pluginVersion": 33,
+                            "properties": {
+                                "baseDir": ".",
+                                "includes": "**\/*",
+                                "excludes": "",
+                                "followSymlinks": "",
+                                "caseSensitive": "true"
+                            },
+                            "type": "plugin",
+                            "name": "Clean Work Directory",
+                            "children": []
+                        },
+                        {
+                            "allowFailure": false,
+                            "useImpersonation": false,
+                            "showHidden": false,
+                            "impersonationUseSudo": false,
+                            "impersonationUseSsh": false,
+                            "commandName": "Unzip",
+                            "pluginName": "File Utils",
+                            "pluginVersion": 33,
+                            "properties": {
+                                "dir": "",
+                                "zip": "${p:component.name}.war",
+                                "overwrite": ""
+                            },
+                            "type": "plugin",
+                            "name": "Extract WAR",
+                            "children": []
+                        },
+                        {
+                            "allowFailure": false,
+                            "useImpersonation": false,
+                            "showHidden": false,
+                            "impersonationUseSudo": false,
+                            "impersonationUseSsh": false,
+                            "commandName": "Deploy Application",
+                            "pluginName": "Tomcat",
+                            "pluginVersion": 7,
+                            "properties": {
+                                "tomcatManagerUrl": "${p:environment\/tomcat.manager.url}",
+                                "tomcatUsername": "${p:environment\/tomcat.manager.login}",
+                                "tomcatPassword": "pbe{rWOMSMBmBmsOaWJI01VFca0b67i+8lePsj333hdPpm93OVin9OwcHbmsijynxq+fO1yICH1wt8Z0ROfjusg6Hg==}",
+                                "tomcatContext": "\/${p:component.name}",
+                                "warFile": ".\/${p:component.name}.war",
+                                "configFile": ""
+                            },
+                            "type": "plugin",
+                            "name": "Deploy Application",
+                            "children": []
+                        },
+                        {
+                            "allowFailure": false,
+                            "useImpersonation": false,
+                            "showHidden": false,
+                            "impersonationUseSudo": false,
+                            "impersonationUseSsh": false,
+                            "commandName": "Create Zip Archive",
+                            "pluginName": "File Utils",
+                            "pluginVersion": 33,
+                            "properties": {
+                                "zipName": "${p:component.name}.war",
+                                "baseDir": ".",
+                                "includes": "**\/*",
+                                "excludes": "**\/*.war",
+                                "update": "true",
+                                "followSymlinks": "",
+                                "caseSensitive": "true",
+                                "noMatch": "skip"
+                            },
+                            "type": "plugin",
+                            "name": "Re-create WAR",
+                            "children": []
+                        },
+                        {
+                            "allowFailure": true,
+                            "useImpersonation": false,
+                            "showHidden": false,
+                            "impersonationUseSudo": false,
+                            "impersonationUseSsh": false,
+                            "commandName": "Undeploy Application",
+                            "pluginName": "Tomcat",
+                            "pluginVersion": 7,
+                            "properties": {
+                                "tomcatManagerUrl": "${p:environment\/tomcat.manager.url}",
+                                "tomcatUsername": "${p:environment\/tomcat.manager.login}",
+                                "tomcatPassword": "pbe{l1WAaw1SMXmZc\/JU+0xoU8INFC+EciFqOlr+NjF4cvSn6upJ0g9JEVh6otEbRbuy4c8JGGUad\/Zr4BDc7gAKvA==}",
+                                "tomcatContext": "\/${p:component.name}"
+                            },
+                            "type": "plugin",
+                            "name": "Undeploy Application",
+                            "children": []
+                        },
+                        {
+                            "allowFailure": true,
+                            "useImpersonation": false,
+                            "showHidden": false,
+                            "impersonationUseSudo": false,
+                            "impersonationUseSsh": false,
+                            "commandName": "Delete Files and Directories",
+                            "pluginName": "File Utils",
+                            "pluginVersion": 33,
+                            "properties": {
+                                "baseDir": ".",
+                                "includes": "${p:component.name}.war",
+                                "excludes": "",
+                                "followSymlinks": "",
+                                "caseSensitive": "true"
+                            },
+                            "type": "plugin",
+                            "name": "Delete Old WAR",
+                            "children": []
+                        },
+                        {
+                            "allowFailure": false,
+                            "useImpersonation": false,
+                            "showHidden": false,
+                            "impersonationUseSudo": false,
+                            "impersonationUseSsh": false,
+                            "workingDir": "${p:resource\/work.dir}\/${p:component.name}\/WEB-INF\/classes",
+                            "commandName": "Install Template",
+                            "pluginName": "DA Configuration Management",
+                            "pluginVersion": 6,
+                            "properties": {
+                                "serverUrl": "${p:server.url}\/",
+                                "requestId": "${p:request.id}",
+                                "name": "application.yml",
+                                "envPropValues": "${environment\/allProperties}"
+                            },
+                            "type": "plugin",
+                            "name": "Create application.yml from template",
+                            "children": []
+                        },
+                        {
+                            "componentTemplateName": "java-tomcat",
+                            "componentProcessName": "tomcat-start",
+                            "allowFailure": false,
+                            "properties": {},
+                            "type": "componentProcess",
+                            "name": "Check Tomcat is Started",
+                            "children": []
+                        },
+                        {
+                            "propertyName": "${agent\/sys.os.name}",
+                            "type": "switch",
+                            "name": "Which OS?",
+                            "children": []
+                        },
+                        {
+                            "componentTemplateName": "java-tomcat",
+                            "componentProcessName": "tomcat-restart",
+                            "allowFailure": false,
+                            "properties": {},
+                            "type": "componentProcess",
+                            "name": "Restart Tomcat",
+                            "children": []
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "tomcat-restart",
+                "description": "Restart Tomcat for the current environment",
+                "defaultWorkingDir": "${p:resource\/work.dir}\/${p:component.name}",
+                "takesVersion": false,
+                "status": "",
+                "active": true,
+                "deleted": false,
+                "executionTimeout": 0,
+                "propDefs": [],
+                "rootActivity": {
+                    "edges": [
+                        {
+                            "to": "Start Tomcat if not Running",
+                            "from": "Stop Tomcat if Running",
+                            "type": "SUCCESS",
+                            "value": ""
+                        },
+                        {
+                            "to": "Stop Tomcat if Running",
+                            "type": "ALWAYS",
+                            "value": ""
+                        },
+                        {
+                            "to": "272eb7dd5e26a51d492d8953bb889c",
+                            "from": "Start Tomcat if not Running",
+                            "type": "SUCCESS",
+                            "value": ""
+                        }
+                    ],
+                    "offsets": [
+                        {
+                            "name": "Start Tomcat if not Running",
+                            "x": -140,
+                            "y": 239
+                        },
+                        {
+                            "name": "272eb7dd5e26a51d492d8953bb889c",
+                            "x": 0,
+                            "y": 370
+                        },
+                        {
+                            "name": "Stop Tomcat if Running",
+                            "x": -140,
+                            "y": 130
+                        }
+                    ],
+                    "sizes": [
+                        {
+                            "name": "Stop Tomcat if Running",
+                            "width": 330,
+                            "height": 50
+                        },
+                        {
+                            "name": "Start Tomcat if not Running",
+                            "width": 330,
+                            "height": 50
+                        },
+                        {
+                            "name": "272eb7dd5e26a51d492d8953bb889c",
+                            "width": 50,
+                            "height": 50
+                        }
+                    ],
+                    "type": "graph",
+                    "name": "4293305b-ed4d-4419-8410-cc010650316a",
+                    "children": [
+                        {
+                            "type": "finish",
+                            "name": "272eb7dd5e26a51d492d8953bb889c",
+                            "children": []
+                        },
+                        {
+                            "componentTemplateName": "java-tomcat",
+                            "componentProcessName": "tomcat-stop",
+                            "allowFailure": false,
+                            "properties": {},
+                            "type": "componentProcess",
+                            "name": "Stop Tomcat if Running",
+                            "children": []
+                        },
+                        {
+                            "componentTemplateName": "java-tomcat",
+                            "componentProcessName": "tomcat-start",
+                            "allowFailure": false,
+                            "properties": {},
+                            "type": "componentProcess",
+                            "name": "Start Tomcat if not Running",
+                            "children": []
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "tomcat-start",
+                "description": "Start Tomcat for the current environment if it is not running",
+                "defaultWorkingDir": "${p:resource\/work.dir}\/${p:component.name}",
+                "takesVersion": false,
+                "status": "",
+                "active": true,
+                "deleted": false,
+                "executionTimeout": 0,
+                "propDefs": [],
+                "rootActivity": {
+                    "edges": [
+                        {
+                            "to": "272eb7dd5e26a51d492d8953bb889c",
+                            "from": "Start Tomcat",
+                            "type": "SUCCESS",
+                            "value": ""
+                        },
+                        {
+                            "to": "Start Tomcat",
+                            "from": "Which OS?",
+                            "type": "VALUE",
+                            "value": ""
+                        },
+                        {
+                            "to": "272eb7dd5e26a51d492d8953bb889c",
+                            "from": "Check if Tomcat is alive",
+                            "type": "SUCCESS",
+                            "value": ""
+                        },
+                        {
+                            "to": "272eb7dd5e26a51d492d8953bb889c",
+                            "from": "Start Service",
+                            "type": "SUCCESS",
+                            "value": ""
+                        },
+                        {
+                            "to": "Check if Tomcat is alive",
+                            "type": "ALWAYS",
+                            "value": ""
+                        },
+                        {
+                            "to": "Which OS?",
+                            "from": "Check if Tomcat is alive",
+                            "type": "FAILURE",
+                            "value": ""
+                        },
+                        {
+                            "to": "Start Service",
+                            "from": "Which OS?",
+                            "type": "VALUE",
+                            "value": "*Windows*\n*windows*"
+                        }
+                    ],
+                    "offsets": [
+                        {
+                            "name": "Which OS?",
+                            "x": -288,
+                            "y": 180
+                        },
+                        {
+                            "name": "272eb7dd5e26a51d492d8953bb889c",
+                            "x": 0,
+                            "y": 440
+                        },
+                        {
+                            "name": "Start Tomcat",
+                            "x": -160,
+                            "y": 295
+                        },
+                        {
+                            "name": "Start Service",
+                            "x": -408,
+                            "y": 295
+                        },
+                        {
+                            "name": "Check if Tomcat is alive",
+                            "x": -80,
+                            "y": 89
+                        }
+                    ],
+                    "sizes": [
+                        {
+                            "name": "Start Tomcat",
+                            "width": 140,
+                            "height": 50
+                        },
+                        {
+                            "name": "Start Service",
+                            "width": 200,
+                            "height": 50
+                        },
+                        {
+                            "name": "Check if Tomcat is alive",
+                            "width": 210,
+                            "height": 50
+                        },
+                        {
+                            "name": "272eb7dd5e26a51d492d8953bb889c",
+                            "width": 50,
+                            "height": 50
+                        },
+                        {
+                            "name": "Which OS?",
+                            "width": 190,
+                            "height": 60
+                        }
+                    ],
+                    "type": "graph",
+                    "name": "8ea45044-f882-4631-a14c-d0f40cc75afd",
+                    "children": [
+                        {
+                            "type": "finish",
+                            "name": "272eb7dd5e26a51d492d8953bb889c",
+                            "children": []
+                        },
+                        {
+                            "allowFailure": false,
+                            "useImpersonation": false,
+                            "showHidden": false,
+                            "impersonationUseSudo": false,
+                            "impersonationUseSsh": false,
+                            "commandName": "Start Service",
+                            "pluginName": "Service Control Manager",
+                            "pluginVersion": 5,
+                            "properties": {
+                                "Service": "${environment\/tomcat.service.name}",
+                                "argString": "",
+                                "waitFor": "true"
+                            },
+                            "type": "plugin",
+                            "name": "Start Service",
+                            "children": []
+                        },
+                        {
+                            "allowFailure": false,
+                            "useImpersonation": false,
+                            "showHidden": false,
+                            "impersonationUseSudo": false,
+                            "impersonationUseSsh": false,
+                            "commandName": "Check if Tomcat is alive",
+                            "pluginName": "Tomcat",
+                            "pluginVersion": 7,
+                            "properties": {
+                                "timeout": "60",
+                                "port": "${p:environment\/tomcat.port}",
+                                "hostname": "${p:environment\/tomcat.host}"
+                            },
+                            "type": "plugin",
+                            "name": "Check if Tomcat is alive",
+                            "children": []
+                        },
+                        {
+                            "allowFailure": false,
+                            "useImpersonation": false,
+                            "showHidden": false,
+                            "impersonationUseSudo": false,
+                            "impersonationUseSsh": false,
+                            "commandName": "Start Tomcat",
+                            "pluginName": "Tomcat",
+                            "pluginVersion": 7,
+                            "properties": {
+                                "launcherLocation": "${p:environment\/tomcat.launcher}",
+                                "options": "${p:environment\/tomcat.launcher.options}",
+                                "timeout": "",
+                                "port": "${p:environment\/tomcat.port}",
+                                "hostname": "${p:environment\/tomcat.host}",
+                                "catalinaHome": "",
+                                "jdkHome": "",
+                                "jreHome": ""
+                            },
+                            "type": "plugin",
+                            "name": "Start Tomcat",
+                            "children": []
+                        },
+                        {
+                            "propertyName": "${p:agent\/sys.os.name}",
+                            "type": "switch",
+                            "name": "Which OS?",
+                            "children": []
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "tomcat-stop",
+                "description": "Start Tomcat for the current environment if it is not running",
+                "defaultWorkingDir": "${p:resource\/work.dir}\/${p:component.name}",
+                "takesVersion": false,
+                "status": "",
+                "active": true,
+                "deleted": false,
+                "executionTimeout": 0,
+                "propDefs": [],
+                "rootActivity": {
+                    "edges": [
+                        {
+                            "to": "Check if Tomcat is alive",
+                            "type": "ALWAYS",
+                            "value": ""
+                        },
+                        {
+                            "to": "272eb7dd5e26a51d492d8953bb889c",
+                            "from": "Stop Service",
+                            "type": "SUCCESS",
+                            "value": ""
+                        },
+                        {
+                            "to": "Stop Service",
+                            "from": "Which OS?",
+                            "type": "VALUE",
+                            "value": "*Windows*\n*windows*"
+                        },
+                        {
+                            "to": "c5e5-6925-4d8e-f2fd",
+                            "from": "Check if Tomcat is alive",
+                            "type": "FAILURE",
+                            "value": ""
+                        },
+                        {
+                            "to": "Which OS?",
+                            "from": "Check if Tomcat is alive",
+                            "type": "SUCCESS",
+                            "value": ""
+                        },
+                        {
+                            "to": "272eb7dd5e26a51d492d8953bb889c",
+                            "from": "Stop Tomcat",
+                            "type": "SUCCESS",
+                            "value": ""
+                        },
+                        {
+                            "to": "272eb7dd5e26a51d492d8953bb889c",
+                            "from": "c5e5-6925-4d8e-f2fd",
+                            "type": "SUCCESS",
+                            "value": ""
+                        },
+                        {
+                            "to": "Stop Tomcat",
+                            "from": "Which OS?",
+                            "type": "VALUE",
+                            "value": ""
+                        }
+                    ],
+                    "offsets": [
+                        {
+                            "name": "Which OS?",
+                            "x": -293,
+                            "y": 150
+                        },
+                        {
+                            "name": "Stop Tomcat",
+                            "x": -155,
+                            "y": 260
+                        },
+                        {
+                            "name": "Stop Service",
+                            "x": -453,
+                            "y": 260
+                        },
+                        {
+                            "name": "c5e5-6925-4d8e-f2fd",
+                            "x": -33,
+                            "y": 200
+                        },
+                        {
+                            "name": "Check if Tomcat is alive",
+                            "x": -78,
+                            "y": 70
+                        },
+                        {
+                            "name": "272eb7dd5e26a51d492d8953bb889c",
+                            "x": 0,
+                            "y": 410
+                        }
+                    ],
+                    "sizes": [
+                        {
+                            "name": "272eb7dd5e26a51d492d8953bb889c",
+                            "width": 50,
+                            "height": 50
+                        },
+                        {
+                            "name": "Check if Tomcat is alive",
+                            "width": 210,
+                            "height": 50
+                        },
+                        {
+                            "name": "Stop Service",
+                            "width": 200,
+                            "height": 50
+                        },
+                        {
+                            "name": "Stop Tomcat",
+                            "width": 140,
+                            "height": 50
+                        },
+                        {
+                            "name": "c5e5-6925-4d8e-f2fd",
+                            "width": 120,
+                            "height": 50
+                        },
+                        {
+                            "name": "Which OS?",
+                            "width": 190,
+                            "height": 60
+                        }
+                    ],
+                    "type": "graph",
+                    "name": "220521cb-eaba-4fe2-aabf-78b19bd49567",
+                    "children": [
+                        {
+                            "type": "finish",
+                            "name": "272eb7dd5e26a51d492d8953bb889c",
+                            "children": []
+                        },
+                        {
+                            "allowFailure": false,
+                            "useImpersonation": false,
+                            "showHidden": false,
+                            "impersonationUseSudo": false,
+                            "impersonationUseSsh": false,
+                            "commandName": "Check if Tomcat is alive",
+                            "pluginName": "Tomcat",
+                            "pluginVersion": 7,
+                            "properties": {
+                                "timeout": "${p:environment\/tomcat.timeout}",
+                                "port": "${p:environment\/tomcat.port}",
+                                "hostname": "${p:environment\/tomcat.host}"
+                            },
+                            "type": "plugin",
+                            "name": "Check if Tomcat is alive",
+                            "children": []
+                        },
+                        {
+                            "propertyName": "${p:agent\/sys.os.name}",
+                            "type": "switch",
+                            "name": "Which OS?",
+                            "children": []
+                        },
+                        {
+                            "allowFailure": false,
+                            "useImpersonation": false,
+                            "showHidden": false,
+                            "impersonationUseSudo": false,
+                            "impersonationUseSsh": false,
+                            "commandName": "Stop Service",
+                            "pluginName": "Service Control Manager",
+                            "pluginVersion": 5,
+                            "properties": {
+                                "Service": "${environment\/tomcat.service.name}",
+                                "argString": "",
+                                "waitFor": "true"
+                            },
+                            "type": "plugin",
+                            "name": "Stop Service",
+                            "children": []
+                        },
+                        {
+                            "allowFailure": false,
+                            "useImpersonation": false,
+                            "showHidden": false,
+                            "impersonationUseSudo": false,
+                            "impersonationUseSsh": false,
+                            "commandName": "Stop Tomcat",
+                            "pluginName": "Tomcat",
+                            "pluginVersion": 7,
+                            "properties": {
+                                "launcherLocation": "${p:environment\/tomcat.launcher.stop}",
+                                "options": "${environment\/tomcat.launcher.start.options}",
+                                "timeout": "${p:environment\/tomcat.timeout}",
+                                "port": "${p:environment\/tomcat.port}",
+                                "hostname": "${p:environment\/tomcat.host}",
+                                "catalinaHome": "",
+                                "jdkHome": "",
+                                "jreHome": ""
+                            },
+                            "type": "plugin",
+                            "name": "Stop Tomcat",
+                            "children": []
+                        },
+                        {
+                            "status": "SUCCESS",
+                            "type": "setStatus",
+                            "name": "c5e5-6925-4d8e-f2fd",
+                            "children": []
+                        }
+                    ]
+                }
+            }
+        ],
+        "taskDefs": []
+    },
+    "sourceConfigTypeName": "File System (Versioned)",
+    "envPropDefs": [{
+        "name": "messages.home",
+        "label": "Home Message",
+        "extendedLabel": "Home Message",
+        "type": "TEXT",
+        "value": "Welcome ${p:request.user.name}",
+        "required": true,
+        "description": "An example message to be injected into the home page",
+        "hidden": false
+    }],
+    "versionPropDefs": [],
+    "propSheetGroup": {"propSheets": [
+        {
+            "name": "template",
+            "properties": []
+        },
+        {
+            "name": "code_station",
+            "properties": [{
+                "name": "repository",
+                "value": "683f2d6e-1928-4b25-b4a3-15d58a9efa37",
+                "description": "",
+                "secure": false
+            }]
+        },
+        {
+            "name": "custom",
+            "properties": []
+        },
+        {
+            "name": "FileSystemVersionedComponentProperties",
+            "properties": [
+                {
+                    "name": "basePath",
+                    "value": "C:\\Temp\\components\\java-web-app\\",
+                    "description": "",
+                    "secure": false
+                },
+                {
+                    "name": "pollingPeriod",
+                    "description": "",
+                    "secure": false
+                },
+                {
+                    "name": "quietPeriod",
+                    "description": "",
+                    "secure": false
+                },
+                {
+                    "name": "saveFileExecuteBits",
+                    "description": "",
+                    "secure": false
+                }
+            ]
+        }
+    ]},
+    "processes": [],
+    "taskDefs": [],
+    "configTemplates": [{
+        "name": "application.yml",
+        "active": true,
+        "data": "server:\n  port: 9080\n\nmessages:\n  home: @messages.home@\n\nspring:\n  thymeleaf:\n    cache: false\n    check-template: true\n    check-template-location: true\n    content-type: text\/html\n    enabled: true\n    encoding: UTF-8\n    # excluded-view-names:\n    # mode: HTML5\n    # prefix: \/templates\/\n    # suffix: .html\n    # template-resolver-order:\n    # view-names:\n\nexample:\n  db:\n    host: @example.db.host@\n    port: @example.db.port@\n    name: @example.db.name@\n    username: @example.db.username@\n    password: @example.db.password@"
+    }],
+    "templateVersion": -1,
+    "usingLatestProperties": false
+}
