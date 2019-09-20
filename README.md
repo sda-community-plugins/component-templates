@@ -10,13 +10,13 @@ The following templates are available:
    An example of how to deploy a Microsoft .NET Web Application to Microsoft IIS and update
    database connection settings
    
- - [java-tomcat]()  
+ - [java-tomcat](java-tomcat/)  
    A example of how to deploy a Java Web application to Apache Tomcat on multiple platforms
    
- - [docker-app]()  
+ - [docker-app](docker-app/)  
    An example of how to deploy a "dockerized" application from [DockerHub](https://hub.docker.com/)
    
- - [adhoc-deploy]()  
+ - [adhoc-deploy](adhoc-deploy/)  
    An example of how to create an adhoc deployment process where the amount and type of
    inputs change each time, this is typical for SQL or Oracle based applications
    
