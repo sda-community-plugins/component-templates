@@ -23,6 +23,10 @@ The following templates are available:
    An example of how to create an adhoc deployment process where the amount and type of
    inputs change each time, this is typical for SQL or Oracle based applications
    
+ - [db-deploy](db-deploy)
+   An example of to use the Deployment Automation provided [DB Upgrader](http://help.serena.com/doc_center/sra/ver6_2_3/SDA_Plugin_Index/sra_plug_dbupgrader.html#sradbupgraderplug) 
+   plugin to upgrade and rollback database versions using XML changesets.
+   
 To make use of the templates:
 
  1. Clone or download this repository from GitHub; to clone:  
