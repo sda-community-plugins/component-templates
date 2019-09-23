@@ -1,16 +1,16 @@
 # Ad-hoc Deployment Template
 
 This Component Template is an example of how to deploy ad-hoc releases where the type and number of inputs change
-each time. An example is SQL releases where different .SQL files are released each time and need to be executed
+each time. An example is SQL releases where different ".SQL" files are released each time and need to be executed
 in a particular sequence. Middleware application infrastructure such as Oracle Forms and Reports also require ad-hoc
 releases.  
 
 The way this template works is by dynamically creating a set of scripts for different file types using a `release.xml`
-input file - see the [example](example\release.xml). XML is used because it is relatively easy to apply an XSLT 
+input file - see the [example](example/release.xml). XML is used because it is relatively easy to apply an XSLT 
 transformation to extract the data pertaining to particular types of files and construct an executable script.  
 
-As a bonus a transformation can also be applied to the `release.xml` file to create an HTML release note - see the
-[example ouput](output\example-release.html).
+As a bonus, a transformation can also be applied to the `release.xml` file to create an HTML release note - see the
+[example ouput](output/example-release.html).
 
 Processes
 ---------
@@ -47,7 +47,7 @@ Files
 
 In order to use the template you will also need to create a Deployment Automation 
 [System Property](http://help.serena.com/doc_center/sra/ver6_3/sda_help/sra_adm_sys_properties.html)
-called `adhocScripts` that refers to the location of the IIS `AppCmd.exe` program on your server,
+called `adhocScripts` that refers to the location of the XSLT transformation scripts on your server,
 e.g. `C:\Temp\Deployment Automation Scripts`.  For production usage this property would be better set as a [Resource
 Property](http://help.serena.com/doc_center/sra/ver6_3/sda_help/sra_resource_props.html#sraresourceprops)
  but is system wide property here for simplicity.  

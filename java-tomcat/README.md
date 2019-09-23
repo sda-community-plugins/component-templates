@@ -1,6 +1,6 @@
 # Java Tomcat Deployment Template
 
-This component template is an example of how to deploy a Java Web Archive (.WAR) to [Apache Tomcat](http://tomcat.apache.org/). 
+This Component Template is an example of how to deploy a Java Web Archive (.WAR) to [Apache Tomcat](http://tomcat.apache.org/). 
 It primarily makes use of the Deployment Automation 
 [Apache Tomcat](http://help.serena.com/doc_center/sra/ver6_2_3/SDA_Plugin_Index/sra_plug_tomcat.html#sratomcatplug) plugin.
 

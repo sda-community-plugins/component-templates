@@ -1,6 +1,6 @@
 # Microsoft .NET Web App deployment to IIS
 
-This component template is an example of how to deploy a Microsoft .NET Web App (with a backend
+This Component Template is an example of how to deploy a Microsoft .NET Web App (with a backend
 database) to Microsoft IIS. It primarily makes use of the Deployment Automation 
 [IIS AppCmd](http://help.serena.com/doc_center/sra/ver6_2_3/SDA_Plugin_Index/sra_plug_iisappcmd.html#sraiisappcmd) plugin.
 
