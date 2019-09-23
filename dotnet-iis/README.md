@@ -10,11 +10,13 @@ The template contains the following processes:
 
  - **deploy-to-iis**  
    This process is the main deployment process that creates/updates an IIS Application Pool,
-   Application and Site. It downloads the files from a component version stored in Deployment Automation and synchronizes 
+   Application and Site. It downloads the files from a [Component Version](http://help.serena.com/doc_center/sra/ver6_3/sda_help/ConcCompVer.html#concept651)
+   stored in Deployment Automation and synchronizes 
    them into the  IIS `webroot` directory. It also calls the **update-connection-settings** process below to update the 
-   entries in a `ConnectionStrings.config` file using environment properties stored in Deployment Automation.  
+   entries in a `ConnectionStrings.config` file using [Application Environment Properties](http://help.serena.com/doc_center/sra/ver6_3/sda_help/ProcAppEnvPropsNew.html#task586)
+   stored in Deployment Automation.  
    
-   Note: this process requires the structure of your web application is represented in a component version in Deployment 
+   Note: this process requires the structure of your web application is represented in a Component Version in Deployment 
    Automation - although you could also create a ".Zip" file and extract it as part of the process.
  - **recycle-app-pool**  
    This process simply recycles an Application Pool
@@ -45,10 +47,12 @@ Property Name                             | Description
 **site.bindings**                         | The bindings to be applied to the website, e.g. HTTP port etc
 **virtualPath.name**                      | The virtual path to the website when accessed from a browser
 
-In order to use the processes you will also need to create a Deployment Automation system property
+In order to use the processes you will also need to create a Deployment Automation 
+[System Property](http://help.serena.com/doc_center/sra/ver6_3/sda_help/sra_adm_sys_properties.html)
 called `appcmd.commandPath` that refers to the location of the IIS `AppCmd.exe` program on your server,
-e.g. `C:\Windows\System32\inetsrv\`.  For production usage this property would be better set as a resource
-property but is system wide property here for simplicity.   
+e.g. `C:\Windows\System32\inetsrv\`.  For production usage this property would be better set as a [Resource
+Property](http://help.serena.com/doc_center/sra/ver6_3/sda_help/sra_resource_props.html#sraresourceprops)
+ but is system wide property here for simplicity.   
 
 Files
 -----

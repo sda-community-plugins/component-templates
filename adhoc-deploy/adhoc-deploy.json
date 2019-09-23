@@ -1,0 +1,686 @@
+{
+    "entityType": "ComponentTemplate",
+    "name": "adhoc-deploy",
+    "description": "Adhoc Deployment Template",
+    "active": true,
+    "envPropDefs": [
+        {
+            "name": "SQL_USERNAME",
+            "label": "Database Username",
+            "extendedLabel": "Database Username",
+            "type": "TEXT",
+            "required": true,
+            "description": "Database username",
+            "hidden": false
+        },
+        {
+            "name": "SQL_PASSWORD",
+            "label": "Database Password",
+            "extendedLabel": "Database Password",
+            "type": "SECURE",
+            "required": true,
+            "description": "Database Password",
+            "hidden": false
+        }
+    ],
+    "versionPropDefs": [],
+    "propDefs": [],
+    "properties": [],
+    "processes": [
+        {
+            "name": "deploy-release",
+            "description": "Deploy all ad-hoc files as part of a release",
+            "defaultWorkingDir": "${p:resource\/work.dir}\/${p:component.name}",
+            "takesVersion": true,
+            "inventoryActionType": "ADD",
+            "status": "Active",
+            "configActionType": "ADD",
+            "active": true,
+            "deleted": false,
+            "executionTimeout": 0,
+            "propDefs": [],
+            "rootActivity": {
+                "edges": [
+                    {
+                        "to": "Run SQL",
+                        "from": "Compile Form",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Execute Copy",
+                        "from": "Replace SQL Credentials",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Execute Copy",
+                        "from": "Extract Shell Commands",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Compile Form",
+                        "from": "Execute Copy",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Cleanup Directory",
+                        "type": "ALWAYS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Generate Release Note",
+                        "from": "Run SQL",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Download Artifacts",
+                        "from": "Cleanup Directory",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "3987846fd6a0a1e59ceec122f00a60",
+                        "from": "Upload Step Attachment",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Execute Copy",
+                        "from": "Extract Copy Commands",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Extract Shell Commands",
+                        "from": "Download Artifacts",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Extract Copy Commands",
+                        "from": "Download Artifacts",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Execute Copy",
+                        "from": "Extract Form Commands",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Replace SQL Credentials",
+                        "from": "Extract SQL Commands",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Extract SQL Commands",
+                        "from": "Download Artifacts",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Upload Step Attachment",
+                        "from": "Generate Release Note",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Extract Form Commands",
+                        "from": "Download Artifacts",
+                        "type": "SUCCESS",
+                        "value": ""
+                    }
+                ],
+                "offsets": [
+                    {
+                        "name": "3987846fd6a0a1e59ceec122f00a60",
+                        "x": -5,
+                        "y": 1065
+                    },
+                    {
+                        "name": "Cleanup Directory",
+                        "x": -69,
+                        "y": 90
+                    },
+                    {
+                        "name": "Compile Form",
+                        "x": -64,
+                        "y": 690
+                    },
+                    {
+                        "name": "Extract Form Commands",
+                        "x": 31,
+                        "y": 365
+                    },
+                    {
+                        "name": "Run SQL",
+                        "x": -49,
+                        "y": 770
+                    },
+                    {
+                        "name": "Replace SQL Credentials",
+                        "x": -214,
+                        "y": 450
+                    },
+                    {
+                        "name": "Upload Step Attachment",
+                        "x": -99,
+                        "y": 960
+                    },
+                    {
+                        "name": "Extract Copy Commands",
+                        "x": -461.5,
+                        "y": 365
+                    },
+                    {
+                        "name": "Execute Copy",
+                        "x": -64,
+                        "y": 610
+                    },
+                    {
+                        "name": "Download Artifacts",
+                        "x": -94,
+                        "y": 220
+                    },
+                    {
+                        "name": "Extract Shell Commands",
+                        "x": 297.5,
+                        "y": 365
+                    },
+                    {
+                        "name": "Extract SQL Commands",
+                        "x": -209,
+                        "y": 365
+                    },
+                    {
+                        "name": "Generate Release Note",
+                        "x": -89,
+                        "y": 874.0595238095237
+                    }
+                ],
+                "sizes": [
+                    {
+                        "name": "Upload Step Attachment",
+                        "width": 0,
+                        "height": 0
+                    },
+                    {
+                        "name": "Execute Copy",
+                        "width": 0,
+                        "height": 0
+                    },
+                    {
+                        "name": "Extract Copy Commands",
+                        "width": 0,
+                        "height": 0
+                    },
+                    {
+                        "name": "Replace SQL Credentials",
+                        "width": 0,
+                        "height": 0
+                    },
+                    {
+                        "name": "Generate Release Note",
+                        "width": 0,
+                        "height": 0
+                    },
+                    {
+                        "name": "Download Artifacts",
+                        "width": 0,
+                        "height": 0
+                    },
+                    {
+                        "name": "Compile Form",
+                        "width": 0,
+                        "height": 0
+                    },
+                    {
+                        "name": "Extract Shell Commands",
+                        "width": 0,
+                        "height": 0
+                    },
+                    {
+                        "name": "Cleanup Directory",
+                        "width": 0,
+                        "height": 0
+                    },
+                    {
+                        "name": "Extract SQL Commands",
+                        "width": 0,
+                        "height": 0
+                    },
+                    {
+                        "name": "3987846fd6a0a1e59ceec122f00a60",
+                        "width": 0,
+                        "height": 0
+                    },
+                    {
+                        "name": "Extract Form Commands",
+                        "width": 0,
+                        "height": 0
+                    },
+                    {
+                        "name": "Run SQL",
+                        "width": 0,
+                        "height": 0
+                    }
+                ],
+                "type": "graph",
+                "name": "6388103c-bafe-431e-abbb-b25feaf1c71c",
+                "children": [
+                    {
+                        "type": "finish",
+                        "name": "3987846fd6a0a1e59ceec122f00a60",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "commandName": "Download Artifacts",
+                        "pluginName": "DA Versioned File Storage",
+                        "pluginVersion": 23,
+                        "properties": {
+                            "directoryOffset": ".",
+                            "fileIncludePatterns": "**\/*",
+                            "fileExcludePatterns": "",
+                            "syncMode": "true",
+                            "fullVerification": "true",
+                            "setFileExecuteBits": "true",
+                            "verifyFileIntegrity": "false",
+                            "repositoryUrl": "${p:server.url}\/vfs",
+                            "repositoryId": "${p:component\/code_station\/repository}",
+                            "label": "${p:version.name}",
+                            "serverUrl": "${p:server.url}",
+                            "compId": "${p:component.id}",
+                            "resId": "${p:resource.id}"
+                        },
+                        "type": "plugin",
+                        "name": "Download Artifacts",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "commandName": "Apply XSL transformation",
+                        "pluginName": "XmlUtils",
+                        "pluginVersion": 3,
+                        "properties": {
+                            "inputXML": "release.xml",
+                            "inputXSLT": "${p:system\/adhocScripts}\\run_script.xslt",
+                            "output": "run.cmd"
+                        },
+                        "type": "plugin",
+                        "name": "Extract Shell Commands",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "commandName": "Apply XSL transformation",
+                        "pluginName": "XmlUtils",
+                        "pluginVersion": 3,
+                        "properties": {
+                            "inputXML": "release.xml",
+                            "inputXSLT": "${p:system\/adhocScripts}\\copy_files.xslt",
+                            "output": "copy_files.cmd"
+                        },
+                        "type": "plugin",
+                        "name": "Extract Copy Commands",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "commandName": "Apply XSL transformation",
+                        "pluginName": "XmlUtils",
+                        "pluginVersion": 3,
+                        "properties": {
+                            "inputXML": "release.xml",
+                            "inputXSLT": "${p:system\/adhocScripts}\\run_sql.xslt",
+                            "output": "run_sql.cmd"
+                        },
+                        "type": "plugin",
+                        "name": "Extract SQL Commands",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": true,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "commandName": "Replace Tokens",
+                        "pluginName": "File Utils",
+                        "pluginVersion": 33,
+                        "properties": {
+                            "dir": "",
+                            "includes": "run_sqlplus.cmd",
+                            "excludes": "",
+                            "startDelimiter": "@",
+                            "endDelimiter": "@",
+                            "propertyPrefix": "",
+                            "propFile": "replace_tokens.properties",
+                            "envPropValues": "${p:environment\/allProperties}",
+                            "explicitTokens": ""
+                        },
+                        "type": "plugin",
+                        "name": "Replace SQL Credentials",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "commandName": "Shell",
+                        "pluginName": "Shell",
+                        "pluginVersion": 4,
+                        "properties": {
+                            "directoryOffset": ".",
+                            "shellInterpreter": "",
+                            "scriptBody": "copy_files.cmd",
+                            "runAsDaemon": "",
+                            "outputFile": ""
+                        },
+                        "type": "plugin",
+                        "name": "Execute Copy",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "commandName": "Shell",
+                        "pluginName": "Shell",
+                        "pluginVersion": 4,
+                        "properties": {
+                            "directoryOffset": ".",
+                            "shellInterpreter": "",
+                            "scriptBody": "run_sql.cmd",
+                            "runAsDaemon": "",
+                            "outputFile": ""
+                        },
+                        "type": "plugin",
+                        "name": "Run SQL",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "commandName": "Delete Files and Directories",
+                        "pluginName": "File Utils",
+                        "pluginVersion": 33,
+                        "properties": {
+                            "baseDir": ".",
+                            "includes": "**\/*",
+                            "excludes": "",
+                            "followSymlinks": "",
+                            "caseSensitive": "true"
+                        },
+                        "type": "plugin",
+                        "name": "Cleanup Directory",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "commandName": "Apply XSL transformation",
+                        "pluginName": "XmlUtils",
+                        "pluginVersion": 3,
+                        "properties": {
+                            "inputXML": "release.xml",
+                            "inputXSLT": "${p:system\/adhocScripts}\\release_note.xslt",
+                            "output": "release.html"
+                        },
+                        "type": "plugin",
+                        "name": "Generate Release Note",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "commandName": "Upload Step Attachment",
+                        "pluginName": "DA Versioned File Storage",
+                        "pluginVersion": 23,
+                        "properties": {
+                            "attachmentName": "Release Note",
+                            "path": "release.html",
+                            "targetStep": "Generate Release Note",
+                            "format": "html",
+                            "deleteAfterUpload": "false"
+                        },
+                        "type": "plugin",
+                        "name": "Upload Step Attachment",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "commandName": "Apply XSL transformation",
+                        "pluginName": "XmlUtils",
+                        "pluginVersion": 3,
+                        "properties": {
+                            "inputXML": "release.xml",
+                            "inputXSLT": "${p:system\/adhocScripts}\\compile_form.xslt",
+                            "output": "compile_form.cmd"
+                        },
+                        "type": "plugin",
+                        "name": "Extract Form Commands",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "commandName": "Shell",
+                        "pluginName": "Shell",
+                        "pluginVersion": 4,
+                        "properties": {
+                            "directoryOffset": ".",
+                            "shellInterpreter": "",
+                            "scriptBody": "compile_form.cmd",
+                            "runAsDaemon": "",
+                            "outputFile": ""
+                        },
+                        "type": "plugin",
+                        "name": "Compile Form",
+                        "children": []
+                    }
+                ]
+            }
+        },
+        {
+            "name": "generate-release-note",
+            "description": "Generate HTML release note from imported version",
+            "defaultWorkingDir": "${p:resource\/work.dir}\/${p:component.name}",
+            "takesVersion": true,
+            "status": "",
+            "active": true,
+            "deleted": false,
+            "executionTimeout": 0,
+            "propDefs": [],
+            "rootActivity": {
+                "edges": [
+                    {
+                        "to": "Generate Release Note",
+                        "from": "Download Artifacts",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "3987846fd6a0a1e59ceec122f00a60",
+                        "from": "Upload Step Attachment",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Upload Step Attachment",
+                        "from": "Generate Release Note",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Download Artifacts",
+                        "type": "ALWAYS",
+                        "value": ""
+                    }
+                ],
+                "offsets": [
+                    {
+                        "name": "Generate Release Note",
+                        "x": -84,
+                        "y": 200
+                    },
+                    {
+                        "name": "Upload Step Attachment",
+                        "x": -94,
+                        "y": 316
+                    },
+                    {
+                        "name": "3987846fd6a0a1e59ceec122f00a60",
+                        "x": 1,
+                        "y": 430
+                    },
+                    {
+                        "name": "Download Artifacts",
+                        "x": -94,
+                        "y": 100
+                    }
+                ],
+                "sizes": [
+                    {
+                        "name": "3987846fd6a0a1e59ceec122f00a60",
+                        "width": 0,
+                        "height": 0
+                    },
+                    {
+                        "name": "Generate Release Note",
+                        "width": 0,
+                        "height": 0
+                    },
+                    {
+                        "name": "Upload Step Attachment",
+                        "width": 0,
+                        "height": 0
+                    },
+                    {
+                        "name": "Download Artifacts",
+                        "width": 0,
+                        "height": 0
+                    }
+                ],
+                "type": "graph",
+                "name": "45cf9a41-e822-4b2e-aede-2157efdece75",
+                "children": [
+                    {
+                        "type": "finish",
+                        "name": "3987846fd6a0a1e59ceec122f00a60",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "commandName": "Apply XSL transformation",
+                        "pluginName": "XmlUtils",
+                        "pluginVersion": 3,
+                        "properties": {
+                            "inputXML": "release.xml",
+                            "inputXSLT": "${p:system\/adhocScripts}\\release_note.xslt",
+                            "output": "release.html"
+                        },
+                        "type": "plugin",
+                        "name": "Generate Release Note",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "commandName": "Upload Step Attachment",
+                        "pluginName": "DA Versioned File Storage",
+                        "pluginVersion": 23,
+                        "properties": {
+                            "attachmentName": "Release Note",
+                            "path": "release.html",
+                            "targetStep": "Generate Release Note",
+                            "format": "html",
+                            "deleteAfterUpload": "false"
+                        },
+                        "type": "plugin",
+                        "name": "Upload Step Attachment",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "commandName": "Download Artifacts",
+                        "pluginName": "DA Versioned File Storage",
+                        "pluginVersion": 23,
+                        "properties": {
+                            "directoryOffset": ".",
+                            "fileIncludePatterns": "**\/*",
+                            "fileExcludePatterns": "",
+                            "syncMode": "true",
+                            "fullVerification": "true",
+                            "setFileExecuteBits": "false",
+                            "verifyFileIntegrity": "false",
+                            "repositoryUrl": "${p:server.url}\/vfs",
+                            "repositoryId": "${p:component\/code_station\/repository}",
+                            "label": "${p:version.name}",
+                            "serverUrl": "${p:server.url}",
+                            "compId": "${p:component.id}",
+                            "resId": "${p:resource.id}"
+                        },
+                        "type": "plugin",
+                        "name": "Download Artifacts",
+                        "children": []
+                    }
+                ]
+            }
+        }
+    ],
+    "taskDefs": []
+}

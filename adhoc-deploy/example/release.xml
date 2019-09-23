@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<release>
+	<!-- Release information -->
+	<name>Middleware Example</name>
+	<description>Example Release Files</description>
+	<system>Middleware</system>
+	<subsystem>Custom</subsystem>
+	<date>01/06/2019</date>
+	<!-- could be pulled from VCS -->
+	<version>1.0-1</version>
+	<deployment>
+		<files>
+			<!--
+				Insert line for each file to be deployed; structure is:
+					name: the file name
+					type: the type of file
+					version: the version number (from VCS)
+					source: the relative directory the file is contained in
+					destination: the destination to copy the file to on the server
+					copy: whether to copy the file or not (usually true)
+					execute: should the file be executed, i.e. a batch/script file
+					chmod: what permissions should the file be given
+			-->
+			<file name="example1.jil" type="file" version="1.1" source="jil"
+				destination="C:\Temp\middleware" copy="true" />
+			<file name="example1.mqsc" type="file" version="1.1" source="mq"
+				destination="C:\Temp\middleware" copy="true" />
+			<file name="example1.cmd" type="script" version="1.0" source="script"
+				destination="C:\Temp\middleware" copy="true" execute="true" chmod="755" />
+			<file name="create-location-table.sql" type="sql" version="1.0" source="sql"
+				destination="C:\Temp\middleware" copy="true" execute="true"/>	
+			<file name="insert-location-data.sql" type="sql" version="1.0" source="sql"
+				destination="C:\Temp\middleware" copy="true" execute="true" />	
+			<file name="LOCATION.fmb" type="form" version="1.0" source="forms"
+				destination="C:\Temp\middleware\forms" copy="true" compile="true" />
+		</files>
+	</deployment>
+	<rollback>
+		<!-- not currently used -->
+	</rollback>
+</release>

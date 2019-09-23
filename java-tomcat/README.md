@@ -40,8 +40,8 @@ The template contains the following processes:
 Properties
 ----------
 
-The template includes the following environment properties that you should set for each Application
-Environment:
+The template includes the following environment properties that you should set for each [Application
+Environment](http://help.serena.com/doc_center/sra/ver6_3/sda_help/sra_ui_appenvs.html#srauienv):
 
 Property Name                             | Description
 ------------------------------------------|----------------------------------------------------------------------
