@@ -1,0 +1,892 @@
+{
+    "entityType": "ComponentTemplate",
+    "name": "db-deploy",
+    "description": "Database deployment using DBUpgrader plugin",
+    "active": true,
+    "envPropDefs": [
+        {
+            "name": "driver.class.name",
+            "label": "JDBC Driver Classname",
+            "extendedLabel": "JDBC Driver Classname",
+            "type": "TEXT",
+            "value": "com.microsoft.sqlserver.jdbc.SQLServerDriver",
+            "required": true,
+            "description": "The Java class name of the JDBC driver to use",
+            "hidden": false
+        },
+        {
+            "name": "driver.jar.path",
+            "label": "JDBC Driver Location",
+            "extendedLabel": "JDBC Driver Location",
+            "type": "TEXT",
+            "required": true,
+            "description": "The full path to the directory containing the JDBC driver JAR",
+            "hidden": false
+        },
+        {
+            "name": "driver.jar",
+            "label": "JDBC Driver JAR",
+            "extendedLabel": "JDBC Driver JAR",
+            "type": "TEXT",
+            "value": "sqljdbc42.jar",
+            "required": true,
+            "description": "The filename of the JDBC driver JAR",
+            "hidden": false
+        },
+        {
+            "name": "db.url",
+            "label": "JDBC Database URL",
+            "extendedLabel": "JDBC Database URL",
+            "type": "TEXT",
+            "value": "jdbc:sqlserver:\/\/${p:environment\/db.server};databaseName=${p:environment\/db.name}",
+            "required": true,
+            "description": "The JDBC URL for the database",
+            "hidden": false
+        },
+        {
+            "name": "db.username",
+            "label": "Database Username",
+            "extendedLabel": "Database Username",
+            "type": "TEXT",
+            "required": true,
+            "description": "The database username",
+            "hidden": false
+        },
+        {
+            "name": "db.password",
+            "label": "Database Password",
+            "extendedLabel": "Database Password",
+            "type": "SECURE",
+            "required": true,
+            "description": "The password for the database user",
+            "hidden": false
+        },
+        {
+            "name": "db.name",
+            "label": "Database Name",
+            "extendedLabel": "Database Name",
+            "type": "TEXT",
+            "required": true,
+            "description": "The name of the database",
+            "hidden": false
+        },
+        {
+            "name": "db.server",
+            "label": "Database Server",
+            "extendedLabel": "Database Server",
+            "type": "TEXT",
+            "required": true,
+            "description": "The database server hostname and port for the environment, e.g. localhost:3306",
+            "hidden": false
+        }
+    ],
+    "versionPropDefs": [],
+    "propDefs": [],
+    "properties": [],
+    "processes": [
+        {
+            "name": "db-clean",
+            "description": "Delete DB_VERSION table and other if required",
+            "defaultWorkingDir": "${p:resource\/work.dir}\/${p:component.name}",
+            "takesVersion": false,
+            "status": "",
+            "active": true,
+            "deleted": false,
+            "executionTimeout": 0,
+            "propDefs": [{
+                "name": "cleanup.sql",
+                "label": "Cleanup SQL Script",
+                "extendedLabel": "Cleanup SQL Script",
+                "type": "TEXTAREA",
+                "value": "DROP TABLE \"DB_VERSION\";\n\n#DROP TABLE \"BOOKING\";\n#DROP TABLE \"LOCATION\";\n#DROP TABLE \"PAYMENT_CARD\";\n#DROP TABLE \"USER_ROLE\";\n#DROP TABLE \"ROLE\";\n#DROP TABLE \"VEHICLE\";\n#DROP TABLE \"USER\";\n#DROP TABLE \"NEWS\";\n#DROP TABLE \"CURRENCY\";\n#DROP PROCEDURE GetCurrencyRate;",
+                "required": true,
+                "description": "The SQL used to cleanup the database",
+                "hidden": false
+            }],
+            "rootActivity": {
+                "edges": [
+                    {
+                        "to": "Execute SQL Scripts",
+                        "from": "Create File",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Create File",
+                        "type": "ALWAYS",
+                        "value": ""
+                    },
+                    {
+                        "to": "75a283670957b5d83d553cb0106bb3",
+                        "from": "Execute SQL Scripts",
+                        "type": "SUCCESS",
+                        "value": ""
+                    }
+                ],
+                "offsets": [
+                    {
+                        "name": "Execute SQL Scripts",
+                        "x": -79,
+                        "y": 220
+                    },
+                    {
+                        "name": "75a283670957b5d83d553cb0106bb3",
+                        "x": 0,
+                        "y": 410
+                    },
+                    {
+                        "name": "Create File",
+                        "x": -49,
+                        "y": 110
+                    }
+                ],
+                "sizes": [
+                    {
+                        "name": "Create File",
+                        "width": 0,
+                        "height": 0
+                    },
+                    {
+                        "name": "Execute SQL Scripts",
+                        "width": 0,
+                        "height": 0
+                    },
+                    {
+                        "name": "75a283670957b5d83d553cb0106bb3",
+                        "width": 0,
+                        "height": 0
+                    }
+                ],
+                "type": "graph",
+                "name": "12ec1aae-b3ec-46c3-8ebb-5b85a478bb0d",
+                "children": [
+                    {
+                        "type": "finish",
+                        "name": "75a283670957b5d83d553cb0106bb3",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "commandName": "Execute SQL Scripts",
+                        "pluginName": "SQL-JDBC",
+                        "pluginVersion": 4,
+                        "properties": {
+                            "jdbcDriver": "${p:environment\/driver.class.name}",
+                            "jdbcJar": "${p:environment\/driver.jar.path}\/${p:environment\/driver.jar}",
+                            "connectionString": "${p:environment\/db.url}",
+                            "username": "${p:environment\/db.username}",
+                            "password": "pbe{W2kEYM9Z\/Xe3XmNiiGuzdi867681M9ddJLswaGdI2lPMcUmdEp6mlOjfnoryKvc8}",
+                            "passScript": "",
+                            "files": "empty-${p:environment\/db.name}.sql",
+                            "includes": "",
+                            "excludes": "",
+                            "delimiter": ";",
+                            "autocommit": "true",
+                            "print": "true",
+                            "onerror": "abort"
+                        },
+                        "type": "plugin",
+                        "name": "Execute SQL Scripts",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "commandName": "Create File",
+                        "pluginName": "File Utils",
+                        "pluginVersion": 33,
+                        "properties": {
+                            "file": "empty-${p:environment\/db.name}.sql",
+                            "contents": "${p:cleanup.sql}",
+                            "overwrite": "true"
+                        },
+                        "type": "plugin",
+                        "name": "Create File",
+                        "children": []
+                    }
+                ]
+            }
+        },
+        {
+            "name": "db-deploy",
+            "description": "Deploy database changes",
+            "defaultWorkingDir": "${p:resource\/work.dir}\/${p:component.name}",
+            "takesVersion": true,
+            "inventoryActionType": "ADD",
+            "status": "Active",
+            "configActionType": "ADD",
+            "active": true,
+            "deleted": false,
+            "executionTimeout": 0,
+            "propDefs": [],
+            "rootActivity": {
+                "edges": [
+                    {
+                        "to": "099e-963f-692e-b131",
+                        "from": "a6b1-dd94-9ba8-9450",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "099e-963f-692e-b131",
+                        "from": "Upgrade DB",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Rollback DB",
+                        "from": "Upgrade DB",
+                        "type": "FAILURE",
+                        "value": ""
+                    },
+                    {
+                        "to": "Upgrade DB",
+                        "from": "Download Artifacts",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Delete Resource Inventory For Component",
+                        "from": "Rollback DB",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "a6b1-dd94-9ba8-9450",
+                        "from": "Delete Resource Inventory For Component",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Download Artifacts",
+                        "type": "ALWAYS",
+                        "value": ""
+                    }
+                ],
+                "offsets": [
+                    {
+                        "name": "Download Artifacts",
+                        "x": -94,
+                        "y": 100
+                    },
+                    {
+                        "name": "Rollback DB",
+                        "x": 197.5,
+                        "y": 427
+                    },
+                    {
+                        "name": "Delete Resource Inventory For Component",
+                        "x": 114.5,
+                        "y": 538
+                    },
+                    {
+                        "name": "Upgrade DB",
+                        "x": -54,
+                        "y": 220
+                    },
+                    {
+                        "name": "099e-963f-692e-b131",
+                        "x": 0,
+                        "y": 766
+                    },
+                    {
+                        "name": "a6b1-dd94-9ba8-9450",
+                        "x": 204.5,
+                        "y": 650
+                    }
+                ],
+                "sizes": [
+                    {
+                        "name": "099e-963f-692e-b131",
+                        "width": 0,
+                        "height": 0
+                    },
+                    {
+                        "name": "Delete Resource Inventory For Component",
+                        "width": 0,
+                        "height": 0
+                    },
+                    {
+                        "name": "Download Artifacts",
+                        "width": 0,
+                        "height": 0
+                    },
+                    {
+                        "name": "a6b1-dd94-9ba8-9450",
+                        "width": 0,
+                        "height": 0
+                    },
+                    {
+                        "name": "Upgrade DB",
+                        "width": 0,
+                        "height": 0
+                    },
+                    {
+                        "name": "Rollback DB",
+                        "width": 0,
+                        "height": 0
+                    }
+                ],
+                "type": "graph",
+                "name": "13dbd1c1-290d-47a1-837c-c97d51660700",
+                "children": [
+                    {
+                        "type": "finish",
+                        "name": "099e-963f-692e-b131",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "commandName": "Download Artifacts",
+                        "pluginName": "DA Versioned File Storage",
+                        "pluginVersion": 23,
+                        "properties": {
+                            "directoryOffset": ".",
+                            "fileIncludePatterns": "**\/*",
+                            "fileExcludePatterns": "",
+                            "syncMode": "true",
+                            "fullVerification": "true",
+                            "setFileExecuteBits": "false",
+                            "verifyFileIntegrity": "false",
+                            "maxTries": "10",
+                            "repositoryUrl": "${p:server.url}\/vfs",
+                            "repositoryId": "${p:component\/code_station\/repository}",
+                            "label": "${p:version.name}",
+                            "serverUrl": "${p:server.url}",
+                            "compId": "${p:component.id}",
+                            "resId": "${p:resource.id}",
+                            "versionId": "${p:version.id}"
+                        },
+                        "type": "plugin",
+                        "name": "Download Artifacts",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "commandName": "Upgrade DB",
+                        "pluginName": "DBUpgrader",
+                        "pluginVersion": 3,
+                        "properties": {
+                            "driver": "${p:environment\/driver.class.name}",
+                            "dbJarDir": "${p:environment\/driver.jar.path}",
+                            "dbJar": "${p:environment\/driver.jar}",
+                            "dbUrl": "${p:environment\/db.url}",
+                            "dbUser": "${p:environment\/db.username}",
+                            "dbPass": "pbe{6GIFVpFVXWlQWp5ZDVJtaZK1WVebD2uTdqmexeVn4D3Q3v9ncbJwosSfyXSwdXz7}",
+                            "sqlFilePath": ".",
+                            "sqlFileInclude": "upgrade_sql_${p:version.name}.xml",
+                            "currentVersionSql": "SELECT VER FROM DB_VERSION WHERE RELEASE_NAME=?",
+                            "deleteVersionSql": "DELETE FROM DB_VERSION WHERE RELEASE_NAME=?",
+                            "updateVersionSql": "INSERT INTO DB_VERSION (RELEASE_NAME, VER) VALUES (?, ?)"
+                        },
+                        "type": "plugin",
+                        "name": "Upgrade DB",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "commandName": "Rollback DB",
+                        "pluginName": "DBUpgrader",
+                        "pluginVersion": 3,
+                        "properties": {
+                            "driver": "${p:environment\/driver.class.name}",
+                            "dbJarDir": "${p:environment\/driver.jar.path}",
+                            "dbJar": "${p:environment\/driver.jar}",
+                            "dbUrl": "${p:environment\/db.url}",
+                            "dbUser": "${p:environment\/db.username}",
+                            "dbPass": "pbe{nWaud7Bp21XoZldjJXclc5e\/iNa21gXtA3E2LZGoR3vbTEH+x01kwKlcuu\/kCDNe}",
+                            "sqlFilePath": ".",
+                            "sqlFileInclude": "upgrade_sql_${p:version.name}.xml",
+                            "targetVersion": "",
+                            "currentVersionSql": "SELECT VER FROM DB_VERSION WHERE RELEASE_NAME=?",
+                            "deleteVersionSql": "DELETE FROM DB_VERSION WHERE RELEASE_NAME=?",
+                            "updateVersionSql": "INSERT INTO DB_VERSION (RELEASE_NAME, VER) VALUES (?, ?)"
+                        },
+                        "type": "plugin",
+                        "name": "Rollback DB",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "commandName": "Delete Resource Inventory For Component",
+                        "pluginName": "DA Resource",
+                        "pluginVersion": 30,
+                        "properties": {
+                            "resource": "${p:resource.name}",
+                            "component": "${p:component.name}",
+                            "version": "${p:version.name}",
+                            "status": "Active"
+                        },
+                        "type": "plugin",
+                        "name": "Delete Resource Inventory For Component",
+                        "children": []
+                    },
+                    {
+                        "status": "FAILURE",
+                        "type": "setStatus",
+                        "name": "a6b1-dd94-9ba8-9450",
+                        "children": []
+                    }
+                ]
+            }
+        },
+        {
+            "name": "db-init",
+            "description": "Initialise database with DB_VERSION table",
+            "defaultWorkingDir": "${p:resource\/work.dir}\/${p:component.name}",
+            "takesVersion": false,
+            "status": "",
+            "active": true,
+            "deleted": false,
+            "executionTimeout": 0,
+            "propDefs": [{
+                "name": "init.sql",
+                "label": "init.sql",
+                "extendedLabel": "init.sql",
+                "type": "TEXTAREA",
+                "value": "create table DB_VERSION (\n    release_name varchar(255) not null,\n    ver numeric default 0 not null\n);",
+                "required": true,
+                "description": "The SQL required to create DB_VERSION table",
+                "hidden": false
+            }],
+            "rootActivity": {
+                "edges": [
+                    {
+                        "to": "Execute SQL Scripts",
+                        "from": "Create File",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "75a283670957b5d83d553cb0106bb3",
+                        "from": "Execute SQL Scripts",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Create File",
+                        "type": "ALWAYS",
+                        "value": ""
+                    }
+                ],
+                "offsets": [
+                    {
+                        "name": "Execute SQL Scripts",
+                        "x": -79,
+                        "y": 210
+                    },
+                    {
+                        "name": "Create File",
+                        "x": -49,
+                        "y": 100
+                    },
+                    {
+                        "name": "75a283670957b5d83d553cb0106bb3",
+                        "x": 0,
+                        "y": 400
+                    }
+                ],
+                "sizes": [
+                    {
+                        "name": "Execute SQL Scripts",
+                        "width": 0,
+                        "height": 0
+                    },
+                    {
+                        "name": "Create File",
+                        "width": 0,
+                        "height": 0
+                    },
+                    {
+                        "name": "75a283670957b5d83d553cb0106bb3",
+                        "width": 0,
+                        "height": 0
+                    }
+                ],
+                "type": "graph",
+                "name": "0417031d-df72-42d5-b811-994106c799a2",
+                "children": [
+                    {
+                        "type": "finish",
+                        "name": "75a283670957b5d83d553cb0106bb3",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "commandName": "Execute SQL Scripts",
+                        "pluginName": "SQL-JDBC",
+                        "pluginVersion": 4,
+                        "properties": {
+                            "jdbcDriver": "${p:environment\/driver.class.name}",
+                            "jdbcJar": "${p:environment\/driver.jar.path}\/${p:environment\/driver.jar}",
+                            "connectionString": "${p:environment\/db.url}",
+                            "username": "${p:environment\/db.username}",
+                            "password": "pbe{OlAVdd5fM17Qb1dp0mbgSWfxBD8+r8K7jKS8dGNYd0faQuHPXCI99MTutzQGvxOl}",
+                            "passScript": "",
+                            "files": "init-${p:environment\/db.name}.sql",
+                            "includes": "",
+                            "excludes": "",
+                            "delimiter": ";",
+                            "autocommit": "true",
+                            "print": "true",
+                            "onerror": "abort"
+                        },
+                        "type": "plugin",
+                        "name": "Execute SQL Scripts",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "commandName": "Create File",
+                        "pluginName": "File Utils",
+                        "pluginVersion": 33,
+                        "properties": {
+                            "file": "init-${p:environment\/db.name}.sql",
+                            "contents": "${p:init.sql}",
+                            "overwrite": "true"
+                        },
+                        "type": "plugin",
+                        "name": "Create File",
+                        "children": []
+                    }
+                ]
+            }
+        },
+        {
+            "name": "db-rollback",
+            "description": "Rollback database to a specific changeset",
+            "defaultWorkingDir": "${p:resource\/work.dir}\/${p:component.name}",
+            "takesVersion": true,
+            "status": "",
+            "active": true,
+            "deleted": false,
+            "executionTimeout": 0,
+            "propDefs": [{
+                "name": "target.version",
+                "label": "Target Version",
+                "extendedLabel": "Target Version",
+                "type": "TEXT",
+                "required": false,
+                "description": "If target version is specified, the database will not be rolled back to before that version ",
+                "hidden": false
+            }],
+            "rootActivity": {
+                "edges": [
+                    {
+                        "to": "Rollback DB",
+                        "from": "Download Artifacts",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Download Artifacts",
+                        "type": "ALWAYS",
+                        "value": ""
+                    },
+                    {
+                        "to": "0c5ce28c773991ad13cea33688e9d7",
+                        "from": "Delete Resource Inventory For Component",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Delete Resource Inventory For Component",
+                        "from": "Rollback DB",
+                        "type": "SUCCESS",
+                        "value": ""
+                    }
+                ],
+                "offsets": [
+                    {
+                        "name": "Download Artifacts",
+                        "x": -94,
+                        "y": 90
+                    },
+                    {
+                        "name": "0c5ce28c773991ad13cea33688e9d7",
+                        "x": 0,
+                        "y": 460
+                    },
+                    {
+                        "name": "Rollback DB",
+                        "x": -54,
+                        "y": 210
+                    },
+                    {
+                        "name": "Delete Resource Inventory For Component",
+                        "x": -139,
+                        "y": 340
+                    }
+                ],
+                "sizes": [
+                    {
+                        "name": "Delete Resource Inventory For Component",
+                        "width": 0,
+                        "height": 0
+                    },
+                    {
+                        "name": "0c5ce28c773991ad13cea33688e9d7",
+                        "width": 0,
+                        "height": 0
+                    },
+                    {
+                        "name": "Rollback DB",
+                        "width": 0,
+                        "height": 0
+                    },
+                    {
+                        "name": "Download Artifacts",
+                        "width": 0,
+                        "height": 0
+                    }
+                ],
+                "type": "graph",
+                "name": "2ff13558-a580-4ab0-8e4a-beac568d519e",
+                "children": [
+                    {
+                        "type": "finish",
+                        "name": "0c5ce28c773991ad13cea33688e9d7",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "commandName": "Rollback DB",
+                        "pluginName": "DBUpgrader",
+                        "pluginVersion": 3,
+                        "properties": {
+                            "driver": "${p:environment\/driver.class.name}",
+                            "dbJarDir": "${p:environment\/driver.jar.path}",
+                            "dbJar": "${p:environment\/driver.jar}",
+                            "dbUrl": "${p:environment\/db.url}",
+                            "dbUser": "${p:environment\/db.username}",
+                            "dbPass": "pbe{1FI+TSZ3imwqcOxhg066WYYhJDIpJD1Pv7UZc6gniOMAbG4V4qXEEFh0oCNmER8V}",
+                            "sqlFilePath": ".",
+                            "sqlFileInclude": "upgrade_sql_${p:version.name}.xml",
+                            "targetVersion": "${p:target.version}",
+                            "currentVersionSql": "SELECT VER FROM DB_VERSION WHERE RELEASE_NAME=?",
+                            "deleteVersionSql": "DELETE FROM DB_VERSION WHERE RELEASE_NAME=?",
+                            "updateVersionSql": "INSERT INTO DB_VERSION (RELEASE_NAME, VER) VALUES (?, ?)"
+                        },
+                        "type": "plugin",
+                        "name": "Rollback DB",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "commandName": "Download Artifacts",
+                        "pluginName": "DA Versioned File Storage",
+                        "pluginVersion": 23,
+                        "properties": {
+                            "directoryOffset": ".",
+                            "fileIncludePatterns": "**\/*",
+                            "fileExcludePatterns": "",
+                            "syncMode": "false",
+                            "fullVerification": "false",
+                            "setFileExecuteBits": "false",
+                            "verifyFileIntegrity": "false",
+                            "repositoryUrl": "${p:server.url}\/vfs",
+                            "repositoryId": "${p:component\/code_station\/repository}",
+                            "label": "${p:version.name}",
+                            "serverUrl": "${p:server.url}",
+                            "compId": "${p:component.id}",
+                            "resId": "${p:resource.id}"
+                        },
+                        "type": "plugin",
+                        "name": "Download Artifacts",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "commandName": "Delete Resource Inventory For Component",
+                        "pluginName": "DA Resource",
+                        "pluginVersion": 30,
+                        "properties": {
+                            "resource": "${p:resource.name}",
+                            "component": "${p:component.name}",
+                            "version": "${p:version.name}",
+                            "status": "Active"
+                        },
+                        "type": "plugin",
+                        "name": "Delete Resource Inventory For Component",
+                        "children": []
+                    }
+                ]
+            }
+        },
+        {
+            "name": "db-test-data",
+            "description": "Load test data into database",
+            "defaultWorkingDir": "${p:resource\/work.dir}\/${p:component.name}",
+            "takesVersion": true,
+            "status": "",
+            "active": true,
+            "deleted": false,
+            "executionTimeout": 0,
+            "propDefs": [],
+            "rootActivity": {
+                "edges": [
+                    {
+                        "to": "b17ebe9040ad17c24b92f9ae4ff8b5",
+                        "from": "Execute SQL Scripts",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Download Test Data",
+                        "type": "ALWAYS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Execute SQL Scripts",
+                        "from": "Download Test Data",
+                        "type": "SUCCESS",
+                        "value": ""
+                    }
+                ],
+                "offsets": [
+                    {
+                        "name": "Download Test Data",
+                        "x": -94,
+                        "y": 100
+                    },
+                    {
+                        "name": "Execute SQL Scripts",
+                        "x": -79,
+                        "y": 220
+                    },
+                    {
+                        "name": "b17ebe9040ad17c24b92f9ae4ff8b5",
+                        "x": 0,
+                        "y": 380
+                    }
+                ],
+                "sizes": [
+                    {
+                        "name": "Execute SQL Scripts",
+                        "width": 0,
+                        "height": 0
+                    },
+                    {
+                        "name": "b17ebe9040ad17c24b92f9ae4ff8b5",
+                        "width": 0,
+                        "height": 0
+                    },
+                    {
+                        "name": "Download Test Data",
+                        "width": 0,
+                        "height": 0
+                    }
+                ],
+                "type": "graph",
+                "name": "edf395e4-d311-4cbc-8479-5fa619858082",
+                "children": [
+                    {
+                        "type": "finish",
+                        "name": "b17ebe9040ad17c24b92f9ae4ff8b5",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "commandName": "Download Artifacts",
+                        "pluginName": "DA Versioned File Storage",
+                        "pluginVersion": 23,
+                        "properties": {
+                            "directoryOffset": ".",
+                            "fileIncludePatterns": "testdata\/*",
+                            "fileExcludePatterns": "",
+                            "syncMode": "false",
+                            "fullVerification": "false",
+                            "setFileExecuteBits": "false",
+                            "verifyFileIntegrity": "false",
+                            "repositoryUrl": "${p:server.url}\/vfs",
+                            "repositoryId": "${p:component\/code_station\/repository}",
+                            "label": "${p:version.name}",
+                            "serverUrl": "${p:server.url}",
+                            "compId": "${p:component.id}",
+                            "resId": "${p:resource.id}"
+                        },
+                        "type": "plugin",
+                        "name": "Download Test Data",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "commandName": "Execute SQL Scripts",
+                        "pluginName": "SQL-JDBC",
+                        "pluginVersion": 4,
+                        "properties": {
+                            "jdbcDriver": "${p:environment\/driver.class.name}",
+                            "jdbcJar": "${p:environment\/driver.jar.path}\/${p:environment\/driver.jar}",
+                            "connectionString": "${p:environment\/db.url}",
+                            "username": "${p:environment\/db.username}",
+                            "password": "pbe{vk6mYaZleE9FU6B4e03JdinVO4CMvVwOsIwoNQrkAYnRCLSzEP3Gamxhck3LOgbl}",
+                            "passScript": "",
+                            "files": "testdata\/create_${p:version.name}.sql",
+                            "includes": "",
+                            "excludes": "",
+                            "delimiter": ";",
+                            "autocommit": "true",
+                            "print": "true",
+                            "onerror": "abort"
+                        },
+                        "type": "plugin",
+                        "name": "Execute SQL Scripts",
+                        "children": []
+                    }
+                ]
+            }
+        }
+    ],
+    "taskDefs": []
+}

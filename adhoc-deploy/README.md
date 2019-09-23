@@ -18,7 +18,9 @@ Processes
 The template contains the following processes:
 
  - **deploy-release**  
-   This is the main process that downloads a Deployment Automation [Component Version]() containing a `release.xml`
+   This is the main process that downloads a Deployment Automation 
+   [Component Version](http://help.serena.com/doc_center/sra/ver6_3/sda_help/ConcCompVer.html#concept651) 
+   containing a `release.xml`
    file and a number of files to be deployed/executed. Using a set of XSLT transformation scripts it then extracts
    and a creates executable scripts for each file type and executes them. Finally it creates a HTML version of the
    `release.xml` and uploads it back in Deployment Automation as an attachment.  

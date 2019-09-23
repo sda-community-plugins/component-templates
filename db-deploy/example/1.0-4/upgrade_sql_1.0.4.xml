@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+
+<change-set release="1.3">
+
+	<change number="1">
+		<description>
+			Add Currency Table.
+		</description>
+		<sql separator=";">
+			create table "CURRENCY" (
+			id numeric(19,0) not null identity,
+			symbol varchar(3) not null,
+			rate numeric(5,2) null
+			);
+		</sql>
+		<rollback>
+			<sql>
+				DROP TABLE "CURRENCY";
+			</sql>
+		</rollback>
+	</change>
+
+	<change number="2">
+		<description>
+			Add Currency Stored Procedure.
+		</description>
+		<sql separator=";">
+			create procedure GetCurrencyRate
+			@symbol varchar(3) = '$'
+			as
+			begin
+			select rate from currency where symbol=@symbol
+			end
+		</sql>
+		<rollback>
+			<sql>
+				DROP PROCEDURE GetCurrencyRate;
+			</sql>
+		</rollback>
+	</change>
+
+</change-set>

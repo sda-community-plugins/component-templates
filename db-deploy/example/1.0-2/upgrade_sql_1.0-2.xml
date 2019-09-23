@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+
+<change-set release="1.1">
+	
+	<change number="1">
+        <description>
+            Create News Table.
+        </description>
+        <sql separator=";">
+			CREATE TABLE "NEWS" (
+				news_id numeric(19,0) not null identity,
+				title varchar(255) not null,
+				content varchar(255) not null,
+				start_date datetime null, 
+				end_date datetime null,
+				active bit default 0,
+				constraint pk_news_id primary key (news_id)
+			);
+        </sql>
+		<rollback>
+			<sql>
+				DROP TABLE "NEWS"
+			</sql>
+		</rollback>
+    </change>
+
+</change-set>
