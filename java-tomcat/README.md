@@ -1,6 +1,7 @@
 # Java Tomcat Deployment Template
 
-This component template is an example of how to deploy a Java Web Archive (.WAR) to [Apache Tomcat]. It mostly makes use of the Deployment Automation 
+This component template is an example of how to deploy a Java Web Archive (.WAR) to [Apache Tomcat](http://tomcat.apache.org/). 
+It primarily makes use of the Deployment Automation 
 [Apache Tomcat](http://help.serena.com/doc_center/sra/ver6_2_3/SDA_Plugin_Index/sra_plug_tomcat.html#sratomcatplug) plugin.
 
 Processes
@@ -10,7 +11,7 @@ The template contains the following processes:
 
  - **tomcat-deploy**  
    This is the main process that deploys a Java Web Application (.WAR) file into Tomcat using the
-   Tomcat Manager API. It makes sure that Tomcat is running so that the API is accessible; on Windows
+   Tomcat Manager API. It makes sure that Tomcat is running so that the API is accessible - on Windows
    it will also force a restart so that there are no problems with locked files.
    
    The process also illustrates how to update an environment specific file, in this case `application.yml`.
@@ -22,9 +23,9 @@ The template contains the following processes:
    download using the [DA Configuration Management](http://help.serena.com/doc_center/sra/ver6_2_3/SDA_Plugin_Index/sra_plug_sracfgmgmt.html#sracfgmgmtplug) plugin. 
  - **tomcat-copy**  
    This process is similar to the **tomcat-deploy** process above but simply copies the .WAR file into
-   the Tomcat ``webapps`` directory for hot deployment, rather than using the Tomcat Manager API.  
+   the Tomcat ``webapps`` directory for hot deployment. It does not use the Tomcat Manager API.  
  - **tomcat-clean**  
-   This process shows how you could clean logs and temporary files from Tomcat using an operational
+   This process illustrates how you could clean logs and temporary files from Tomcat using an operational
    process. It checks if Tomcat is running and if so stops it so there are no problems deleting files.
  - **tomcat-restart**  
    This process simply calls the **tomcat-stop** and **tomcat-start** processes below.
@@ -59,6 +60,10 @@ Property Name                             | Description
 *tomcat.logs.dir*                         | The full path to the Tomcat "logs" directory
 *tomcat.timeout*                          | The timeout in seconds to applied when checking Tomcat, e.g. if its accessible
 *example.db.host*,*example.db.port* etc.  | Some example properties that are used in the Configuration Template
+
+Note: to make use of the Tomcat Manager API you will need to ensure the user (referenced in **tomcat.manager.username** above)
+has the **admin-script** role. See [Tomcat documention](https://tomcat.apache.org/tomcat-8.0-doc/host-manager-howto.html) for 
+further instructions.
 
 Files
 -----
