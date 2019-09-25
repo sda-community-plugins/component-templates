@@ -1,3 +1,0 @@
-# Docker Application Deployment Template
-
-Coming soon...

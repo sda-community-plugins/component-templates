@@ -19,15 +19,15 @@ The following templates are available:
    A example of how to deploy a Java Web application to Apache Tomcat potentially running on multiple platforms
    and also how to update/create an environment specific file usng Deployment Automation  "Configuration Templates"
    
- - [docker-app](docker-app/)  
-   An example of how to deploy a "dockerized" application from [DockerHub](https://hub.docker.com/)
+ - [docker](docker/)  
+   An example of how to deploy a "dockerized" application from a Registry such as [DockerHub](https://hub.docker.com/)
    
  - [adhoc-deploy](adhoc-deploy/)  
    An example of how to create an adhoc deployment process where the amount and type of
    inputs change each deployment time - this is typical for SQL or Oracle based applications
    
  - [db-deploy](db-deploy)  
-   An example of to use the Deployment Automation  
+   An example of how to use the Deployment Automation 
    [DB Upgrader](http://help.serena.com/doc_center/sra/ver6_2_3/SDA_Plugin_Index/sra_plug_dbupgrader.html#sradbupgraderplug) 
    plugin to upgrade and rollback database versions using XML changesets.
 
