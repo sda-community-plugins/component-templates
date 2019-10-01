@@ -14,6 +14,8 @@ The template contains the following processes:
    This process can be used to create a new [Component Version](http://help.serena.com/doc_center/sra/ver6_3/sda_help/ConcCompVer.html#concept651)
    that corresponds to the tag of the Docker image. This version (tag) can then be selected in the **pull-and-run** 
    process below.  
+ - **build-and-push**  
+   This process builds a docker image from a **Dockerfile** and pushes it to the system Docker Registry. 
  - **pull-and-run**  
    This is the main process that "pulls" a version (tag)  of an image from the Registry and runs a container based on it.
    It creates a container with the name of the component and environment, e.g. for the image *myname* being deployed
@@ -42,10 +44,16 @@ Property Name                             | Description
 *host.port*                               | The external (host) port of the container that is mapped to the internal port
 *container.name*                          | The name of the currently running container for the environment
 
-In order to use the processes you will also need to create a Deployment Automation 
-[System Property](http://help.serena.com/doc_center/sra/ver6_3/sda_help/sra_adm_sys_properties.html)
-called `docker.registry ` that refers to the Docker Registry that you are using. If you are using [DockerHub](https://hub.docker.com/)
-you can leave this blank or else set it to your registry address, e.g. `myserver:5000/`. For production usage this 
+In order to use the processes you will also need to create the following Deployment Automation 
+[System Properties](http://help.serena.com/doc_center/sra/ver6_3/sda_help/sra_adm_sys_properties.html):
+
+Property Name                             | Description
+------------------------------------------|----------------------------------------------------------------------
+*docker.registry*                         | The tcp addres of the Registry, e.g. mydomain.com:5000/ (please include trailing slash)
+*docker.username*                         | If basic authentication, a username to login to the registry
+*docker.password*                         | If basic authentication, a password of the user to login to the registry
+
+If you are using [DockerHub](https://hub.docker.com/) you can leave `docker.registry` blank. For production usage this 
 property would be better set as a [Resource Property](http://help.serena.com/doc_center/sra/ver6_3/sda_help/sra_resource_props.html#sraresourceprops)
  but is system wide property here for simplicity. 
  

@@ -49,6 +49,350 @@
     "properties": [],
     "processes": [
         {
+            "name": "build-and-push",
+            "description": "Builds a docker image from a Dockerfile and pushes it to a registry",
+            "defaultWorkingDir": "${p:resource\/work.dir}\/${p:component.name}",
+            "takesVersion": true,
+            "inventoryActionType": "ADD",
+            "status": "Active",
+            "configActionType": "ADD",
+            "active": true,
+            "deleted": false,
+            "executionTimeout": 0,
+            "propDefs": [{
+                "name": "dockerfile.path",
+                "label": "Dockerfile Path",
+                "extendedLabel": "Dockerfile Path",
+                "type": "TEXT",
+                "value": ".",
+                "required": true,
+                "description": "Path to Dockerfile to use",
+                "hidden": false
+            }],
+            "rootActivity": {
+                "edges": [
+                    {
+                        "to": "8cd5-23e7-46a9-b4d3",
+                        "from": "Push Image",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Build from Dockerfile",
+                        "from": "Download Artifacts",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Docker Login",
+                        "from": "Build from Dockerfile",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Download Artifacts",
+                        "type": "ALWAYS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Push Image",
+                        "from": "Docker Login",
+                        "type": "SUCCESS",
+                        "value": ""
+                    }
+                ],
+                "offsets": [
+                    {
+                        "name": "8cd5-23e7-46a9-b4d3",
+                        "x": 0,
+                        "y": 726
+                    },
+                    {
+                        "name": "Build from Dockerfile",
+                        "x": -79,
+                        "y": 260
+                    },
+                    {
+                        "name": "Push Image",
+                        "x": -54,
+                        "y": 550
+                    },
+                    {
+                        "name": "Download Artifacts",
+                        "x": -94,
+                        "y": 120
+                    },
+                    {
+                        "name": "Docker Login",
+                        "x": -59,
+                        "y": 400
+                    }
+                ],
+                "sizes": [
+                    {
+                        "name": "Docker Login",
+                        "width": 0,
+                        "height": 0
+                    },
+                    {
+                        "name": "Download Artifacts",
+                        "width": 0,
+                        "height": 0
+                    },
+                    {
+                        "name": "8cd5-23e7-46a9-b4d3",
+                        "width": 0,
+                        "height": 0
+                    },
+                    {
+                        "name": "Build from Dockerfile",
+                        "width": 0,
+                        "height": 0
+                    },
+                    {
+                        "name": "Push Image",
+                        "width": 0,
+                        "height": 0
+                    }
+                ],
+                "type": "graph",
+                "name": "2aed8e4c-8559-4630-b6fd-40c331e6e84f",
+                "children": [
+                    {
+                        "type": "finish",
+                        "name": "8cd5-23e7-46a9-b4d3",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "commandName": "Build from Dockerfile",
+                        "pluginName": "Docker",
+                        "pluginVersion": 5,
+                        "properties": {
+                            "path": "${p:dockerfile.path}",
+                            "repo": "${p:system\/docker.registry}",
+                            "tag": "${p:component.name}:${p:version.name}"
+                        },
+                        "type": "plugin",
+                        "name": "Build from Dockerfile",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "commandName": "Push Image",
+                        "pluginName": "Docker",
+                        "pluginVersion": 5,
+                        "properties": {
+                            "image": "${p:system\/docker.registry}${p:component.name}:${p:version.name}",
+                            "private": "",
+                            "user": "${p:system\/docker.username}",
+                            "pass": "pbe{K07vU+ZPx1e0UFVvd3GLS7GjGnLpvf\/lwWrFrZ5iYcuitQDaG3BOAM+xnREjSvKk}"
+                        },
+                        "type": "plugin",
+                        "name": "Push Image",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "commandName": "Download Artifacts",
+                        "pluginName": "DA Versioned File Storage",
+                        "pluginVersion": 23,
+                        "properties": {
+                            "directoryOffset": ".",
+                            "fileIncludePatterns": "**\/*",
+                            "fileExcludePatterns": "",
+                            "syncMode": "true",
+                            "fullVerification": "true",
+                            "setFileExecuteBits": "false",
+                            "verifyFileIntegrity": "false",
+                            "maxTries": "10",
+                            "repositoryUrl": "${p:server.url}\/vfs",
+                            "repositoryId": "${p:component\/code_station\/repository}",
+                            "label": "${p:version.name}",
+                            "serverUrl": "${p:server.url}",
+                            "compId": "${p:component.id}",
+                            "resId": "${p:resource.id}",
+                            "versionId": "${p:version.id}"
+                        },
+                        "type": "plugin",
+                        "name": "Download Artifacts",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "commandName": "Shell",
+                        "pluginName": "Shell",
+                        "pluginVersion": 4,
+                        "properties": {
+                            "directoryOffset": ".",
+                            "shellInterpreter": "",
+                            "scriptBody": "docker login ${system\/docker.registry} -u ${system\/docker.username} -p ${system\/docker.password}",
+                            "runAsDaemon": "",
+                            "outputFile": ""
+                        },
+                        "type": "plugin",
+                        "name": "Docker Login",
+                        "children": []
+                    }
+                ]
+            }
+        },
+        {
+            "name": "build-push-and-run",
+            "description": "Builds a docker image from a Dockerfile, pushes it to a registry and runs it",
+            "defaultWorkingDir": "${p:resource\/work.dir}\/${p:component.name}",
+            "takesVersion": true,
+            "inventoryActionType": "ADD",
+            "status": "Active",
+            "configActionType": "ADD",
+            "active": true,
+            "deleted": false,
+            "executionTimeout": 0,
+            "propDefs": [
+                {
+                    "name": "dockerfile.path",
+                    "label": "Dockerfile Path",
+                    "extendedLabel": "Dockerfile Path",
+                    "type": "TEXT",
+                    "value": ".",
+                    "required": true,
+                    "description": "Path to Dockerfile to use",
+                    "hidden": false
+                },
+                {
+                    "name": "docker.opts",
+                    "label": "Docker Options",
+                    "extendedLabel": "Docker Options",
+                    "type": "TEXT",
+                    "required": false,
+                    "description": "Additional Docker Options, e.g. --network=isolated_nw",
+                    "hidden": false
+                },
+                {
+                    "name": "remove.container",
+                    "label": "Remove Existing Container",
+                    "extendedLabel": "Remove Existing Container",
+                    "type": "TEXT",
+                    "value": "true",
+                    "required": true,
+                    "description": "Remove the current version of the container",
+                    "hidden": false
+                },
+                {
+                    "name": "pull.image",
+                    "label": "Pull Image",
+                    "extendedLabel": "Pull Image",
+                    "type": "TEXT",
+                    "value": "true",
+                    "required": true,
+                    "description": "Pull the image from the registry",
+                    "hidden": false
+                }
+            ],
+            "rootActivity": {
+                "edges": [
+                    {
+                        "to": "7f73-61ef-e6f9-9eb0",
+                        "from": "pull-and-run",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "pull-and-run",
+                        "from": "build-and-push",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "build-and-push",
+                        "type": "ALWAYS",
+                        "value": ""
+                    }
+                ],
+                "offsets": [
+                    {
+                        "name": "7f73-61ef-e6f9-9eb0",
+                        "x": 0,
+                        "y": 776
+                    },
+                    {
+                        "name": "pull-and-run",
+                        "x": -124,
+                        "y": 380
+                    },
+                    {
+                        "name": "build-and-push",
+                        "x": -134,
+                        "y": 170
+                    }
+                ],
+                "sizes": [
+                    {
+                        "name": "pull-and-run",
+                        "width": 0,
+                        "height": 0
+                    },
+                    {
+                        "name": "build-and-push",
+                        "width": 0,
+                        "height": 0
+                    },
+                    {
+                        "name": "7f73-61ef-e6f9-9eb0",
+                        "width": 0,
+                        "height": 0
+                    }
+                ],
+                "type": "graph",
+                "name": "d2522277-6b63-4d35-ae0c-e980fdf6bf55",
+                "children": [
+                    {
+                        "type": "finish",
+                        "name": "7f73-61ef-e6f9-9eb0",
+                        "children": []
+                    },
+                    {
+                        "componentTemplateName": "docker",
+                        "componentProcessName": "build-and-push",
+                        "allowFailure": false,
+                        "properties": {"dockerfile.path": "${p:dockerfile.path}"},
+                        "type": "componentProcess",
+                        "name": "build-and-push",
+                        "children": []
+                    },
+                    {
+                        "componentTemplateName": "docker",
+                        "componentProcessName": "pull-and-run",
+                        "allowFailure": false,
+                        "properties": {
+                            "docker.opts": "${p:docker.opts}",
+                            "remove.container": "${p:remove.container}",
+                            "pull.image": "${pull.image}"
+                        },
+                        "type": "componentProcess",
+                        "name": "pull-and-run",
+                        "children": []
+                    }
+                ]
+            }
+        },
+        {
             "name": "create-component-version",
             "description": "Create a component version for a tag from a Docker Registry",
             "defaultWorkingDir": "${p:resource\/work.dir}\/${p:component.name}",
@@ -387,43 +731,24 @@
                     "required": false,
                     "description": "Additional Docker Options, e.g. --network=isolated_nw",
                     "hidden": false
+                },
+                {
+                    "name": "pull.image",
+                    "label": "Pull Image",
+                    "extendedLabel": "Pull Image",
+                    "type": "TEXT",
+                    "value": "true",
+                    "required": true,
+                    "description": "Pull the image from the registry",
+                    "hidden": false
                 }
             ],
             "rootActivity": {
                 "edges": [
                     {
-                        "to": "Set Component Environment Property",
-                        "from": "Set Container Name",
-                        "type": "SUCCESS",
-                        "value": ""
-                    },
-                    {
-                        "to": "Run Command",
-                        "from": "Inspect",
-                        "type": "FAILURE",
-                        "value": ""
-                    },
-                    {
                         "to": "Get Container Id",
                         "from": "Stop Container",
                         "type": "SUCCESS",
-                        "value": ""
-                    },
-                    {
-                        "to": "Pull Image?",
-                        "type": "ALWAYS",
-                        "value": ""
-                    },
-                    {
-                        "to": "Set Container Name",
-                        "from": "Pull Image",
-                        "type": "SUCCESS",
-                        "value": ""
-                    },
-                    {
-                        "to": "Run Command",
-                        "from": "Get Container Id",
-                        "type": "FAILURE",
                         "value": ""
                     },
                     {
@@ -439,38 +764,13 @@
                         "value": ""
                     },
                     {
-                        "to": "Get Container Id",
-                        "from": "Is Running?",
-                        "type": "VALUE",
+                        "to": "Pull Image?",
+                        "type": "ALWAYS",
                         "value": ""
                     },
                     {
-                        "to": "Pull Image",
-                        "from": "Pull Image?",
-                        "type": "VALUE",
-                        "value": "true\nTrue"
-                    },
-                    {
-                        "to": "Stop Container",
-                        "from": "Is Running?",
-                        "type": "VALUE",
-                        "value": "running"
-                    },
-                    {
-                        "to": "Remove Container",
-                        "from": "Remove Container?",
-                        "type": "VALUE",
-                        "value": "true"
-                    },
-                    {
-                        "to": "4517afc0c797819fa316e849059e17",
-                        "from": "Run Command",
-                        "type": "SUCCESS",
-                        "value": ""
-                    },
-                    {
-                        "to": "Remove Container?",
-                        "from": "Get Container Id",
+                        "to": "Set Component Environment Property",
+                        "from": "Set Container Name",
                         "type": "SUCCESS",
                         "value": ""
                     },
@@ -481,9 +781,33 @@
                         "value": ""
                     },
                     {
+                        "to": "Stop Container",
+                        "from": "Is Running?",
+                        "type": "VALUE",
+                        "value": "running"
+                    },
+                    {
                         "to": "Inspect",
                         "from": "Set Component Environment Property",
                         "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Docker login",
+                        "from": "Pull Image?",
+                        "type": "VALUE",
+                        "value": "true\nTrue"
+                    },
+                    {
+                        "to": "Run Command",
+                        "from": "Inspect",
+                        "type": "FAILURE",
+                        "value": ""
+                    },
+                    {
+                        "to": "Get Container Id",
+                        "from": "Is Running?",
+                        "type": "VALUE",
                         "value": ""
                     },
                     {
@@ -491,73 +815,144 @@
                         "from": "Inspect",
                         "type": "SUCCESS",
                         "value": ""
+                    },
+                    {
+                        "to": "Set Container Name",
+                        "from": "Pull Image",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Remove Container?",
+                        "from": "Get Container Id",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "4517afc0c797819fa316e849059e17",
+                        "from": "Run Command",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Pull Image",
+                        "from": "Docker login",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Run Command",
+                        "from": "Get Container Id",
+                        "type": "FAILURE",
+                        "value": ""
+                    },
+                    {
+                        "to": "Remove Container",
+                        "from": "Remove Container?",
+                        "type": "VALUE",
+                        "value": "true"
                     }
                 ],
                 "offsets": [
                     {
-                        "name": "Set Component Environment Property",
-                        "x": -129,
-                        "y": 400
-                    },
-                    {
-                        "name": "4517afc0c797819fa316e849059e17",
-                        "x": 0,
-                        "y": 1516
-                    },
-                    {
-                        "name": "Remove Container",
-                        "x": 331,
-                        "y": 1176
-                    },
-                    {
-                        "name": "Get Container Id",
-                        "x": 186,
-                        "y": 846
-                    },
-                    {
-                        "name": "Remove Container?",
-                        "x": 301,
-                        "y": 986
-                    },
-                    {
-                        "name": "Stop Container",
-                        "x": 431,
-                        "y": 766
-                    },
-                    {
-                        "name": "Inspect",
-                        "x": -39,
-                        "y": 520
-                    },
-                    {
                         "name": "Pull Image?",
-                        "x": -74,
-                        "y": 50
-                    },
-                    {
-                        "name": "Pull Image",
-                        "x": -264.5,
-                        "y": 180
+                        "x": -79,
+                        "y": 90
                     },
                     {
                         "name": "Run Command",
                         "x": -59,
-                        "y": 1236
+                        "y": 1376
+                    },
+                    {
+                        "name": "Pull Image",
+                        "x": -264.5,
+                        "y": 320
+                    },
+                    {
+                        "name": "Remove Container",
+                        "x": 331,
+                        "y": 1316
+                    },
+                    {
+                        "name": "Get Container Id",
+                        "x": 186,
+                        "y": 986
+                    },
+                    {
+                        "name": "Remove Container?",
+                        "x": 301,
+                        "y": 1126
+                    },
+                    {
+                        "name": "Stop Container",
+                        "x": 431,
+                        "y": 906
                     },
                     {
                         "name": "Is Running?",
                         "x": 171,
-                        "y": 646
+                        "y": 786
+                    },
+                    {
+                        "name": "Set Component Environment Property",
+                        "x": -129,
+                        "y": 540
                     },
                     {
                         "name": "Set Container Name",
                         "x": -74,
-                        "y": 290
+                        "y": 430
+                    },
+                    {
+                        "name": "4517afc0c797819fa316e849059e17",
+                        "x": 0,
+                        "y": 1656
+                    },
+                    {
+                        "name": "Inspect",
+                        "x": -39,
+                        "y": 660
+                    },
+                    {
+                        "name": "Docker login",
+                        "x": -269.5,
+                        "y": 220
                     }
                 ],
                 "sizes": [
                     {
+                        "name": "Get Container Id",
+                        "width": 0,
+                        "height": 0
+                    },
+                    {
                         "name": "4517afc0c797819fa316e849059e17",
+                        "width": 0,
+                        "height": 0
+                    },
+                    {
+                        "name": "Run Command",
+                        "width": 0,
+                        "height": 0
+                    },
+                    {
+                        "name": "Set Component Environment Property",
+                        "width": 0,
+                        "height": 0
+                    },
+                    {
+                        "name": "Is Running?",
+                        "width": 0,
+                        "height": 0
+                    },
+                    {
+                        "name": "Pull Image?",
+                        "width": 0,
+                        "height": 0
+                    },
+                    {
+                        "name": "Remove Container",
                         "width": 0,
                         "height": 0
                     },
@@ -572,7 +967,7 @@
                         "height": 0
                     },
                     {
-                        "name": "Set Component Environment Property",
+                        "name": "Docker login",
                         "width": 0,
                         "height": 0
                     },
@@ -582,32 +977,7 @@
                         "height": 0
                     },
                     {
-                        "name": "Is Running?",
-                        "width": 0,
-                        "height": 0
-                    },
-                    {
-                        "name": "Get Container Id",
-                        "width": 0,
-                        "height": 0
-                    },
-                    {
-                        "name": "Remove Container",
-                        "width": 0,
-                        "height": 0
-                    },
-                    {
-                        "name": "Run Command",
-                        "width": 0,
-                        "height": 0
-                    },
-                    {
                         "name": "Stop Container",
-                        "width": 0,
-                        "height": 0
-                    },
-                    {
-                        "name": "Pull Image?",
                         "width": 0,
                         "height": 0
                     },
@@ -618,7 +988,7 @@
                     }
                 ],
                 "type": "graph",
-                "name": "ff47ff31-1655-44bb-a1d6-b40a8189ca32",
+                "name": "035efe9a-6b4b-47dd-a37d-66119247b128",
                 "children": [
                     {
                         "type": "finish",
@@ -790,6 +1160,26 @@
                         },
                         "type": "plugin",
                         "name": "Set Component Environment Property",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "commandName": "Shell",
+                        "pluginName": "Shell",
+                        "pluginVersion": 4,
+                        "properties": {
+                            "directoryOffset": ".",
+                            "shellInterpreter": "",
+                            "scriptBody": "docker login ${system\/docker.registry} -u ${system\/docker.username} -p ${system\/docker.password}",
+                            "runAsDaemon": "",
+                            "outputFile": ""
+                        },
+                        "type": "plugin",
+                        "name": "Docker login",
                         "children": []
                     }
                 ]
