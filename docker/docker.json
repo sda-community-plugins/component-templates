@@ -186,14 +186,19 @@
             "rootActivity": {
                 "edges": [
                     {
+                        "to": "Download Artifacts",
+                        "type": "ALWAYS",
+                        "value": ""
+                    },
+                    {
                         "to": "8cd5-23e7-46a9-b4d3",
                         "from": "Push Image",
                         "type": "SUCCESS",
                         "value": ""
                     },
                     {
-                        "to": "Build from Dockerfile",
-                        "from": "Download Artifacts",
+                        "to": "Push Image",
+                        "from": "Docker Login",
                         "type": "SUCCESS",
                         "value": ""
                     },
@@ -204,52 +209,42 @@
                         "value": ""
                     },
                     {
-                        "to": "Download Artifacts",
-                        "type": "ALWAYS",
-                        "value": ""
-                    },
-                    {
-                        "to": "Push Image",
-                        "from": "Docker Login",
+                        "to": "Build from Dockerfile",
+                        "from": "Download Artifacts",
                         "type": "SUCCESS",
                         "value": ""
                     }
                 ],
                 "offsets": [
                     {
-                        "name": "8cd5-23e7-46a9-b4d3",
-                        "x": 0,
-                        "y": 726
+                        "name": "Docker Login",
+                        "x": -59,
+                        "y": 390
                     },
                     {
-                        "name": "Build from Dockerfile",
-                        "x": -79,
-                        "y": 260
+                        "name": "8cd5-23e7-46a9-b4d3",
+                        "x": 0,
+                        "y": 716
                     },
                     {
                         "name": "Push Image",
                         "x": -54,
-                        "y": 550
+                        "y": 540
+                    },
+                    {
+                        "name": "Build from Dockerfile",
+                        "x": -79,
+                        "y": 250
                     },
                     {
                         "name": "Download Artifacts",
                         "x": -94,
-                        "y": 120
-                    },
-                    {
-                        "name": "Docker Login",
-                        "x": -59,
-                        "y": 400
+                        "y": 110
                     }
                 ],
                 "sizes": [
                     {
-                        "name": "Docker Login",
-                        "width": 0,
-                        "height": 0
-                    },
-                    {
-                        "name": "Download Artifacts",
+                        "name": "Build from Dockerfile",
                         "width": 0,
                         "height": 0
                     },
@@ -259,18 +254,23 @@
                         "height": 0
                     },
                     {
-                        "name": "Build from Dockerfile",
+                        "name": "Docker Login",
                         "width": 0,
                         "height": 0
                     },
                     {
                         "name": "Push Image",
+                        "width": 0,
+                        "height": 0
+                    },
+                    {
+                        "name": "Download Artifacts",
                         "width": 0,
                         "height": 0
                     }
                 ],
                 "type": "graph",
-                "name": "2aed8e4c-8559-4630-b6fd-40c331e6e84f",
+                "name": "33f7c879-b60f-4d68-9df8-3e7ec1a2c926",
                 "children": [
                     {
                         "type": "finish",
@@ -288,8 +288,8 @@
                         "pluginVersion": 5,
                         "properties": {
                             "path": "${p:dockerfile.path}",
-                            "repo": "${p:system\/docker.registry}",
-                            "tag": "${p:component.name}:${p:version.name}"
+                            "repo": "${system\/docker.registry}${p:component.name}",
+                            "tag": "${p:version.name}"
                         },
                         "type": "plugin",
                         "name": "Build from Dockerfile",
@@ -308,7 +308,7 @@
                             "image": "${p:system\/docker.registry}${p:component.name}:${p:version.name}",
                             "private": "",
                             "user": "${p:system\/docker.username}",
-                            "pass": "pbe{pEo3W+9R2nK4dxRVNnS5ax4vRhdejGsu\/TO6RB1TJ69W97mf+KeOEBEbdHLZBVYe}"
+                            "pass": "pbe{aHA8WqNLx3ctY1pwnHIsZZ1TpU2ZbPGuNDR8Q+si51qypsiIabUKvymxkH6QN6l3}"
                         },
                         "type": "plugin",
                         "name": "Push Image",
@@ -2064,7 +2064,7 @@
                             "verifyString": "${verification.string}",
                             "failIfFound": "",
                             "user": "",
-                            "password": "pbe{O3kjTIJhdmLBZ1lfDGdAWE9qhae10JnH}",
+                            "password": "pbe{YUsBUSFnAnZAbJhvW2Q0V\/ubzWYzlm3I}",
                             "timeout": "",
                             "passScript": "",
                             "maxWaitTime": "${verification.wait}",
