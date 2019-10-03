@@ -7,44 +7,158 @@
     "sourceConfigProperties": [],
     "envPropDefs": [
         {
-            "name": "host.port",
-            "label": "Host Port",
-            "extendedLabel": "Host Port",
-            "type": "TEXT",
-            "value": "8080",
-            "required": true,
-            "description": "Docker port exposed on the host",
-            "hidden": false
-        },
-        {
-            "name": "container.port",
-            "label": "Container Port",
-            "extendedLabel": "Container Port",
-            "type": "TEXT",
-            "value": "8080",
-            "required": true,
-            "description": "Docker internal port to be mapped on the host",
-            "hidden": false
-        },
-        {
-            "name": "container.name",
-            "label": "Container Name",
-            "extendedLabel": "Container Name",
+            "name": "container.links",
+            "label": "Container Links",
+            "extendedLabel": "Container Links",
             "type": "TEXT",
             "required": false,
-            "description": "The running container in the environment - this is set automatically",
+            "description": "Name of any containers to link to (legacy feature)",
+            "hidden": false
+        },
+        {
+            "name": "SERVER_PORT",
+            "label": "Server Port",
+            "extendedLabel": "Server Port",
+            "type": "TEXT",
+            "value": "8080",
+            "required": true,
+            "description": "The port that the service will run on",
+            "hidden": false
+        },
+        {
+            "name": "EUREKA_HOST",
+            "label": "Eureka Hostname",
+            "extendedLabel": "Eureka Hostname",
+            "type": "TEXT",
+            "value": "eureka-service",
+            "required": true,
+            "description": "The hostname of the (Eureka) registration and discovery server",
+            "hidden": false
+        },
+        {
+            "name": "EUREKA_PORT",
+            "label": "Eureka Port",
+            "extendedLabel": "Eureka Port",
+            "type": "TEXT",
+            "value": "1111",
+            "required": true,
+            "description": "The TCP port of the (Eureka) registration and discovery server",
+            "hidden": false
+        },
+        {
+            "name": "EUREKA_CLIENT_SERVICEURL_DEFAULTZONE",
+            "label": "Eureka URI",
+            "extendedLabel": "Eureka URI",
+            "type": "TEXT",
+            "value": "http:\/\/${environment\/EUREKA_HOST}:${environment\/EUREKA_PORT}\/eureka",
+            "required": true,
+            "description": "The full address of the (Eureka) registration and discovery server",
+            "hidden": false
+        },
+        {
+            "name": "SERVER_HOST",
+            "label": "Server Host",
+            "extendedLabel": "Server Host",
+            "type": "TEXT",
+            "value": "${component.name}",
+            "required": false,
+            "description": "The hostname that the service will run on (used to name the container)",
+            "hidden": false
+        },
+        {
+            "name": "primary.ip",
+            "label": "Server Primary IP",
+            "extendedLabel": "Server Primary IP",
+            "type": "TEXT",
+            "required": false,
+            "description": "Primary IP address of server (retrieved and set using get-server-ip process)",
             "hidden": false
         }
     ],
-    "versionPropDefs": [{
-        "name": "image.id",
-        "label": "Docker Image Id",
-        "extendedLabel": "Docker Image Id",
-        "type": "TEXT",
-        "required": false,
-        "description": "Docker Image Id",
-        "hidden": false
-    }],
+    "versionPropDefs": [
+        {
+            "name": "image.id",
+            "label": "Docker Image Id",
+            "extendedLabel": "Docker Image Id",
+            "type": "TEXT",
+            "required": false,
+            "description": "Docker Image Id",
+            "hidden": false
+        },
+        {
+            "name": "build.url",
+            "label": "Build URL",
+            "extendedLabel": "Build URL",
+            "type": "TEXT",
+            "required": false,
+            "description": "The URL to the build in the build tool, i.e. Jenkins that created the component version",
+            "hidden": false
+        },
+        {
+            "name": "issue.ids",
+            "label": "Issue Ids",
+            "extendedLabel": "Issue Ids",
+            "type": "TEXT",
+            "required": false,
+            "description": "Comma separated list of Issue Ids, i.e. JIRA Issues that were recorded against the SCM commit",
+            "hidden": false
+        },
+        {
+            "name": "build.version",
+            "label": "Build Version",
+            "extendedLabel": "Build Version",
+            "type": "TEXT",
+            "value": "1.0",
+            "required": false,
+            "description": "Version number automatically retrieved from build tool, i.e. Maven \"<project.version>\"",
+            "hidden": false
+        },
+        {
+            "name": "build.number",
+            "label": "Build Number",
+            "extendedLabel": "Build Number",
+            "type": "TEXT",
+            "required": false,
+            "description": "The build number in the build tool, i.e. Jenkins that created the component version",
+            "hidden": false
+        },
+        {
+            "name": "scm.id",
+            "label": "SCM Id",
+            "extendedLabel": "SCM Id",
+            "type": "TEXT",
+            "required": false,
+            "description": "The unique id of the SCM changeset, i.e. Git commit hash that created the component version",
+            "hidden": false
+        },
+        {
+            "name": "scm.branch",
+            "label": "SCM Branch",
+            "extendedLabel": "SCM Branch",
+            "type": "TEXT",
+            "required": false,
+            "description": "The SCM branch of the commit that created the component version.",
+            "hidden": false
+        },
+        {
+            "name": "scm.url",
+            "label": "SCM URL",
+            "extendedLabel": "SCM URL",
+            "type": "TEXT",
+            "required": false,
+            "description": "The URL of the SCM repository of the commit that created the component version",
+            "hidden": false
+        },
+        {
+            "name": "docker.image.id",
+            "label": "Docker Image Id",
+            "extendedLabel": "Docker Image Id",
+            "type": "TEXT",
+            "required": false,
+            "description": "The unique id of the docker image that was created from the component verison",
+            "hidden": false
+        }
+    ],
     "propDefs": [],
     "properties": [],
     "processes": [
@@ -194,7 +308,7 @@
                             "image": "${p:system\/docker.registry}${p:component.name}:${p:version.name}",
                             "private": "",
                             "user": "${p:system\/docker.username}",
-                            "pass": "pbe{K07vU+ZPx1e0UFVvd3GLS7GjGnLpvf\/lwWrFrZ5iYcuitQDaG3BOAM+xnREjSvKk}"
+                            "pass": "pbe{pEo3W+9R2nK4dxRVNnS5ax4vRhdejGsu\/TO6RB1TJ69W97mf+KeOEBEbdHLZBVYe}"
                         },
                         "type": "plugin",
                         "name": "Push Image",
@@ -702,6 +816,131 @@
             }
         },
         {
+            "name": "get-server-ip",
+            "description": "Gets the primary server IP address and stores it in the application environment \"primary.ip\" property",
+            "defaultWorkingDir": "${p:resource\/work.dir}\/${p:component.name}",
+            "takesVersion": false,
+            "status": "",
+            "active": true,
+            "deleted": false,
+            "executionTimeout": 0,
+            "propDefs": [{
+                "name": "ip.prefix",
+                "label": "IP Prefix",
+                "extendedLabel": "IP Prefix",
+                "type": "TEXT",
+                "value": "192",
+                "required": true,
+                "description": "Prefix of IP addresses to filter",
+                "hidden": false
+            }],
+            "rootActivity": {
+                "edges": [
+                    {
+                        "to": "Create Environment Property",
+                        "from": "Get Primary IP",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "ba6e-5850-af81-d90e",
+                        "from": "Create Environment Property",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Get Primary IP",
+                        "type": "ALWAYS",
+                        "value": ""
+                    }
+                ],
+                "offsets": [
+                    {
+                        "name": "Create Environment Property",
+                        "x": -105.5,
+                        "y": 280
+                    },
+                    {
+                        "name": "ba6e-5850-af81-d90e",
+                        "x": 0,
+                        "y": 440
+                    },
+                    {
+                        "name": "Get Primary IP",
+                        "x": -60.5,
+                        "y": 158
+                    }
+                ],
+                "sizes": [
+                    {
+                        "name": "Get Primary IP",
+                        "width": 0,
+                        "height": 0
+                    },
+                    {
+                        "name": "ba6e-5850-af81-d90e",
+                        "width": 0,
+                        "height": 0
+                    },
+                    {
+                        "name": "Create Environment Property",
+                        "width": 0,
+                        "height": 0
+                    }
+                ],
+                "type": "graph",
+                "name": "81d30f95-6737-4756-a6cc-1a6e1edb667d",
+                "children": [
+                    {
+                        "type": "finish",
+                        "name": "ba6e-5850-af81-d90e",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "postProcessingScript": "e8b739ef-b678-4b87-8668-acf1c62b2cce",
+                        "commandName": "Shell",
+                        "pluginName": "Shell",
+                        "pluginVersion": 4,
+                        "properties": {
+                            "directoryOffset": ".",
+                            "shellInterpreter": "",
+                            "scriptBody": "echo address=`ifconfig | grep -Eo 'inet (addr:)?([0-9]*\\.){3}[0-9]*' | grep -Eo '([0-9]*\\.){3}[0-9]*' | grep -v '127.0.0.1' | grep ${ip.prefix}`",
+                            "runAsDaemon": "",
+                            "outputFile": ""
+                        },
+                        "type": "plugin",
+                        "name": "Get Primary IP",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "commandName": "Create Environment Property",
+                        "pluginName": "DA Environment",
+                        "pluginVersion": 12,
+                        "properties": {
+                            "application": "${p:application.name}",
+                            "environment": "${p:environment.name}",
+                            "name": "primary.ip",
+                            "value": "${Get Primary IP\/address}",
+                            "isSecure": ""
+                        },
+                        "type": "plugin",
+                        "name": "Create Environment Property",
+                        "children": []
+                    }
+                ]
+            }
+        },
+        {
             "name": "pull-and-run",
             "description": "Pull the specified Docker image version and Run it",
             "defaultWorkingDir": "${p:resource\/work.dir}\/${p:component.name}",
@@ -746,31 +985,8 @@
             "rootActivity": {
                 "edges": [
                     {
-                        "to": "Get Container Id",
-                        "from": "Stop Container",
-                        "type": "SUCCESS",
-                        "value": ""
-                    },
-                    {
-                        "to": "Set Container Name",
-                        "from": "Pull Image?",
-                        "type": "VALUE",
-                        "value": ""
-                    },
-                    {
-                        "to": "Run Command",
-                        "from": "Remove Container",
-                        "type": "SUCCESS",
-                        "value": ""
-                    },
-                    {
-                        "to": "Pull Image?",
-                        "type": "ALWAYS",
-                        "value": ""
-                    },
-                    {
-                        "to": "Set Component Environment Property",
-                        "from": "Set Container Name",
+                        "to": "Pull Image",
+                        "from": "Docker login",
                         "type": "SUCCESS",
                         "value": ""
                     },
@@ -781,44 +997,19 @@
                         "value": ""
                     },
                     {
-                        "to": "Stop Container",
-                        "from": "Is Running?",
+                        "to": "Remove Container",
+                        "from": "Remove Container?",
                         "type": "VALUE",
-                        "value": "running"
+                        "value": "true"
                     },
                     {
-                        "to": "Inspect",
-                        "from": "Set Component Environment Property",
-                        "type": "SUCCESS",
+                        "to": "Pull Image?",
+                        "type": "ALWAYS",
                         "value": ""
                     },
                     {
-                        "to": "Docker login",
-                        "from": "Pull Image?",
-                        "type": "VALUE",
-                        "value": "true\nTrue"
-                    },
-                    {
-                        "to": "Run Command",
-                        "from": "Inspect",
-                        "type": "FAILURE",
-                        "value": ""
-                    },
-                    {
-                        "to": "Get Container Id",
-                        "from": "Is Running?",
-                        "type": "VALUE",
-                        "value": ""
-                    },
-                    {
-                        "to": "Is Running?",
-                        "from": "Inspect",
-                        "type": "SUCCESS",
-                        "value": ""
-                    },
-                    {
-                        "to": "Set Container Name",
-                        "from": "Pull Image",
+                        "to": "Get Container Status Again",
+                        "from": "Run Command",
                         "type": "SUCCESS",
                         "value": ""
                     },
@@ -829,14 +1020,50 @@
                         "value": ""
                     },
                     {
-                        "to": "4517afc0c797819fa316e849059e17",
-                        "from": "Run Command",
+                        "to": "Run Command",
+                        "from": "Get Container Status",
+                        "type": "FAILURE",
+                        "value": ""
+                    },
+                    {
+                        "to": "Stop Container",
+                        "from": "Is Running?",
+                        "type": "VALUE",
+                        "value": "running"
+                    },
+                    {
+                        "to": "Docker login",
+                        "from": "Pull Image?",
+                        "type": "VALUE",
+                        "value": "true\nTrue"
+                    },
+                    {
+                        "to": "Get Container Status",
+                        "from": "Pull Image?",
+                        "type": "VALUE",
+                        "value": ""
+                    },
+                    {
+                        "to": "b51c-3109-fa16-be92",
+                        "from": "Conatiner Running?",
+                        "type": "VALUE",
+                        "value": ""
+                    },
+                    {
+                        "to": "Is Running?",
+                        "from": "Get Container Status",
                         "type": "SUCCESS",
                         "value": ""
                     },
                     {
-                        "to": "Pull Image",
-                        "from": "Docker login",
+                        "to": "Run Command",
+                        "from": "Remove Container",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "4517afc0c797819fa316e849059e17",
+                        "from": "7986-2a1c-4344-fe65",
                         "type": "SUCCESS",
                         "value": ""
                     },
@@ -847,122 +1074,122 @@
                         "value": ""
                     },
                     {
-                        "to": "Remove Container",
-                        "from": "Remove Container?",
+                        "to": "4517afc0c797819fa316e849059e17",
+                        "from": "b51c-3109-fa16-be92",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Get Container Id",
+                        "from": "Stop Container",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Get Container Status",
+                        "from": "Pull Image",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Conatiner Running?",
+                        "from": "Get Container Status Again",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Get Container Id",
+                        "from": "Is Running?",
                         "type": "VALUE",
-                        "value": "true"
+                        "value": ""
+                    },
+                    {
+                        "to": "7986-2a1c-4344-fe65",
+                        "from": "Conatiner Running?",
+                        "type": "VALUE",
+                        "value": "running"
                     }
                 ],
                 "offsets": [
                     {
-                        "name": "Pull Image?",
-                        "x": -79,
-                        "y": 90
-                    },
-                    {
-                        "name": "Run Command",
-                        "x": -59,
-                        "y": 1376
-                    },
-                    {
-                        "name": "Pull Image",
-                        "x": -264.5,
-                        "y": 320
-                    },
-                    {
-                        "name": "Remove Container",
-                        "x": 331,
-                        "y": 1316
-                    },
-                    {
-                        "name": "Get Container Id",
-                        "x": 186,
-                        "y": 986
-                    },
-                    {
                         "name": "Remove Container?",
-                        "x": 301,
-                        "y": 1126
+                        "x": 293.5,
+                        "y": 856
                     },
                     {
-                        "name": "Stop Container",
-                        "x": 431,
-                        "y": 906
+                        "name": "Get Container Status",
+                        "x": -76.5,
+                        "y": 390
                     },
                     {
-                        "name": "Is Running?",
-                        "x": 171,
-                        "y": 786
-                    },
-                    {
-                        "name": "Set Component Environment Property",
-                        "x": -129,
-                        "y": 540
-                    },
-                    {
-                        "name": "Set Container Name",
-                        "x": -74,
-                        "y": 430
-                    },
-                    {
-                        "name": "4517afc0c797819fa316e849059e17",
-                        "x": 0,
-                        "y": 1656
-                    },
-                    {
-                        "name": "Inspect",
-                        "x": -39,
-                        "y": 660
+                        "name": "7986-2a1c-4344-fe65",
+                        "x": 62,
+                        "y": 1480
                     },
                     {
                         "name": "Docker login",
-                        "x": -269.5,
-                        "y": 220
+                        "x": -282,
+                        "y": 190
+                    },
+                    {
+                        "name": "Pull Image",
+                        "x": -272,
+                        "y": 300
+                    },
+                    {
+                        "name": "Conatiner Running?",
+                        "x": -108,
+                        "y": 1360
+                    },
+                    {
+                        "name": "Is Running?",
+                        "x": 163.5,
+                        "y": 516
+                    },
+                    {
+                        "name": "Pull Image?",
+                        "x": -79,
+                        "y": 120
+                    },
+                    {
+                        "name": "4517afc0c797819fa316e849059e17",
+                        "x": -9,
+                        "y": 1600
+                    },
+                    {
+                        "name": "Remove Container",
+                        "x": 323.5,
+                        "y": 1046
+                    },
+                    {
+                        "name": "Get Container Status Again",
+                        "x": -103,
+                        "y": 1230
+                    },
+                    {
+                        "name": "Stop Container",
+                        "x": 423.5,
+                        "y": 636
+                    },
+                    {
+                        "name": "Run Command",
+                        "x": -68,
+                        "y": 1106
+                    },
+                    {
+                        "name": "b51c-3109-fa16-be92",
+                        "x": -192,
+                        "y": 1480
+                    },
+                    {
+                        "name": "Get Container Id",
+                        "x": 178.5,
+                        "y": 716
                     }
                 ],
                 "sizes": [
                     {
-                        "name": "Get Container Id",
-                        "width": 0,
-                        "height": 0
-                    },
-                    {
-                        "name": "4517afc0c797819fa316e849059e17",
-                        "width": 0,
-                        "height": 0
-                    },
-                    {
-                        "name": "Run Command",
-                        "width": 0,
-                        "height": 0
-                    },
-                    {
-                        "name": "Set Component Environment Property",
-                        "width": 0,
-                        "height": 0
-                    },
-                    {
-                        "name": "Is Running?",
-                        "width": 0,
-                        "height": 0
-                    },
-                    {
-                        "name": "Pull Image?",
-                        "width": 0,
-                        "height": 0
-                    },
-                    {
-                        "name": "Remove Container",
-                        "width": 0,
-                        "height": 0
-                    },
-                    {
-                        "name": "Set Container Name",
-                        "width": 0,
-                        "height": 0
-                    },
-                    {
-                        "name": "Inspect",
+                        "name": "Get Container Status",
                         "width": 0,
                         "height": 0
                     },
@@ -972,7 +1199,37 @@
                         "height": 0
                     },
                     {
+                        "name": "Run Command",
+                        "width": 0,
+                        "height": 0
+                    },
+                    {
+                        "name": "Get Container Id",
+                        "width": 0,
+                        "height": 0
+                    },
+                    {
+                        "name": "Get Container Status Again",
+                        "width": 0,
+                        "height": 0
+                    },
+                    {
+                        "name": "4517afc0c797819fa316e849059e17",
+                        "width": 0,
+                        "height": 0
+                    },
+                    {
+                        "name": "Remove Container",
+                        "width": 0,
+                        "height": 0
+                    },
+                    {
                         "name": "Pull Image",
+                        "width": 0,
+                        "height": 0
+                    },
+                    {
+                        "name": "Pull Image?",
                         "width": 0,
                         "height": 0
                     },
@@ -982,13 +1239,33 @@
                         "height": 0
                     },
                     {
+                        "name": "Is Running?",
+                        "width": 0,
+                        "height": 0
+                    },
+                    {
+                        "name": "Conatiner Running?",
+                        "width": 0,
+                        "height": 0
+                    },
+                    {
+                        "name": "7986-2a1c-4344-fe65",
+                        "width": 0,
+                        "height": 0
+                    },
+                    {
                         "name": "Remove Container?",
+                        "width": 0,
+                        "height": 0
+                    },
+                    {
+                        "name": "b51c-3109-fa16-be92",
                         "width": 0,
                         "height": 0
                     }
                 ],
                 "type": "graph",
-                "name": "035efe9a-6b4b-47dd-a37d-66119247b128",
+                "name": "46a61662-1bae-4d3c-8bb0-3c90ab71ab23",
                 "children": [
                     {
                         "type": "finish",
@@ -1010,7 +1287,7 @@
                         "children": []
                     },
                     {
-                        "propertyName": "Inspect\/ContainerStatus",
+                        "propertyName": "Get Container Status\/ContainerStatus",
                         "type": "switch",
                         "name": "Is Running?",
                         "children": []
@@ -1025,7 +1302,7 @@
                         "pluginName": "Docker",
                         "pluginVersion": 5,
                         "properties": {
-                            "container": "${environment\/container.name}",
+                            "container": "${environment\/SERVER_HOST}",
                             "timer": "60"
                         },
                         "type": "plugin",
@@ -1042,7 +1319,7 @@
                         "pluginName": "Docker",
                         "pluginVersion": 5,
                         "properties": {
-                            "container": "${environment\/container.name}",
+                            "container": "${environment\/SERVER_HOST}",
                             "force": "true"
                         },
                         "type": "plugin",
@@ -1059,10 +1336,10 @@
                         "pluginName": "Docker",
                         "pluginVersion": 5,
                         "properties": {
-                            "name": "${environment\/container.name}",
+                            "name": "${environment\/SERVER_HOST}",
                             "detach": "true",
-                            "ports": "${p:environment\/host.port}:${p:environment\/container.port}",
-                            "links": "",
+                            "ports": "${environment\/SERVER_PORT}:${environment\/SERVER_PORT}",
+                            "links": "${environment\/container.links}",
                             "image": "${p:system\/docker.registry}${p:component.name}:${p:version.name}",
                             "options": "${p:docker.opts}",
                             "command": "",
@@ -1083,13 +1360,13 @@
                         "pluginName": "Docker",
                         "pluginVersion": 5,
                         "properties": {
-                            "name": "${environment\/container.name}",
+                            "name": "${environment\/SERVER_HOST}",
                             "type": "container",
                             "propName": "ContainerStatus",
                             "template": "{{.State.Status}}"
                         },
                         "type": "plugin",
-                        "name": "Inspect",
+                        "name": "Get Container Status",
                         "children": []
                     },
                     {
@@ -1102,7 +1379,7 @@
                         "pluginName": "Docker",
                         "pluginVersion": 5,
                         "properties": {
-                            "name": "${environment\/container.name}",
+                            "name": "${environment\/SERVER_HOST}",
                             "type": "container",
                             "propName": "containerId",
                             "template": "{{.Id}}"
@@ -1129,45 +1406,6 @@
                         "showHidden": false,
                         "impersonationUseSudo": false,
                         "impersonationUseSsh": false,
-                        "postProcessingScript": "383d29fe-46ae-4e74-a4cf-5e223c4c5a37",
-                        "commandName": "Run Groovy Script",
-                        "pluginName": "Groovy",
-                        "pluginVersion": 3,
-                        "properties": {
-                            "scriptBody": "println \"container-name=${p:component.name}\"+\"-\"+ \"${environment.name}\".replace(\" \", \"_\").toLowerCase();",
-                            "userDefinedClassPath": ""
-                        },
-                        "type": "plugin",
-                        "name": "Set Container Name",
-                        "children": []
-                    },
-                    {
-                        "allowFailure": false,
-                        "useImpersonation": false,
-                        "showHidden": false,
-                        "impersonationUseSudo": false,
-                        "impersonationUseSsh": false,
-                        "commandName": "Set Component Environment Property",
-                        "pluginName": "DA Environment",
-                        "pluginVersion": 12,
-                        "properties": {
-                            "component": "${p:component.name}",
-                            "environment": "${environment.name}",
-                            "application": "${application.name}",
-                            "name": "container.name",
-                            "value": "${p:Set Container Name\/container.name}",
-                            "isSecure": ""
-                        },
-                        "type": "plugin",
-                        "name": "Set Component Environment Property",
-                        "children": []
-                    },
-                    {
-                        "allowFailure": false,
-                        "useImpersonation": false,
-                        "showHidden": false,
-                        "impersonationUseSudo": false,
-                        "impersonationUseSsh": false,
                         "commandName": "Shell",
                         "pluginName": "Shell",
                         "pluginVersion": 4,
@@ -1180,6 +1418,44 @@
                         },
                         "type": "plugin",
                         "name": "Docker login",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "postProcessingScript": "0fb167d5-bd93-4abc-adae-3ce6643c6ad3",
+                        "commandName": "Inspect",
+                        "pluginName": "Docker",
+                        "pluginVersion": 5,
+                        "properties": {
+                            "name": "${environment\/SERVER_HOST}",
+                            "type": "container",
+                            "propName": "ContainerStatus",
+                            "template": "{{.State.Status}}"
+                        },
+                        "type": "plugin",
+                        "name": "Get Container Status Again",
+                        "children": []
+                    },
+                    {
+                        "propertyName": "Get Container Status Again\/ContainerStatus",
+                        "type": "switch",
+                        "name": "Conatiner Running?",
+                        "children": []
+                    },
+                    {
+                        "status": "SUCCESS",
+                        "type": "setStatus",
+                        "name": "7986-2a1c-4344-fe65",
+                        "children": []
+                    },
+                    {
+                        "status": "FAILURE",
+                        "type": "setStatus",
+                        "name": "b51c-3109-fa16-be92",
                         "children": []
                     }
                 ]
@@ -1207,9 +1483,9 @@
             "rootActivity": {
                 "edges": [
                     {
-                        "to": "Is Running?",
-                        "from": "Inspect",
-                        "type": "SUCCESS",
+                        "to": "Remove Container",
+                        "from": "Is Running?",
+                        "type": "VALUE",
                         "value": ""
                     },
                     {
@@ -1219,9 +1495,9 @@
                         "value": "running"
                     },
                     {
-                        "to": "Remove Container",
-                        "from": "Is Running?",
-                        "type": "VALUE",
+                        "to": "4517afc0c797819fa316e849059e17",
+                        "from": "Remove Container",
+                        "type": "SUCCESS",
                         "value": ""
                     },
                     {
@@ -1230,53 +1506,48 @@
                         "value": ""
                     },
                     {
-                        "to": "Remove Container",
-                        "from": "Stop Container",
+                        "to": "Is Running?",
+                        "from": "Inspect",
                         "type": "SUCCESS",
                         "value": ""
                     },
                     {
-                        "to": "4517afc0c797819fa316e849059e17",
-                        "from": "Remove Container",
+                        "to": "Remove Container",
+                        "from": "Stop Container",
                         "type": "SUCCESS",
                         "value": ""
                     }
                 ],
                 "offsets": [
                     {
-                        "name": "Inspect",
-                        "x": -37.5,
-                        "y": 130
-                    },
-                    {
-                        "name": "Is Running?",
-                        "x": -74,
-                        "y": 260
-                    },
-                    {
                         "name": "4517afc0c797819fa316e849059e17",
                         "x": 0,
-                        "y": 736
-                    },
-                    {
-                        "name": "Remove Container",
-                        "x": -74,
-                        "y": 576
+                        "y": 726
                     },
                     {
                         "name": "Stop Container",
                         "x": 136,
-                        "y": 380
+                        "y": 370
+                    },
+                    {
+                        "name": "Remove Container",
+                        "x": -74,
+                        "y": 566
+                    },
+                    {
+                        "name": "Is Running?",
+                        "x": -74,
+                        "y": 250
+                    },
+                    {
+                        "name": "Inspect",
+                        "x": -37.5,
+                        "y": 120
                     }
                 ],
                 "sizes": [
                     {
-                        "name": "Inspect",
-                        "width": 0,
-                        "height": 0
-                    },
-                    {
-                        "name": "Stop Container",
+                        "name": "Is Running?",
                         "width": 0,
                         "height": 0
                     },
@@ -1286,18 +1557,23 @@
                         "height": 0
                     },
                     {
-                        "name": "4517afc0c797819fa316e849059e17",
+                        "name": "Stop Container",
                         "width": 0,
                         "height": 0
                     },
                     {
-                        "name": "Is Running?",
+                        "name": "Inspect",
+                        "width": 0,
+                        "height": 0
+                    },
+                    {
+                        "name": "4517afc0c797819fa316e849059e17",
                         "width": 0,
                         "height": 0
                     }
                 ],
                 "type": "graph",
-                "name": "aab1efed-1ad3-4d6d-9f7d-e1a8a1774dbd",
+                "name": "08506f67-c91e-429f-bc29-78551f4f2715",
                 "children": [
                     {
                         "type": "finish",
@@ -1320,7 +1596,7 @@
                         "pluginName": "Docker",
                         "pluginVersion": 5,
                         "properties": {
-                            "container": "${environment\/container.name}",
+                            "container": "${environment\/SERVER_HOST}",
                             "timer": "${p:stop.timeout}"
                         },
                         "type": "plugin",
@@ -1338,7 +1614,7 @@
                         "pluginName": "Docker",
                         "pluginVersion": 5,
                         "properties": {
-                            "name": "${environment\/container.name}",
+                            "name": "${environment\/SERVER_HOST}",
                             "type": "container",
                             "propName": "ContainerStatus",
                             "template": "{{.State.Status}}"
@@ -1357,7 +1633,7 @@
                         "pluginName": "Docker",
                         "pluginVersion": 5,
                         "properties": {
-                            "container": "${p:container.name}",
+                            "container": "${environment\/SERVER_HOST}",
                             "force": "true"
                         },
                         "type": "plugin",
@@ -1389,17 +1665,6 @@
             "rootActivity": {
                 "edges": [
                     {
-                        "to": "Start Container",
-                        "from": "Is Running?",
-                        "type": "VALUE",
-                        "value": ""
-                    },
-                    {
-                        "to": "Inspect",
-                        "type": "ALWAYS",
-                        "value": ""
-                    },
-                    {
                         "to": "Is Running?",
                         "from": "Inspect",
                         "type": "SUCCESS",
@@ -1418,6 +1683,17 @@
                         "value": "running"
                     },
                     {
+                        "to": "Inspect",
+                        "type": "ALWAYS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Start Container",
+                        "from": "Is Running?",
+                        "type": "VALUE",
+                        "value": ""
+                    },
+                    {
                         "to": "4517afc0c797819fa316e849059e17",
                         "from": "Restart Container",
                         "type": "SUCCESS",
@@ -1426,42 +1702,32 @@
                 ],
                 "offsets": [
                     {
-                        "name": "Is Running?",
-                        "x": -79,
-                        "y": 280
+                        "name": "Start Container",
+                        "x": -217.5,
+                        "y": 420
                     },
                     {
                         "name": "Inspect",
                         "x": -37.5,
-                        "y": 120
-                    },
-                    {
-                        "name": "4517afc0c797819fa316e849059e17",
-                        "x": 0,
-                        "y": 706
-                    },
-                    {
-                        "name": "Start Container",
-                        "x": -217.5,
-                        "y": 430
+                        "y": 110
                     },
                     {
                         "name": "Restart Container",
                         "x": 131,
-                        "y": 430
+                        "y": 420
+                    },
+                    {
+                        "name": "4517afc0c797819fa316e849059e17",
+                        "x": 0,
+                        "y": 696
+                    },
+                    {
+                        "name": "Is Running?",
+                        "x": -79,
+                        "y": 270
                     }
                 ],
                 "sizes": [
-                    {
-                        "name": "Start Container",
-                        "width": 0,
-                        "height": 0
-                    },
-                    {
-                        "name": "Restart Container",
-                        "width": 0,
-                        "height": 0
-                    },
                     {
                         "name": "4517afc0c797819fa316e849059e17",
                         "width": 0,
@@ -1473,13 +1739,23 @@
                         "height": 0
                     },
                     {
+                        "name": "Start Container",
+                        "width": 0,
+                        "height": 0
+                    },
+                    {
                         "name": "Is Running?",
+                        "width": 0,
+                        "height": 0
+                    },
+                    {
+                        "name": "Restart Container",
                         "width": 0,
                         "height": 0
                     }
                 ],
                 "type": "graph",
-                "name": "121d5d80-4af1-40e8-b94d-acd8e2829af7",
+                "name": "0f8d0e2d-342a-4b4c-9e35-d70172fc9141",
                 "children": [
                     {
                         "type": "finish",
@@ -1503,7 +1779,7 @@
                         "pluginName": "Docker",
                         "pluginVersion": 5,
                         "properties": {
-                            "name": "${environment\/container.name}",
+                            "name": "${environment\/SERVER_HOST}",
                             "type": "container",
                             "propName": "ContainerStatus",
                             "template": "{{.State.Status}}"
@@ -1522,7 +1798,7 @@
                         "pluginName": "Docker",
                         "pluginVersion": 5,
                         "properties": {
-                            "container": "${environment\/container.name}",
+                            "container": "${environment\/SERVER_HOST}",
                             "attachOutErr": ""
                         },
                         "type": "plugin",
@@ -1539,7 +1815,7 @@
                         "pluginName": "Docker",
                         "pluginVersion": 5,
                         "properties": {
-                            "container": "${environment\/container.name}",
+                            "container": "${environment\/SERVER_HOST}",
                             "timer": "${stop.timeout}"
                         },
                         "type": "plugin",
@@ -1571,8 +1847,8 @@
             "rootActivity": {
                 "edges": [
                     {
-                        "to": "Is Running?",
-                        "from": "Inspect",
+                        "to": "4517afc0c797819fa316e849059e17",
+                        "from": "Stop Container",
                         "type": "SUCCESS",
                         "value": ""
                     },
@@ -1588,15 +1864,15 @@
                         "value": ""
                     },
                     {
-                        "to": "4517afc0c797819fa316e849059e17",
-                        "from": "Is Running?",
-                        "type": "VALUE",
+                        "to": "Is Running?",
+                        "from": "Inspect",
+                        "type": "SUCCESS",
                         "value": ""
                     },
                     {
                         "to": "4517afc0c797819fa316e849059e17",
-                        "from": "Stop Container",
-                        "type": "SUCCESS",
+                        "from": "Is Running?",
+                        "type": "VALUE",
                         "value": ""
                     }
                 ],
@@ -1604,25 +1880,35 @@
                     {
                         "name": "Inspect",
                         "x": -39,
-                        "y": 146
+                        "y": 136
                     },
                     {
                         "name": "4517afc0c797819fa316e849059e17",
                         "x": -1.5,
-                        "y": 726
+                        "y": 716
                     },
                     {
                         "name": "Stop Container",
                         "x": 130,
-                        "y": 460
+                        "y": 450
                     },
                     {
                         "name": "Is Running?",
                         "x": -80.5,
-                        "y": 300
+                        "y": 290
                     }
                 ],
                 "sizes": [
+                    {
+                        "name": "Inspect",
+                        "width": 0,
+                        "height": 0
+                    },
+                    {
+                        "name": "Stop Container",
+                        "width": 0,
+                        "height": 0
+                    },
                     {
                         "name": "4517afc0c797819fa316e849059e17",
                         "width": 0,
@@ -1630,22 +1916,12 @@
                     },
                     {
                         "name": "Is Running?",
-                        "width": 0,
-                        "height": 0
-                    },
-                    {
-                        "name": "Stop Container",
-                        "width": 0,
-                        "height": 0
-                    },
-                    {
-                        "name": "Inspect",
                         "width": 0,
                         "height": 0
                     }
                 ],
                 "type": "graph",
-                "name": "a8cb2d7d-454b-4e34-b6bc-b4f3f001c354",
+                "name": "76eb0b5e-2498-48ae-9b88-91b2e5a9c704",
                 "children": [
                     {
                         "type": "finish",
@@ -1668,7 +1944,7 @@
                         "pluginName": "Docker",
                         "pluginVersion": 5,
                         "properties": {
-                            "container": "${environment\/container.name}",
+                            "container": "${environment\/SERVER_HOST}",
                             "timer": "${p:stop.timeout}"
                         },
                         "type": "plugin",
@@ -1686,13 +1962,116 @@
                         "pluginName": "Docker",
                         "pluginVersion": 5,
                         "properties": {
-                            "name": "${environment\/container.name}",
+                            "name": "${environment\/SERVER_HOST}",
                             "type": "container",
                             "propName": "ContainerStatus",
                             "template": "{{.State.Status}}"
                         },
                         "type": "plugin",
                         "name": "Inspect",
+                        "children": []
+                    }
+                ]
+            }
+        },
+        {
+            "name": "verify-ui",
+            "description": "Verify that the user interface (if any) is accessible",
+            "defaultWorkingDir": "${p:resource\/work.dir}\/${p:component.name}",
+            "takesVersion": false,
+            "status": "",
+            "active": true,
+            "deleted": false,
+            "executionTimeout": 0,
+            "propDefs": [
+                {
+                    "name": "verification.string",
+                    "label": "Verification String",
+                    "extendedLabel": "Verification String",
+                    "type": "TEXT",
+                    "required": true,
+                    "description": "The string to verify in the HTML web page, e.g. title",
+                    "hidden": false
+                },
+                {
+                    "name": "verification.wait",
+                    "label": "Verification Wait Time",
+                    "extendedLabel": "Verification Wait Time",
+                    "type": "TEXT",
+                    "value": "60",
+                    "required": true,
+                    "description": "Maximum wait time (in seconds) to wait for verification string",
+                    "hidden": false
+                }
+            ],
+            "rootActivity": {
+                "edges": [
+                    {
+                        "to": "e726-66d9-6d4c-c13d",
+                        "from": "Wait for web page",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Wait for web page",
+                        "type": "ALWAYS",
+                        "value": ""
+                    }
+                ],
+                "offsets": [
+                    {
+                        "name": "e726-66d9-6d4c-c13d",
+                        "x": -5.5,
+                        "y": 460
+                    },
+                    {
+                        "name": "Wait for web page",
+                        "x": -70.5,
+                        "y": 158
+                    }
+                ],
+                "sizes": [
+                    {
+                        "name": "Wait for web page",
+                        "width": 0,
+                        "height": 0
+                    },
+                    {
+                        "name": "e726-66d9-6d4c-c13d",
+                        "width": 0,
+                        "height": 0
+                    }
+                ],
+                "type": "graph",
+                "name": "03ed8ebc-3710-4bb7-bd45-6cb353e1f124",
+                "children": [
+                    {
+                        "type": "finish",
+                        "name": "e726-66d9-6d4c-c13d",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "impersonationUseSsh": false,
+                        "commandName": "Wait for web page",
+                        "pluginName": "Deploy Tools",
+                        "pluginVersion": 5,
+                        "properties": {
+                            "url": "http:\/\/${environment\/primary.ip}:${environment\/SERVER_PORT}",
+                            "verifyString": "${verification.string}",
+                            "failIfFound": "",
+                            "user": "",
+                            "password": "pbe{O3kjTIJhdmLBZ1lfDGdAWE9qhae10JnH}",
+                            "timeout": "",
+                            "passScript": "",
+                            "maxWaitTime": "${verification.wait}",
+                            "retryTimeout": "5000"
+                        },
+                        "type": "plugin",
+                        "name": "Wait for web page",
                         "children": []
                     }
                 ]

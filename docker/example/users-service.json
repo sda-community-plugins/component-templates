@@ -1,8 +1,8 @@
 {
     "entityType": "Component",
-    "name": "jetty",
-    "description": "Jetty component for testing docker template",
-    "created": 1569331396247,
+    "name": "users-service",
+    "description": "Ring2Park Microservices - Users Service module",
+    "created": 1569939879513,
     "importAutomatically": false,
     "useVfs": true,
     "active": true,
@@ -320,7 +320,7 @@
                                 "image": "${p:system\/docker.registry}${p:component.name}:${p:version.name}",
                                 "private": "",
                                 "user": "${p:system\/docker.username}",
-                                "pass": "pbe{zmoKbTplf04VbCFhw3qNUt4GAGNSILrKUjcecu9is7BTx3FWGghg0eV3OYzjknkr}"
+                                "pass": "pbe{mVk3Vt9p9U9DUYlecVkpVLi\/axtkSMg4Rv5YOrlhN30kLf0vZRb1XxCou\/WKPoTh}"
                             },
                             "type": "plugin",
                             "name": "Push Image",
@@ -2076,7 +2076,7 @@
                                 "verifyString": "${verification.string}",
                                 "failIfFound": "",
                                 "user": "",
-                                "password": "pbe{tGuseat1qnXXYWlj1VBeTahPhHUzIRse}",
+                                "password": "pbe{BllvdjJPaHrbd85xaWoecgARn3\/FWpnh}",
                                 "timeout": "",
                                 "passScript": "",
                                 "maxWaitTime": "${verification.wait}",
@@ -2097,14 +2097,14 @@
     "versionPropDefs": [],
     "propSheetGroup": {"propSheets": [
         {
-            "name": "custom",
+            "name": "template",
             "properties": []
         },
         {
             "name": "code_station",
             "properties": [{
                 "name": "repository",
-                "value": "6728bfd6-cc29-47ce-beac-250914ee6cb9",
+                "value": "c99a365b-b552-407a-bd6a-73032ad798ba",
                 "description": "",
                 "secure": false
             }]
@@ -2114,7 +2114,7 @@
             "properties": []
         },
         {
-            "name": "template",
+            "name": "custom",
             "properties": []
         }
     ]},

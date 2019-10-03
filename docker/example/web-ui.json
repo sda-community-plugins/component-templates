@@ -1,8 +1,8 @@
 {
     "entityType": "Component",
-    "name": "jetty",
-    "description": "Jetty component for testing docker template",
-    "created": 1569331396247,
+    "name": "web-ui",
+    "description": "Ring2Park Microservices - Web UI module",
+    "created": 1570102176728,
     "importAutomatically": false,
     "useVfs": true,
     "active": true,
@@ -320,7 +320,7 @@
                                 "image": "${p:system\/docker.registry}${p:component.name}:${p:version.name}",
                                 "private": "",
                                 "user": "${p:system\/docker.username}",
-                                "pass": "pbe{zmoKbTplf04VbCFhw3qNUt4GAGNSILrKUjcecu9is7BTx3FWGghg0eV3OYzjknkr}"
+                                "pass": "pbe{iGjjZftmJGUnacVV\/VD1VO14xkL6m8aKNO4IqKDaeDWyK0qg+b1+op0SKuZlixkZ}"
                             },
                             "type": "plugin",
                             "name": "Push Image",
@@ -2076,7 +2076,7 @@
                                 "verifyString": "${verification.string}",
                                 "failIfFound": "",
                                 "user": "",
-                                "password": "pbe{tGuseat1qnXXYWlj1VBeTahPhHUzIRse}",
+                                "password": "pbe{IVwqaZZx\/mWHZAFOZVobZRNZH7PvL8qv}",
                                 "timeout": "",
                                 "passScript": "",
                                 "maxWaitTime": "${verification.wait}",
@@ -2093,29 +2093,192 @@
         "taskDefs": []
     },
     "sourceConfigTypeName": "Jenkins",
-    "envPropDefs": [],
-    "versionPropDefs": [],
-    "propSheetGroup": {"propSheets": [
+    "envPropDefs": [
         {
-            "name": "custom",
-            "properties": []
+            "name": "container.links",
+            "label": "Container Links",
+            "extendedLabel": "Container Links",
+            "type": "TEXT",
+            "required": false,
+            "description": "Name of any containers to link to (legacy feature)",
+            "hidden": false
         },
+        {
+            "name": "SERVER_PORT",
+            "label": "Server Port",
+            "extendedLabel": "Server Port",
+            "type": "TEXT",
+            "value": "8080",
+            "required": true,
+            "description": "The port that the service will run on",
+            "hidden": false
+        },
+        {
+            "name": "EUREKA_HOST",
+            "label": "Eureka Hostname",
+            "extendedLabel": "Eureka Hostname",
+            "type": "TEXT",
+            "value": "eureka-service",
+            "required": true,
+            "description": "The hostname of the (Eureka) registration and discovery server",
+            "hidden": false
+        },
+        {
+            "name": "EUREKA_PORT",
+            "label": "Eureka Port",
+            "extendedLabel": "Eureka Port",
+            "type": "TEXT",
+            "value": "1111",
+            "required": true,
+            "description": "The TCP port of the (Eureka) registration and discovery server",
+            "hidden": false
+        },
+        {
+            "name": "EUREKA_CLIENT_SERVICEURL_DEFAULTZONE",
+            "label": "Eureka URI",
+            "extendedLabel": "Eureka URI",
+            "type": "TEXT",
+            "value": "http:\/\/${environment\/EUREKA_HOST}:${environment\/EUREKA_PORT}\/eureka",
+            "required": true,
+            "description": "The full address of the (Eureka) registration and discovery server",
+            "hidden": false
+        },
+        {
+            "name": "SERVER_HOST",
+            "label": "Server Host",
+            "extendedLabel": "Server Host",
+            "type": "TEXT",
+            "value": "${component.name}",
+            "required": false,
+            "description": "The hostname that the service will run on (used to name the container)",
+            "hidden": false
+        },
+        {
+            "name": "primary.ip",
+            "label": "Server Primary IP",
+            "extendedLabel": "Server Primary IP",
+            "type": "TEXT",
+            "required": false,
+            "description": "Primary IP address of server (retrieved and set using get-server-ip process)",
+            "hidden": false
+        }
+    ],
+    "versionPropDefs": [
+        {
+            "name": "image.id",
+            "label": "Docker Image Id",
+            "extendedLabel": "Docker Image Id",
+            "type": "TEXT",
+            "required": false,
+            "description": "Docker Image Id",
+            "hidden": false
+        },
+        {
+            "name": "build.url",
+            "label": "Build URL",
+            "extendedLabel": "Build URL",
+            "type": "TEXT",
+            "required": false,
+            "description": "The URL to the build in the build tool, i.e. Jenkins that created the component version",
+            "hidden": false
+        },
+        {
+            "name": "issue.ids",
+            "label": "Issue Ids",
+            "extendedLabel": "Issue Ids",
+            "type": "TEXT",
+            "required": false,
+            "description": "Comma separated list of Issue Ids, i.e. JIRA Issues that were recorded against the SCM commit",
+            "hidden": false
+        },
+        {
+            "name": "build.version",
+            "label": "Build Version",
+            "extendedLabel": "Build Version",
+            "type": "TEXT",
+            "value": "1.0",
+            "required": false,
+            "description": "Version number automatically retrieved from build tool, i.e. Maven \"<project.version>\"",
+            "hidden": false
+        },
+        {
+            "name": "build.number",
+            "label": "Build Number",
+            "extendedLabel": "Build Number",
+            "type": "TEXT",
+            "required": false,
+            "description": "The build number in the build tool, i.e. Jenkins that created the component version",
+            "hidden": false
+        },
+        {
+            "name": "scm.id",
+            "label": "SCM Id",
+            "extendedLabel": "SCM Id",
+            "type": "TEXT",
+            "required": false,
+            "description": "The unique id of the SCM changeset, i.e. Git commit hash that created the component version",
+            "hidden": false
+        },
+        {
+            "name": "scm.branch",
+            "label": "SCM Branch",
+            "extendedLabel": "SCM Branch",
+            "type": "TEXT",
+            "required": false,
+            "description": "The SCM branch of the commit that created the component version.",
+            "hidden": false
+        },
+        {
+            "name": "scm.url",
+            "label": "SCM URL",
+            "extendedLabel": "SCM URL",
+            "type": "TEXT",
+            "required": false,
+            "description": "The URL of the SCM repository of the commit that created the component version",
+            "hidden": false
+        },
+        {
+            "name": "docker.image.id",
+            "label": "Docker Image Id",
+            "extendedLabel": "Docker Image Id",
+            "type": "TEXT",
+            "required": false,
+            "description": "The unique id of the docker image that was created from the component verison",
+            "hidden": false
+        }
+    ],
+    "propSheetGroup": {"propSheets": [
         {
             "name": "code_station",
             "properties": [{
                 "name": "repository",
-                "value": "6728bfd6-cc29-47ce-beac-250914ee6cb9",
+                "value": "e44a0e51-a541-4273-9a52-58fc5ab57173",
                 "description": "",
                 "secure": false
             }]
         },
         {
-            "name": "JenkinsComponentProperties",
+            "name": "custom",
             "properties": []
         },
         {
             "name": "template",
             "properties": []
+        },
+        {
+            "name": "JenkinsComponentProperties",
+            "properties": [
+                {
+                    "name": "pollingPeriod",
+                    "description": "",
+                    "secure": false
+                },
+                {
+                    "name": "quietPeriod",
+                    "description": "",
+                    "secure": false
+                }
+            ]
         }
     ]},
     "processes": [],

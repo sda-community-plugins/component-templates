@@ -1,8 +1,8 @@
 {
     "entityType": "Component",
-    "name": "jetty",
-    "description": "Jetty component for testing docker template",
-    "created": 1569331396247,
+    "name": "eureka-service",
+    "description": "Ring2Park Microservices - Registration Service module",
+    "created": 1569921144865,
     "importAutomatically": false,
     "useVfs": true,
     "active": true,
@@ -320,7 +320,7 @@
                                 "image": "${p:system\/docker.registry}${p:component.name}:${p:version.name}",
                                 "private": "",
                                 "user": "${p:system\/docker.username}",
-                                "pass": "pbe{zmoKbTplf04VbCFhw3qNUt4GAGNSILrKUjcecu9is7BTx3FWGghg0eV3OYzjknkr}"
+                                "pass": "pbe{HXTYYT10mmqRUQF2eG0XUPEdZBSNRpuIMu3yMLb9a13jcxNKWKRmpiMAAk9Xqumh}"
                             },
                             "type": "plugin",
                             "name": "Push Image",
@@ -2076,7 +2076,7 @@
                                 "verifyString": "${verification.string}",
                                 "failIfFound": "",
                                 "user": "",
-                                "password": "pbe{tGuseat1qnXXYWlj1VBeTahPhHUzIRse}",
+                                "password": "pbe{bXVBVPBv4GLtaVVuN2F1TLVPHqAXpjkS}",
                                 "timeout": "",
                                 "passScript": "",
                                 "maxWaitTime": "${verification.wait}",
@@ -2104,7 +2104,7 @@
             "name": "code_station",
             "properties": [{
                 "name": "repository",
-                "value": "6728bfd6-cc29-47ce-beac-250914ee6cb9",
+                "value": "37d96224-a525-4a2f-a41a-c528cecb0ba8",
                 "description": "",
                 "secure": false
             }]
